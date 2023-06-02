@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 import chooeat.restaurant.service.RestaurantService;
 
-@WebServlet("/restaurantuploadimage")
+@WebServlet("/restaurant/restaurantuploadimage")
 public class RestaurantUploadImage extends HttpServlet {
 	 @Autowired
 	    private RestaurantService RestaurantService;
