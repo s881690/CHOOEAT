@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <title>CHOOEAT！</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- 引入bootstrap -->
+    <link rel="stylesheet" href="./styles/bootstrap/bootstrap.min.css" />
+
+    <!-- 以下引入我們自己寫的css -->
+    <link rel="stylesheet" href="./styles/header/footer.css" />
+    <link rel="stylesheet" href="./styles/header/header.css" />
+    <link rel="stylesheet" href="./styles/activity/activity.css" />
+    <!-- <link rel="stylesheet" href="./styles/all/all.css" /> -->
+  </head>
+
+  <body>
+    <header>
+      <!-- 設定導覽列標籤在桌機以上size展開 -->
+      <nav class="navbar navbar-expand-lg" id="navbar">
+        <!-- div class="container-fluid"置中且滿版 -->
+        <div class="container">
+          <!-- .navbar-brand 標示為公司，產品或專案名稱。
+              這裡放的是chooeat文字logo
+                      這裡的連結之後要改，跳轉到首頁
+                  內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
+          <a class="navbar-brand" href="#">
+            <img src="./images/header/logo.png" />
+          </a>
+          <!-- order-lg-last在bootstrap框架中是設定在父元素的排列順序，last的意思是會在最後面
+                      function_icons只代表這個class的名稱 -->
+          <div class="function_icons order-lg-last">
+            <!-- "mb-0" 類用於指定此元素的外邊距（margin）為 0。 
+                      "d-flex" 類用於指定此元素為一個彈性盒子，即在此元素內部的所有子元素將以一個方向排列
+                      ，並且可以通過 justify-content 和 align-items 屬性來調整它們之間的間距和位置。 -->
+            <p class="mb-0 d-flex">
+              <!-- "d-flex" 類用於指定此元素為一個彈性盒子，它將允許 "align-items-center" 
+                              和 "justify-content-center" 屬性來垂直和水平居中其內部的子元素。 
+                              "align-items-center" 類用於垂直居中，"justify-content-center" 類
+                              用於水平居中。 -->
+              <!-- 以下3個a標籤，包的是聊天視窗、購物車、會員登入的小icon -->
+              <a
+                href="#"
+                class="d-flex align-items-center justify-content-center mr-1 icon"
+              >
+                <img src="./images/header/chat_icon.png" />
+              </a>
+              <a
+                href="#"
+                class="d-flex align-items-center justify-content-center mr-1 icon"
+              >
+                <img src="./images/header/shopping_cart_Icon.png" />
+              </a>
+              <a
+                href="#"
+                class="d-flex align-items-center justify-content-center mr-1 icon"
+              >
+                <img src="./images/header/member_icon.png" />
+              </a>
+            </p>
+          </div>
+          <!-- 這個button是漢堡選單的menu按鈕 -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#ftco-nav"
+            aria-controls="ftco-nav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa fa-bars"></span> Menu
+          </button>
+          <!-- 以下為header各分區的標題連結 -->
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul
+              class="navbar-nav d-flex align-items-center justify-content-center"
+              style="gap: 1rem"
+            >
+              <li class="nav-item">
+                <a href="../restaurant/Homepage.html" class="nav-link">首頁</a>
+              </li>
+              <li class="nav-item">
+                <a href="../restaurant/Homepage.html" class="nav-link"
+                  >找餐廳</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="../prod/mall.html" class="nav-link">找餐券</a>
+              </li>
+              <li class="nav-item">
+                <a href="./activity.html" class="nav-link">揪團</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">美食排行榜</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">關於我們</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- 以下為內容區域，主要對這裡做修改 -->
+    <div class="main_content">
+      <div class="activity_establish_main">
+        <div class="container">
+          <!-- 麵包屑與搜尋框 -->
+          <div class="row bread_and_search">
+            <!-- 麵包屑 -->
+            <nav
+              class="col"
+              style="--bs-breadcrumb-divider: '>'"
+              aria-label="breadcrumb"
+            >
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#" class="normal_a">首頁</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                  <a href="./activity.html" class="normal_a">揪團</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  揪團活動建立
+                </li>
+              </ol>
+            </nav>
+
+            <!-- 搜尋框 -->
+            <!-- 因Java有將靜態檔案設定映射名稱與前綴字，因此不用加"activity/"-->
+            <form class="col search" name="search_value">
+              <input
+                type="text"
+                class="search_value rounded-3"
+                name="search_value"
+                placeholder="搜尋..."
+              />
+              <!-- <input type="hidden" class="search_value" /> -->
+              <button type="submit" class="submit">
+                <img src="./images/search_icon.png" alt="search_icon" />
+              </button>
+            </form>
+          </div>
+
+          <!-- "開始揪團"大標 -->
+          <div class="row activity_title">
+            <h3 class="col">開始揪團</h3>
+          </div>
+
+          <!-- 建立活動表單 -->
+          <form
+            class="row activity_establish_form justify-content-around shadow p-5 mb-5"
+          >
+            <!-- 表單左側 -->
+            <section class="col activity_establish_form_left">
+              <div>
+                <label class="form-label" for="activity_name">活動名稱</label>
+                <input
+                  type="text"
+                  class="form-control border border-2"
+                  name="activity_name"
+                  id="activity_name"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="activity_restaruant"
+                  >活動餐廳</label
+                >
+                <select
+                  name="activity_restaruant"
+                  class="form-select border border-2"
+                  id="activity_restaruant"
+                >
+                  <option value="recommand_restaurant">推薦餐廳</option>
+                  <!--  -->
+                </select>
+              </div>
+
+              <div>
+                <label class="form-label" for="activity_date">活動日期</label>
+                <input
+                  class="form-control border border-2"
+                  type="date"
+                  name="activity_date"
+                  id="activity_date"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="regesteration_starting_time"
+                  >活動報名開始時間</label
+                >
+                <input
+                  type="datetime-local"
+                  class="form-control border border-2"
+                  name="regesteration_starting_time"
+                  id="regesteration_starting_time"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="regesteration_ending_time"
+                  >活動報名截止時間</label
+                >
+                <input
+                  type="datetime-local"
+                  class="form-control border border-2"
+                  name="regesteration_ending_time"
+                  id="regesteration_ending_time"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="activity_starting_time"
+                  >活動開始時間</label
+                >
+                <input
+                  type="time"
+                  class="form-control border border-2"
+                  name="activity_starting_time"
+                  id="activity_starting_time"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="activity_ending_time"
+                  >活動結束時間</label
+                >
+                <input
+                  type="time"
+                  class="form-control border border-2"
+                  name="activity_ending_time"
+                  id="activity_ending_time"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="min_number">最少參加人數</label>
+                <input
+                  type="text"
+                  class="form-control border border-2"
+                  name="min_member"
+                  id="min_member"
+                />
+              </div>
+
+              <div>
+                <label class="form-label" for="max_number">最多參加人數</label>
+                <input
+                  type="text"
+                  class="form-control border border-2"
+                  name="max_member"
+                  id="max_member"
+                />
+              </div>
+            </section>
+            <!-- 表單右側 -->
+            <section class="col row activity_establish_form_right flex-column">
+              <!-- 聚會活動照片 -->
+              <div class="col mt">
+                <label class="form-label" for="activity_photo"
+                  >封面照片上傳</label
+                >
+                <input
+                  type="file"
+                  class="form-control border border-2"
+                  name="activity_photo"
+                  id="activity_photo"
+                />
+                <div class="show_photo mt-3 border border-2">照片預覽</div>
+              </div>
+
+              <!-- 聚會活動內容 -->
+              <div class="col">
+                <label class="form-label" for="activity_text"
+                  >聚會活動內容簡介</label
+                >
+                <textarea
+                  name="activity_text"
+                  class="form-control border-2"
+                  id="activity_text"
+                  cols="50"
+                  rows="6"
+                ></textarea>
+              </div>
+            </section>
+
+            <!-- 按鈕們 -->
+            <section class="row btns justify-content-center">
+              <div class="col-2">
+                <!--點擊送出鈕會彈窗-->
+                <button
+                  type="button"
+                  class="btn btn-outline-warning submit"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  送出
+                </button>
+              </div>
+              <div class="col-2">
+                <button type="reset" class="btn btn-outline-danger">
+                  清除
+                </button>
+              </div>
+            </section>
+          </form>
+
+          <!--活動建立彈窗-->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog w-75 h-auto">
+              <div class="modal-content">
+                <div class="modal-body mb-5 m">
+                  <h3
+                    class="modal-title text-center mt-5"
+                    id="exampleModalLabel"
+                  >
+                    確認送出?
+                  </h3>
+                </div>
+                <div class="row justify-content-around mt-5 pb-3">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger w-25"
+                    data-bs-dismiss="modal"
+                  >
+                    取消
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-success w-25 check_submit"
+                  >
+                    送出
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div
+      class="container-fluid footer_container border-2 border-secondary border-top"
+    >
+      <footer>
+        <ul
+          class="nav justify-content-center border-bottom pb-3 mb-3 py-2 my-2"
+        >
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">首頁</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">找餐廳</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">找餐券</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">揪團</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">美食排行榜</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">商家申請</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-4 text-muted">關於我們</a>
+          </li>
+        </ul>
+        <p class="text-center text-muted mb-0 py-2 my-3">&copy; THA101 G4</p>
+      </footer>
+    </div>
+
+    <!-- 引入 Bootstrap JS -->
+    <script src="./js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- 引入自己的JS -->
+    <script src="./js/vendors/jquery/jquery-3.4.1.min.js"></script>
+    <script src="./js/activity/activity_estiblish.js"></script>
+  </body>
+</html>
