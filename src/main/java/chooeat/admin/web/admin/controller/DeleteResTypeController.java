@@ -36,6 +36,7 @@ public class DeleteResTypeController extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		
 		int resTypeId = Integer.parseInt(req.getParameter("resTypeId"));
+		System.out.println("test");
 		
 		final Core core = new Core();		
 		
