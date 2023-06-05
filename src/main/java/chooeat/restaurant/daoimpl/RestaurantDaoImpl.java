@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import chooeat.restaurant.dao.RestaurantDAO;
 import chooeat.restaurant.model.vo.AccountVO;
+import chooeat.restaurant.model.vo.AdVO;
 import chooeat.restaurant.model.vo.ProdVO;
 import chooeat.restaurant.model.vo.ResTypeVO;
 import chooeat.restaurant.model.vo.ReservationVO;
@@ -750,4 +751,85 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 		}
 		return 1;
 	}
+	
+	@Override
+	public int restaurantuploadad(String restaurantId, String adplan, String adprice, String adstarttime,
+			String adendtime,String strTimestamp,String adcheck) {
+		String sql = "INSERT INTO ad(restaurant_id,ad_plan,ad_amount,ad_start_date,ad_end_date,ad_apply_timestamp,ad_check)\r\n"
+				+ "VALUES (?,?,?,?,?,?,?)";
+		int result = 0;
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,restaurantId);
+			pstmt.setString(2,adplan);	
+			pstmt.setString(3,adprice);	
+			pstmt.setString(4,adstarttime);	
+			pstmt.setString(5,adendtime);	
+			pstmt.setString(6,strTimestamp);
+			pstmt.setString(7,adcheck);
+			int rowsAffected = pstmt.executeUpdate();
+
+			if (rowsAffected > 0) {
+				result = 1;
+			}			
+			pstmt.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 2;
+		}
+		return 1;
+	}
+
+	@Override
+	public List<AdVO> restaurantfindad(String restaurantId) {
+		String sql = "SELECT ad_id,ad_apply_timestamp,ad_start_date,ad_end_date,ad_amount,ad_plan,ad_check FROM ad		\r\n"
+				+ "where restaurant_id=?";
+		List<AdVO> adList = new ArrayList<>();
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, restaurantId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AdVO adVO = new AdVO();
+				adVO.setAdId(rs.getInt("ad_id"));
+				adVO.setAdApplyTimestamp(rs.getTimestamp("ad_apply_timestamp"));
+				adVO.setAdStartDate(rs.getDate("ad_start_date"));
+				adVO.setAdEndDate(rs.getDate("ad_end_date"));
+				adVO.setAdAmount(rs.getInt("ad_amount"));
+				adVO.setAdPlan(rs.getInt("ad_plan"));
+				adVO.setAdCheck(rs.getInt("ad_check"));						
+				adList.add(adVO);
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return adList;
+	}
+
+	@Override
+	public int restaurantdeletead(String adId, String restaurantId) {
+		String sql = "delete FROM ad\r\n"
+				+ "where ad_id=? and restaurant_id=?";	
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);			
+			pstmt.setString(1, adId);	
+			pstmt.setString(2, restaurantId);	
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();	
+			return 2;
+		}			
+		return 1;
+	}
+
 }

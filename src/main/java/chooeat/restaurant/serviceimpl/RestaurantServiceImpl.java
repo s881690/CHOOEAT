@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import chooeat.restaurant.dao.ResTypeDAO;
 import chooeat.restaurant.dao.RestaurantDAO;
+import chooeat.restaurant.model.vo.AdVO;
 import chooeat.restaurant.model.vo.ProdVO;
 import chooeat.restaurant.model.vo.ReservationVO;
 import chooeat.restaurant.model.vo.RestaurantVO;
@@ -279,6 +280,26 @@ public class RestaurantServiceImpl<K> implements RestaurantService {
 	public int restaurantuploadimage(String restaurantId,  byte[] image) {
 		
 		return dao.restaurantuploadimage(restaurantId,image);
+	}
+
+	@Override
+	public int restaurantuploadad(String restaurantId, String adplan, String adprice, String adstarttime,
+			String adendtime,String strTimestamp,String adcheck) {
+		
+		return dao.restaurantuploadad(restaurantId,adplan,adprice,adstarttime,adendtime,strTimestamp,adcheck);
+		
+	}
+
+	@Override
+	public List<AdVO> restaurantfindad(String restaurantId) {
+		
+		return dao.restaurantfindad(restaurantId);
+	}
+
+	@Override
+	public int restaurantdeletead(String adId, String restaurantId) {
+	
+		return dao.restaurantdeletead(adId, restaurantId);
 	}
 
 
