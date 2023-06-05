@@ -49,12 +49,10 @@
     <link rel="stylesheet" href="./styles/header/footer.css" />
     <link rel="stylesheet" href="./styles/header/header.css" />
     <link rel="stylesheet" href="./styles/all/all.css" />
-    <link rel="stylesheet" href="./styles/main_content/reservation.css" />
-
+    <link rel="stylesheet" href="./styles/main_content/mall_checkout.css" />
     <script src="./js/reservation_js/restaurantInfo.js"></script>
-    <script src="./js/reservation_js/selectDate.js"></script>
+    <script src="./js/reservation_js/reservedCheckout.js"></script>
   </head>
-
   <body>
     <header>
       <!-- 設定導覽列標籤在桌機以上size展開 -->
@@ -62,23 +60,23 @@
         <!-- div class="container-fluid"置中且滿版 -->
         <div class="container">
           <!-- .navbar-brand 標示為公司，產品或專案名稱。
-            這裡放的是chooeat文字logo
-                    這裡的連結之後要改，跳轉到首頁
-                內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
+              這裡放的是chooeat文字logo
+                      這裡的連結之後要改，跳轉到首頁
+                  內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
           <a class="navbar-brand" href="#">
             <img src="./images/header/logo.png" />
           </a>
           <!-- order-lg-last在bootstrap框架中是設定在父元素的排列順序，last的意思是會在最後面
-                    function_icons只代表這個class的名稱 -->
+                      function_icons只代表這個class的名稱 -->
           <div class="function_icons order-lg-last">
             <!-- "mb-0" 類用於指定此元素的外邊距（margin）為 0。 
-                    "d-flex" 類用於指定此元素為一個彈性盒子，即在此元素內部的所有子元素將以一個方向排列
-                    ，並且可以通過 justify-content 和 align-items 屬性來調整它們之間的間距和位置。 -->
+                      "d-flex" 類用於指定此元素為一個彈性盒子，即在此元素內部的所有子元素將以一個方向排列
+                      ，並且可以通過 justify-content 和 align-items 屬性來調整它們之間的間距和位置。 -->
             <p class="mb-0 d-flex">
               <!-- "d-flex" 類用於指定此元素為一個彈性盒子，它將允許 "align-items-center" 
-                            和 "justify-content-center" 屬性來垂直和水平居中其內部的子元素。 
-                            "align-items-center" 類用於垂直居中，"justify-content-center" 類
-                            用於水平居中。 -->
+                              和 "justify-content-center" 屬性來垂直和水平居中其內部的子元素。 
+                              "align-items-center" 類用於垂直居中，"justify-content-center" 類
+                              用於水平居中。 -->
               <!-- 以下3個a標籤，包的是聊天視窗、購物車、會員登入的小icon -->
               <a
                 href="#"
@@ -135,153 +133,57 @@
         </div>
       </nav>
     </header>
-
-    <!-- 內容區域最外圈的div，把container包住，做為標示用 -->
     <div class="main_content">
       <div class="container">
         <div class="row">
-          <!-- action屬性表示之後要送到哪個網址，之後跟後端結合再改 -->
-          <div
-            class="col-12 d-flex align-items-center justify-content-center reservation_image"
-          >
-            <img
-              src="./images/reservation_image/seafoodRes.jpg"
-              class="img-fluid resImg"
-            />
+          <div class="restaurant">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>單價</th>
+                  <th>人數</th>
+                  <th>總價</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <h1>餐廳名稱</h1>
+                  </td>
+                  <td>NT $1,000</td>
+                  <td id="ppl">1</td>
+                  <td>NT $<span id="total">1,000</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <!-- 餐廳標題，之後用資料庫送 -->
-          <div
-            class="col-12 d-flex align-items-center justify-content-center title"
-          >
-            <h1>Brun不然早午餐</h1>
-          </div>
-          <div class="border"></div>
-          <div
-            class="col-12 d-flex align-items-center justify-content-center resreve_info"
-          >
-            <!-- 下拉式選單，選幾位大人 -->
-            <div
-              class="col-6 d-flex align-items-center justify-content-center people"
-            >
-              <div class="dropdown">
-                <select
-                  name=""
-                  id="meal_select"
-                  style="width: 200px"
-                  class="form-select"
-                >
-                  <option value="1">1位</option>
-                  <option value="2" selected>2位</option>
-                  <option value="3">3位</option>
-                  <option value="4">4位</option>
-                  <option value="5">5位</option>
-                  <option value="6">6位</option>
-                  <option value="7">7位</option>
-                  <option value="8">8位</option>
-                  <option value="9">9位</option>
-                  <option value="10">10位</option>
-                </select>
-              </div>
-            </div>
-            <!-- 這裡是日期選擇器 -->
-            <div
-              class="col-6 d-flex align-items-center justify-content-start second"
-            >
+          <div class="pay_area">
+            <h4>付款方式</h4>
+            <div class="credit_area">
+              <input type="radio" /> <span style="font-size: 24px">信用卡</span>
               <input
                 type="text"
-                id="datepicker-widget"
-                class="time form-control"
-                placeholder="請選取日期"
+                class="credit_number"
+                placeholder="信用卡卡號"
               />
+              <input
+                type="text"
+                class="credit_date"
+                placeholder="信用卡到期日"
+              />
+              <input type="text" class="credit_security" placeholder="安全碼" />
             </div>
-          </div>
-
-          <!-- 這裡是標示用餐時間和提醒的部分 -->
-          <div
-            class="col-12 d-flex align-items-center justify-content-start remind"
-          >
-            <p>
-              用餐時段：<br />
-              預設用餐時間為90分鐘<br />
-
-              備註：<br />
-              灰色表示非營業時間，可點選檢視其他時段。<br />
-              綠色表示為該會員已預約<br />
-              紅色表示該時段已無法預約<br />
-              藍色表示剩餘座位不足
-            </p>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>早上：</span>
-            <button type="button" class="meal_time" name="08:00">08:00</button>
-            <button type="button" class="meal_time" name="09:00">09:00</button>
-            <button type="button" class="meal_time" name="10:00">10:00</button>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>中午：</span>
-            <button type="button" class="meal_time" name="11:00">11:00</button>
-            <button type="button" class="meal_time" name="12:00">12:00</button>
-            <button type="button" class="meal_time" name="13:00">13:00</button>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>下午：</span>
-            <button type="button" class="meal_time" name="14:00">14:00</button>
-            <button type="button" class="meal_time" name="15:00">15:00</button>
-            <button type="button" class="meal_time" name="16:00">16:00</button>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>晚上：</span>
-            <button type="button" class="meal_time" name="17:00">17:00</button>
-            <button type="button" class="meal_time" name="18:00">18:00</button>
-            <button type="button" class="meal_time" name="19:00">19:00</button>
-          </div>
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span style="visibility: hidden">晚上：</span>
-
-            <button type="button" class="meal_time" name="20:00">20:00</button>
-            <button type="button" class="meal_time" name="21:00">21:00</button>
-            <button type="button" class="meal_time" name="22:00">22:00</button>
-          </div>
-
-          <div
-            class="col-12 d.flex-column align-items-center justify-content-center notes"
-          >
-            <label for="exampleFormControlTextarea1" class="form-label"
-              >備註：</label
-            >
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-            ></textarea>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-center notes"
-          >
-            <button type="button" class="fin" id="btn">送出</button>
-            <button type="button" class="fin">
-              <a href="#" class="back">返回</a>
-            </button>
+            <div class="pay_check_area">
+              <span class="pay_check_text"
+                >點擊「確認付款方式」即表示確認訂單與右方總金額無誤，且同意平台服務條款、退改政策與信用卡/銀行轉帳服務條款</span
+              >
+              <button class="pay_check_btn">確認結帳</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
     <footer class="navbar-fixed-bottom">
       <div class="container">
         <div class="row">
@@ -344,18 +246,6 @@
         </div>
       </div>
     </footer>
+    <script src="./js/reservation_js/reservedCheckoutButton.js"></script>
   </body>
-  <script src="./js/reservation_js/insertReservation.js"></script>
-  <script>
-    fetch("/getIds")
-      .then((response) => response.json())
-      .then((data) => {
-        // 在这里处理响应数据
-        console.log(data);
-      })
-      .catch((error) => {
-        // 在这里处理错误
-        console.error(error);
-      });
-  </script>
 </html>

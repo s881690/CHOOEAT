@@ -24,7 +24,6 @@
       integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
       crossorigin="anonymous"
     ></script>
-
     <script src="js/header_js/popper.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -43,16 +42,15 @@
     />
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!-- <script src="js/jquery.min.js"></script> -->
 
-    <!-- 以下引入我們自己寫的css和js -->
+    <!-- 引入h2函式庫 -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- 以下引入我們自己寫的css -->
     <link rel="stylesheet" href="./styles/header/footer.css" />
     <link rel="stylesheet" href="./styles/header/header.css" />
     <link rel="stylesheet" href="./styles/all/all.css" />
-    <link rel="stylesheet" href="./styles/main_content/reservation.css" />
-
-    <script src="./js/reservation_js/restaurantInfo.js"></script>
-    <script src="./js/reservation_js/selectDate.js"></script>
+    <link rel="stylesheet" href="./styles/main_content/reservationSucess.css" />
   </head>
 
   <body>
@@ -140,148 +138,84 @@
     <div class="main_content">
       <div class="container">
         <div class="row">
-          <!-- action屬性表示之後要送到哪個網址，之後跟後端結合再改 -->
           <div
             class="col-12 d-flex align-items-center justify-content-center reservation_image"
           >
             <img
               src="./images/reservation_image/seafoodRes.jpg"
-              class="img-fluid resImg"
+              class="img-fluid res_Img"
             />
           </div>
           <!-- 餐廳標題，之後用資料庫送 -->
-          <div
-            class="col-12 d-flex align-items-center justify-content-center title"
-          >
-            <h1>Brun不然早午餐</h1>
-          </div>
-          <div class="border"></div>
-          <div
-            class="col-12 d-flex align-items-center justify-content-center resreve_info"
-          >
-            <!-- 下拉式選單，選幾位大人 -->
+
+          <div class="col-12 d-flex align-items-center justify-content-center">
             <div
-              class="col-6 d-flex align-items-center justify-content-center people"
+              class="col-12 d.flex-column align-items-center justify-content-center resSuccessInfo"
             >
-              <div class="dropdown">
-                <select
-                  name=""
-                  id="meal_select"
-                  style="width: 200px"
-                  class="form-select"
+              <div
+                class="col-12 d.flex-column align-items-center justify-content-center"
+                id="targetDiv"
+              >
+                <div
+                  class="col-12 d-flex align-items-center justify-content-center title"
                 >
-                  <option value="1">1位</option>
-                  <option value="2" selected>2位</option>
-                  <option value="3">3位</option>
-                  <option value="4">4位</option>
-                  <option value="5">5位</option>
-                  <option value="6">6位</option>
-                  <option value="7">7位</option>
-                  <option value="8">8位</option>
-                  <option value="9">9位</option>
-                  <option value="10">10位</option>
-                </select>
+                  <h1>restaurantName</h1>
+                </div>
+                <div
+                  class="col d-flex align-items-center justify-content-center resInfo changeRemind"
+                >
+                  <img
+                    src="./images/reservation_image/checkGreen.png"
+                    class="check"
+                  />
+                  <h3>您已訂位成功！</h3>
+                </div>
+                <div
+                  class="col d-flex align-items-center justify-content-center resInfo resName"
+                >
+                  <h2>親愛的 <span id="memberName">xxx</span> 會員您好</h2>
+                </div>
+                <div
+                  class="col d-flex align-items-center justify-content-center resInfo resTitle"
+                >
+                  <h2>以下是您的訂位資訊</h2>
+                </div>
+                <div
+                  class="col d-flex align-items-center justify-content-center resInfo resDate"
+                >
+                  <h2><span id="reservedTime">2023年5月31日 13:00</span></h2>
+                </div>
+                <div
+                  class="col d-flex align-items-center justify-content-center resInfo resNumber"
+                >
+                  <h2><span id="reservedPeoeple">2位</span></h2>
+                </div>
+              </div>
+              <div
+                class="col d-flex align-items-center justify-content-center notes"
+              >
+                <button type="button" class="resChange">
+                  <a href="./reservationChangeV3.html" class="resChange"
+                    >更改訂位</a
+                  >
+                </button>
+                <button type="button" class="resChange" id="viewButton">
+                  查看路線
+                </button>
+                <button type="button" class="resChange" id="share">
+                  分享到LINE
+                </button>
+                <button type="button" class="resChange">
+                  <a href="#" class="resChange">取消訂位</a>
+                </button>
               </div>
             </div>
-            <!-- 這裡是日期選擇器 -->
-            <div
-              class="col-6 d-flex align-items-center justify-content-start second"
-            >
-              <input
-                type="text"
-                id="datepicker-widget"
-                class="time form-control"
-                placeholder="請選取日期"
-              />
-            </div>
-          </div>
-
-          <!-- 這裡是標示用餐時間和提醒的部分 -->
-          <div
-            class="col-12 d-flex align-items-center justify-content-start remind"
-          >
-            <p>
-              用餐時段：<br />
-              預設用餐時間為90分鐘<br />
-
-              備註：<br />
-              灰色表示非營業時間，可點選檢視其他時段。<br />
-              綠色表示為該會員已預約<br />
-              紅色表示該時段已無法預約<br />
-              藍色表示剩餘座位不足
-            </p>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>早上：</span>
-            <button type="button" class="meal_time" name="08:00">08:00</button>
-            <button type="button" class="meal_time" name="09:00">09:00</button>
-            <button type="button" class="meal_time" name="10:00">10:00</button>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>中午：</span>
-            <button type="button" class="meal_time" name="11:00">11:00</button>
-            <button type="button" class="meal_time" name="12:00">12:00</button>
-            <button type="button" class="meal_time" name="13:00">13:00</button>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>下午：</span>
-            <button type="button" class="meal_time" name="14:00">14:00</button>
-            <button type="button" class="meal_time" name="15:00">15:00</button>
-            <button type="button" class="meal_time" name="16:00">16:00</button>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span>晚上：</span>
-            <button type="button" class="meal_time" name="17:00">17:00</button>
-            <button type="button" class="meal_time" name="18:00">18:00</button>
-            <button type="button" class="meal_time" name="19:00">19:00</button>
-          </div>
-          <div
-            class="col-12 d-flex align-items-center justify-content-start choose_time"
-          >
-            <span style="visibility: hidden">晚上：</span>
-
-            <button type="button" class="meal_time" name="20:00">20:00</button>
-            <button type="button" class="meal_time" name="21:00">21:00</button>
-            <button type="button" class="meal_time" name="22:00">22:00</button>
-          </div>
-
-          <div
-            class="col-12 d.flex-column align-items-center justify-content-center notes"
-          >
-            <label for="exampleFormControlTextarea1" class="form-label"
-              >備註：</label
-            >
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-            ></textarea>
-          </div>
-
-          <div
-            class="col-12 d-flex align-items-center justify-content-center notes"
-          >
-            <button type="button" class="fin" id="btn">送出</button>
-            <button type="button" class="fin">
-              <a href="#" class="back">返回</a>
-            </button>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- class="navbar-fixed-bottom"讓footer置底 -->
     <footer class="navbar-fixed-bottom">
       <div class="container">
         <div class="row">
@@ -344,18 +278,9 @@
         </div>
       </div>
     </footer>
+    <script src="js/reservation_js/restaurantInfo.js"></script>
+    <script src="js/reservation_js/getReservedInfo.js"></script>
+    <script src="js/reservation_js/viewRouteV2-FETCH.js"></script>
+    <script src="js/reservation_js/getpic.js"></script>
   </body>
-  <script src="./js/reservation_js/insertReservation.js"></script>
-  <script>
-    fetch("/getIds")
-      .then((response) => response.json())
-      .then((data) => {
-        // 在这里处理响应数据
-        console.log(data);
-      })
-      .catch((error) => {
-        // 在这里处理错误
-        console.error(error);
-      });
-  </script>
 </html>
