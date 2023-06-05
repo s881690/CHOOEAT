@@ -1,3 +1,7 @@
+// 解析會員資訊
+let account = JSON.parse(sessionStorage.getItem("loginReq"));
+let accId = account.accId;
+
 // 接收list資訊
 function fetch3ActivityList() {
   const card_list_3 = document.querySelector(".card_list_3");
@@ -9,16 +13,17 @@ function fetch3ActivityList() {
       return res.json();
     })
     .then((resList) => {
-      // console.log(resList);
+      console.log(resList);
       let resList3 = resList.slice(0, 3);
+      console.log(resList3);
       let resListCollapse = resList.slice(3, 9);
 
       //塞進前三個
       for (let reser of resList3) {
-        let base64Photo = reser.activityPhoto;
-        // console.log(base64Photo);
+        console.log(reser);
+        let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
-        image.src = `data:image/*;base64,${base64Photo}`;
+        image.src = `data:image/jpeg;base64,${base64Photo}`;
         card_list_3.innerHTML += `
         <div class="col-4 mt-5">
           <div class="card">
@@ -29,9 +34,11 @@ function fetch3ActivityList() {
             />
             <div class="card-body" data-activityid=${reser.activityId}>
               <h5 class="card-title">${reser.activityName}</h5>
-              <p class="restaurant-name">地點：${reser.restaurantVO.resName}</p>
+              <p class="restaurant-name">地點：${
+                reser.activityrestaurantVO.resName
+              }</p>
             <p class="card-text address">地址：
-              ${reser.restaurantVO.resAdd}
+              ${reser.activityrestaurantVO.resAdd}
             </p>
             <p class="card-text date_time">活動時間：${
               reser.activityStartingTime.slice(0, 5) +
@@ -65,10 +72,9 @@ function fetch3ActivityList() {
 
       // 塞進摺疊區塊內
       for (let reser of resListCollapse) {
-        let base64Photo = reser.activityPhoto;
-        // console.log(base64Photo);
+        let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
-        image.src = `data:image/*;base64,${base64Photo}`;
+        image.src = `data:image/jpeg;base64,${base64Photo}`;
         card_list_collapse.innerHTML += `
             <div class="col-4 mt-5">
             <div class="card">
@@ -80,10 +86,10 @@ function fetch3ActivityList() {
               <div class="card-body" data-activityid=${reser.activityId}>
                 <h5 class="card-title">${reser.activityName}</h5>
                 <p class="restaurant-name">地點：${
-                  reser.restaurantVO.resName
+                  reser.activityrestaurantVO.resName
                 }</p>
                 <p class="card-text address">地址：
-                  ${reser.restaurantVO.resAdd}
+                  ${reser.activityrestaurantVO.resAdd}
                 </p>
                 <p class="card-text date_time">活動時間：${
                   reser.activityStartingTime.slice(0, 5) +
@@ -157,11 +163,11 @@ function like() {
   let likebtn = $("svg.like");
 
   likebtn.click(function (e) {
-    let accId = sessionStorage.getItem("accId");
+    // let accId = account.accId;
     let activityId = $(e.target).closest(".card-body").attr("data-activityId");
 
     // 判斷是否已登入
-    if (sessionStorage.getItem("login") == null) {
+    if (sessionStorage.getItem("loginReq") == null) {
       alert("請先進行登入");
       return;
     }
@@ -208,9 +214,13 @@ function like() {
 // 取得收藏活動
 function getlikes() {
   // 判斷會員是否已登入
-  if (sessionStorage.getItem("accId") != null) {
+  if (accId == null) {
+    return;
+  }
+  if (accId != null) {
+    console.log(accId);
     // 取得該會員已收藏的活動，若已收藏，愛心就會是實心
-    let accId = sessionStorage.getItem("accId");
+    // let accId = sessionStorage.getItem("accId");
     let getLikeURL = "getlike?accId=" + accId;
     // 準備好array，用來接活動id
     let activityId_arr = [];
@@ -237,8 +247,6 @@ function getlikes() {
           }
         });
       });
-  } else {
-    console.log("請先進行會員登入");
   }
 }
 
