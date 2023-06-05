@@ -19,6 +19,7 @@ import chooeat.prod.dao.ProdDao;
 import chooeat.prod.dao.impl.ProdDaoImpl;
 import chooeat.prod.model.vo.Prod;
 import chooeat.prod.service.ProdService;
+import chooeat.prod.service.impl.ProdServiceImpl;
 
 @WebServlet("/prod/Prod/getall")
 public class ProdController extends HttpServlet {
@@ -27,6 +28,8 @@ public class ProdController extends HttpServlet {
 	private ProdService prodService;
 	@Autowired
 	private ProdDaoImpl prodDaoImpl;
+	@Autowired
+	private	ProdServiceImpl prodServiceImpl;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// 設置接收格式
@@ -51,6 +54,20 @@ public class ProdController extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			out.print(jsonStr);
 			out.flush();
+		} else if ("getCategory".equals(action)) {
+			System.out.println("我有被執行到");
+			List<Prod> list = null;
+			String category = req.getParameter("category").toString();
+			System.out.println(category);
+			HttpSession session = req.getSession();
+			session.setAttribute("category", category);
+			list = prodServiceImpl.getByCategory(category);
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(list);
+			PrintWriter out = res.getWriter();
+			out.print(jsonStr);
+			out.flush();
+			session.removeAttribute("category");
 		} else if ("sortBy".equals(action)) {
 			String sortParam = req.getParameter("sort");
 			HttpSession session = req.getSession();

@@ -14,6 +14,22 @@ document.addEventListener("DOMContentLoaded", function() {
 	productId = getProductIdFromURL();
 	getProductDetails(productId);
 });
+//======================================== 時間轉換 ========================================
+function formatTimestamp(timestampString) {
+	var timestamp = new Date(timestampString);
+	var year = timestamp.getFullYear();
+	var month = timestamp.getMonth() + 1;
+	var day = timestamp.getDate();
+	var hours = timestamp.getHours();
+	var minutes = timestamp.getMinutes();
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+
+	var formattedTimestamp = year + "年" + month + "月" + day + "日 " + hours + ":" + minutes;
+
+	return formattedTimestamp;
+}
 //===================================送到餐券詳細頁面=================================
 function initMap() {
 	const uluru = { lat: -25.344, lng: 131.031 };
@@ -33,228 +49,78 @@ function getProductDetails(productId) {
 	const url = "prod/details?id=" + productId;
 	fetch(url, { signal: fetchSignal })
 		.then(response => response.json())
-		.then(prod => {
+		.then(data => {
+//			console.log(data);
+			const prod = data.prod;
+			const orderDetails = data.orderDetails;
 			const address = prod.resAdd;
 			resName = prod.resName;
 			productName = prod.resName + "｜" + prod.prodName;
 			price = prod.prodPrice.toLocaleString();
-			var productDetailsElement = document.getElementById("product-details");
 			star = Math.floor(prod.prodCommentScore);
-
-			productDetailsElement.innerHTML = `
-           <div id="product-details" class="main_content">
-	  	    <div class="container">
-	  	      <div class="row">
-	       	   <div class="breadcrumbandSearch">
-	            <nav class="breadcrumbandSearch" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-	             <ol class="breadcrumb">
-	               <li class="breadcrumb-item"><a href="#">主頁</a></li>
-	               <li class="breadcrumb-item"><a href="mall.html">找餐券</a></li>
-	               <li class="breadcrumb-item active" aria-current="page">${prod.resName} | ${prod.prodName}</li>
-	              </ol>
-	            </nav>
-	            <div class="search_area">
-						<input type="text" id="search_text" class="search_text"
-							name="search"> 
-							<input type="hidden" name="action" value="getByCompositeQuery">
-							 <input type="submit" id="search_button" class="search_button" value=""
-							style="background-image: url(./chooeat/images/mall_image/search.png);">
-					</div>
-         	</div>
-          <div class="parent_container">
-            <main class="main">
-              <div id="carouselExampleIndicators" class="carousel slide carousel-dark" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                </div>
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="./chooeat/images/mall_image/mall1.jpg" class="d-block prod_img" alt="..."></div>
-                  <div class="carousel-item"><img src="./chooeat/images/mall_image/mall2.jpg" class="d-block prod_img" alt="..."></div>
-                  <div class="carousel-item"><img src="./chooeat/images/mall_image/mall3.jpg" class="d-block prod_img" alt="..."></div>
-                  <div class="carousel-item"><img src="./chooeat/images/mall_image/mall4.jpg" class="d-block prod_img" alt="..."></div>
-                  <div class="carousel-item"><img src="./chooeat/images/mall_image/mall5.jpg" class="d-block prod_img" alt="..."></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-
-              <div class="prod">
-                <span id="productName" class="prodTitle">${prod.resName} | ${prod.prodName}</span>
+			document.getElementById("breadcrumb-page").innerHTML = `
+			${prod.resName} | ${prod.prodName}
+			`;
+			document.getElementById("prodInfor").innerHTML = `
+			<span id="productName" class="prodTitle">${prod.resName} | ${prod.prodName}</span>
                 <br />
               <div class="type">${prod.resType}</div>
-              <div class="add">${prod.resAdd}</div>
-                <div class="map">
-                <div id="map">
-                </div>
-            </div>
-			</div>
-              <div class="prod">
-                <span class="prodTitle">餐券詳情</span>
+              <div class="add">${prod.resAdd}</div>`;
+			document.getElementById("prodText").innerHTML = `<span class="prodTitle">餐券詳情</span>
                 <br />
                 <ul>
                   <li>${prod.prodText}</li>
-                </ul>
-              </div>
-              <div class="prod">
-			                <span class="prodTitle">如何使用</span>
+                </ul>`;
+			document.getElementById("prodUserguide").innerHTML = `
+			<span class="prodTitle">如何使用</span>
 			                <br />
 			                <ul>
 			                 <li>${prod.prodUserguide}</li>
-			                </ul>
-			              </div>
-              <div class="prod">
-                <span class="prodTitle">商品評價</span>
-                <br />
-             
-                
-                <div class="star_area">
-                  <span class="star_score">${prod.prodCommentScore.toFixed(1)} <span style="font-size: 16px;">/ 5</span></span>
-                  <span class="star_block">
-                    <span class="star" data-star="1"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="2"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="3"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="4"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="5"><i class="fas fa-star"></i></span>
-                  </span>
-                  <div class="star_filter">
-                    <button class="star_filter_all">全部</button>
-                    <button class="star_filter_all">五星</button>
-                    <button class="star_filter_all">四星</button>
-                    <button class="star_filter_all">三星</button>
-                    <button class="star_filter_all">二星</button>
-                    <button class="star_filter_all">一星</button>
-                  </div>
-                </div>
-                <div class="sort">
-                  <div class="sortBy">排序方式</div>
-                  <select class="sorting">
-                    <option>評分最高</option>
-                    <option>價格由高到低</option>
-                    <option>價格由低到高</option>
-                    <option>Chooeat!推薦</option>
-                  </select>
-                </div>
-                <br />
-                <div class="comment">
-                  <div class="acc_profiles">
+			                </ul>`;
+			document.getElementById("star_score").innerHTML = `
+			${prod.prodCommentScore.toFixed(1)} <span style="font-size: 16px;">/ 5</span>
+			`;
+
+			if (orderDetails.length === 0) {
+				document.getElementById("comment").innerHTML = `<h2 style="margin-top:30px; text-align: center;">尚未有任何評論。</h2>`;
+			} else {
+				for (let orderDetail of orderDetails) {
+					const star = Math.floor(orderDetail.prodCommentScore);
+					// 星星
+					let starHtml = '';
+					for (let i = 1; i <= 5; i++) {
+						if (i <= star) {
+							starHtml += `<span class="star -on" data-star="${i}" style="padding-right:3px;"><i class="fas fa-star"></i></span>`;
+						} else {
+							starHtml += `<span class="star" data-star="${i}" style="padding-right:3px;"><i class="fas fa-star"></i></span>`;
+						}
+					}
+					document.getElementById("comment").innerHTML += `
+			<div class="acc_profiles">
                     <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
                     <div class="nameandStar">
-                      <div class="acc_name">用戶名稱</div>
+                      <div class="acc_name">${orderDetail.accName}</div>
                       <div class="dot3">
-                       <input type="submit" id="more_button" class="more" value=""
+                       <input type="submit" id="more_button" class="more" value="" data-order-detail-id="${orderDetail.orderDetailId}"
 							style="background-image: url(./chooeat/images/mall_image/more.png);">
                     </div>
                       <br />
                       <div class="commemt_star_block">
-                       <span class="star" data-star="1"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="2"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="3"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="4"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="5"><i class="fas fa-star"></i></span>
+                       ${starHtml}
                       </div>
                     </div>
                   </div>
                   <div class="comment_area">
-                    <div>2023年4月9日 19:42 單人｜平日晚餐</div>
+                    <div>${formatTimestamp(orderDetail.prodCommentTimestamp)} 單人｜平日晚餐</div>
                     <div class="comment_text">
-                      好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ好ㄘ
+                     ${orderDetail.prodCommentText}
                     </div>
                   </div>
-                  <hr class="comment_hr" style="border: 1.3px solid" />
-                </div>
-                <div class="comment">
-                  <div class="acc_profiles">
-                   <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
-                    <div class="nameandStar">
-                      <div class="acc_name">用戶名稱</div>
-                      <div class="dot3">
-                       <input type="submit" id="more_button" class="more" value=""
-							style="background-image: url(./chooeat/images/mall_image/more.png);">
-                    </div>
-                      <br />
-                      <div class="commemt_star_block">
-                        <span class="star" data-star="1"><i class="fas fa-star"></i></span>
-                        <span class="star" data-star="2"><i class="fas fa-star"></i></span>
-                        <span class="star" data-star="3"><i class="fas fa-star"></i></span>
-                        <span class="star" data-star="4"><i class="fas fa-star"></i></span>
-                        <span class="star" data-star="5"><i class="fas fa-star"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="comment_area">
-                    <div>2023年4月9日 19:42 單人｜平日晚餐</div>
-                    <div class="comment_text">
-                      普通普通普通普通普通普通普通普通普通普通普通普通普通普通普通普通普通普通
-                    </div>
-                  </div>
-                  <hr class="comment_hr" style="border: 1.3px solid" />
-                </div>
-                <div class="comment">
-                  <div class="acc_profiles">
-                   <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
-                    <div class="nameandStar">
-                      <div class="acc_name">用戶名稱</div>
-                      <div class="dot3">
-                       <input type="submit" id="more_button" class="more" value=""
-							style="background-image: url(./chooeat/images/mall_image/more.png);">
-                    </div>
-                      <br />
-                      <div class="commemt_star_block">
-                       <span class="star" data-star="1"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="2"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="3"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="4"><i class="fas fa-star"></i></span>
-                       <span class="star" data-star="5"><i class="fas fa-star"></i></span>
-                      </div>
-                    </div>   
-                  </div>
-                  <div class="comment_area">
-                    <div>2023年4月9日 19:42 單人｜平日晚餐</div>
-                    <div class="comment_text">
-                      還行還行還行還行還行還行還行還行還行還行還行還行還行還行還行還行還行還行
-                    </div>
-                  </div>
-                  <hr class="comment_hr" style="border: 1.3px solid" />
-                </div>
-              </div>
-            </main>
+                  <hr class="comment_hr" style="border: 1.3px solid; margin-bottom:15px;" />`;
+				}
+			}
 
-            <aside class="aside">
-              <div class="pay_area">費用詳情</div>
-              <hr />
-              <ul class="price_list">
-                <li>單人｜平日晚餐｜ <span id="price"> NT $${price}</span></li>
-              </ul>
-              <br />
-              <input
-                type="button"
-                id="pay_immediately"
-                class="pay_immediately"
-                value="立即購買"
-              />
-              <input
-                type="button"
-                id="add_cart"
-                class="add_cart"
-                value="加入購物車"
-                
-              />
-            </aside>
-          </div>
-        </div>
-      </div>
-    </div>
-          `;
+			document.getElementById("price").innerHTML = ` NT $${price}`;
 			//              <div class="prod">
 			//                <span class="prodTitle">餐券詳情</span>
 			//                <br />
@@ -370,6 +236,8 @@ function bindEventsToElements() {
 	const overlay = $(".confirmation-overlay");
 	$(".more").on("click", function() {
 		const moreBtn = $(this);
+		const orderDetailId = moreBtn.attr("data-order-detail-id");
+		console.log(orderDetailId);
 		if (moreBtn.hasClass("reported")) {
 			overlay.css("display", "flex");
 			confirmationBox.css({
@@ -386,9 +254,8 @@ function bindEventsToElements() {
 		});
 
 		confirmationBox.html(
-			`<h5>檢舉評論</h5>
-				<div>檢舉這則評論的原因？</div>
-				<div></div>
+			`<h5 style="font-weight: bold;">檢舉評論</h5>
+				<div style="margin:5px;">檢舉這則評論的原因？</div>
 				<textarea placeholder="請輸入檢舉原因..."></textarea>
 				<div>
 					<button class="confirm-btn">完成</button>
@@ -399,24 +266,31 @@ function bindEventsToElements() {
 
 		const confirmBtn = confirmationBox.find(".confirm-btn");
 		confirmBtn.on("click", function() {
-			console.log("檢舉成功");
+			const reason = confirmationBox.find("textarea").val();
+			if (reason.trim() === "") {
+				alert("請輸入檢舉原因");
+				return;
+			}
+			console.log(reason);
 			confirmationBox.css({
 				width: "300px",
 				height: "180px"
 			});
 			confirmationBox.html("<h4 class='centered-text'>檢舉成功！</h4>");
 			moreBtn.addClass("reported");
+			const url = "prod/details";
 			fetch(url, {
-				//					method: "POST",
-				//				})
-				//					.then((response) => response.json())
-				//					.then((data) => {
-				//						console.log("檢舉成功");
-				//					})
-				//					.catch((error) => {
-				//						console.error("檢舉失敗:", error);
-				//					});
-			});
+				method: "POST",
+				body: JSON.stringify({ reason: reason, orderDetailId: orderDetailId })
+			})
+				.then(function(response) { return response.json(); })
+				.then((data) => {
+					 console.log(data);
+				})
+				.catch((error) => {
+					console.log("哀哀哀：" + error);
+				});
+
 		})
 		const cancelBtn = confirmationBox.find(".cancel-btn");
 		cancelBtn.on("click", function() {

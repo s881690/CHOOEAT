@@ -102,7 +102,7 @@ function sendCartDataToBackend() {
 	})
 		.then(response => {
 			if (response.ok) {
-				console.log("d");
+//				console.log("d");
 				window.location.href = 'mall_pay_successfully.html';
 			} else {
 

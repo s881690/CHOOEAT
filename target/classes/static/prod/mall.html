@@ -64,7 +64,7 @@
 						</a> <a href="mall_shopping_cart.html"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
 							<img src="./chooeat/images/header/shopping_cart_Icon.png" />
-						</a> <a href="#"
+						</a> <a href="../account/login.html"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
 							<img src="./chooeat/images/header/member_icon.png" />
 						</a>
@@ -81,8 +81,8 @@
 					<ul
 						class="navbar-nav d-flex align-items-center justify-content-center"
 						style="gap: 1rem">
-						<li class="nav-item"><a href="#" class="nav-link">首頁</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">找餐廳</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html" class="nav-link">首頁</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html" class="nav-link">找餐廳</a></li>
 						<li class="nav-item"><a href="mall.html" class="nav-link">找餐券</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">揪團</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">美食排行榜</a></li>
@@ -99,9 +99,9 @@
 			<div class="row">
 				<div class="breadcrumbandSearch">
 					<nav class="breadcrumbandSearch"
-						style="-bs-breadcrumb-divider: '&gt;';" aria-label="breadcrumb">
+						style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#">主頁</a></li>
+							<li class="breadcrumb-item"><a href="../restaurant/Homepage.html">主頁</a></li>
 							<li class="breadcrumb-item active" aria-current="page">找餐券</li>
 						</ol>
 					</nav>
@@ -115,13 +115,13 @@
 				</div>
 			</div>
 			<div id="hotCategoryandSort" class="hotCategoryandSort">
-				<div class="hotCategory">
+				<div class="hotCategoryArea">
 					<span class="hotCategoryTitle">熱門類別</span>
-					<button class="hotCategory">美式</button>
+					<button class="hotCategory">西式</button>
 					<button class="hotCategory">日式</button>
-					<button class="hotCategory">韓式</button>
 					<button class="hotCategory">中式</button>
-					<button class="hotCategory">義式</button>
+					<button class="hotCategory">小吃</button>
+					<button class="hotCategory">早午餐</button>
 				</div>
 				<div class="sort">
 					<div class="sortBy">排序方式</div>
@@ -143,10 +143,10 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">菜系</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">西式</a></li>
-							<li><a class="dropdown-item" href="#">韓式</a></li>
-							<li><a class="dropdown-item" href="#">中式</a></li>
-							<li><a class="dropdown-item" href="#">港式</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">西式</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">韓式</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">中式</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">港式</a></li>
 						</ul>
 					</div>
 					<div class="dropdown">
@@ -154,11 +154,11 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">時段</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">早餐</a></li>
-							<li><a class="dropdown-item" href="#">午餐</a></li>
-							<li><a class="dropdown-item" href="#">早午餐</a></li>
-							<li><a class="dropdown-item" href="#">晚餐</a></li>
-							<li><a class="dropdown-item" href="#">宵夜</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">早餐</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">午餐</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">早午餐</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">晚餐</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">宵夜</a></li>
 						</ul>
 					</div>
 
@@ -167,13 +167,13 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">西式</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">漢堡</a></li>
-							<li><a class="dropdown-item" href="#">披薩</a></li>
-							<li><a class="dropdown-item" href="#">牛排</a></li>
-							<li><a class="dropdown-item" href="#">沙拉</a></li>
-							<li><a class="dropdown-item" href="#">水餃</a></li>
-							<li><a class="dropdown-item" href="#">餐酒館</a></li>	
-							<li><a class="dropdown-item" href="#">義大利麵</a></li>	
+							<li><a class="dropdown-item categoryDetail" href="#">漢堡</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">披薩</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">牛排</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">沙拉</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">水餃</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">餐酒館</a></li>	
+							<li><a class="dropdown-item categoryDetail" href="#">義大利麵</a></li>	
 						</ul>
 					</div>
 					<div class="dropdown">
@@ -181,13 +181,13 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">日式</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">壽司</a></li>
-							<li><a class="dropdown-item" href="#">拉麵</a></li>
-							<li><a class="dropdown-item" href="#">鐵板燒</a></li>
-							<li><a class="dropdown-item" href="#">壽喜燒</a></li>
-							<li><a class="dropdown-item" href="#">咖哩</a></li>
-							<li><a class="dropdown-item" href="#">居酒屋</a></li>
-							<li><a class="dropdown-item" href="#">定食</a></li>							
+							<li><a class="dropdown-item categoryDetail" href="#">壽司</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">拉麵</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">鐵板燒</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">壽喜燒</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">咖哩</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">居酒屋</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">定食</a></li>							
 						</ul>
 					</div>
 					<div class="dropdown">
@@ -195,13 +195,13 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">中式</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">火鍋</a></li>
-							<li><a class="dropdown-item" href="#">燒烤</a></li>
-							<li><a class="dropdown-item" href="#">合菜</a></li>
-							<li><a class="dropdown-item" href="#">麵食</a></li>
-							<li><a class="dropdown-item" href="#">滷味</a></li>
-							<li><a class="dropdown-item" href="#">牛肉麵</a></li>
-							<li><a class="dropdown-item" href="#">粥</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">火鍋</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">燒烤</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">合菜</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">麵食</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">滷味</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">牛肉麵</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">粥</a></li>
 						</ul>
 					</div>
 					<button class="categoryDetail">飲料</button>
