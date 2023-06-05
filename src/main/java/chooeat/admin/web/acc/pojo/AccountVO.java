@@ -1,10 +1,11 @@
 package chooeat.admin.web.acc.pojo;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class AccountVO implements Serializable{
+import chooeat.admin.core.pojo.Core;
+
+public class AccountVO extends Core{
 	private static final long serialVersionUID = 1L;
 
 	private Integer accId;

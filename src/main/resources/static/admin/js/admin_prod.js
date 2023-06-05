@@ -1,9 +1,9 @@
 (() => {
     let searchType = $("#searchType");
     let search = $("#search");
-    let accListBody = $("#accListBody");
+    let prodListBody = $("#prodListBody");
     let listCountArea = $("#listCount");
-    let accCount = $("#listCountNumber");
+    let prodCount = $("#listCountNumber");
     let findNothingMsg = $("#findNothingMsg");
     const pagination = $("#pagination");
 
@@ -73,11 +73,11 @@
             search.trigger("focus");
             return;
         } else {
-            fetch(url)
+            fetch("/adminSearchProd/selectAll")
                 .then(res => res.json())
                 .then(body => {
-                    accListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
-                    accCount.empty();
+                    prodListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
+                    prodCount.empty();
                     findNothingMsg.empty();
                     pagination.empty();
                     listCountArea.attr("hidden", true);
@@ -108,7 +108,7 @@
                     const currentPageData = body.slice(startIndex, endIndex);
 
                     //顯示新分頁資料
-                    $.each(currentPageData, function(index, acc){
+                    $.each(currentPageData, function(index, prod){
 
                         //列表編號
                         let rowIndex = (currentPage - 1) * itemsPerPage + index + 1;
@@ -116,17 +116,17 @@
                         let html = `
                                 <tr>
                                     <th scope="row">${rowIndex}</th>
-                                    <td class="accId">${acc.accId}</td>
-                                    <td>${acc.accName}</td>
-                                    <td>${acc.accAcc}</td>
-                                    <td>${acc.accPhone}</td>
-                                    <td>${acc.accState}</td>
+                                    <td class="prodId">${prod.prodId}</td>
+                                    <td>${prod.prodName}</td>
+                                    <td>${prod.restaurantId}</td>
+                                    <td>${prod.adminRestaurantVO.resName}</td>
+                                    <td>${prod.prodState}</td>
                                     <td>
                                         <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
                                     </td>
                                 </tr>
                                 `;
-                        accListBody.append(html);
+                        prodListBody.append(html);
                     });
 
                     // 更新分頁區域的內容
@@ -144,19 +144,19 @@
         fetchAndUpdateData();
     });
     
-    $(document).on("click", ".editBtn", function(){
-        let accId = $(this).closest("tr").find(".accId").text();
+    // $(document).on("click", ".editBtn", function(){
+    //     let accId = $(this).closest("tr").find(".accId").text();
 
-        fetch("adminAccSearchResult", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                accId: accId
-            })
-        })
-            .then(res => res.json())
-            .then(body => {
+    //     fetch("adminAccSearchResult", {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({
+    //             accId: accId
+    //         })
+    //     })
+    //         .then(res => res.json())
+    //         .then(body => {
             
-            });
-    });
+    //         });
+    // });
 })();
