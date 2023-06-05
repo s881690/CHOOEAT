@@ -54,7 +54,6 @@ a {
 	font-weight: bold;
 }
 /* ======== 搜尋 ======== */
-/* ======== 搜尋 ======== */
 div.search_area {
 	position: relative;
 	float: right;
@@ -204,6 +203,9 @@ div.star_area {
 div.star_filter {
 	/* display: inline-block; */
 	float: right;
+}
+span.star.-on {
+	color: orange;
 }
 
 div.star_filter button {
@@ -358,7 +360,7 @@ hr.comment_hr {
 
 textarea {
 	height: 180px;
-	width: 200px;
+	width: 250px;
 	max-height: 200px;
 	resize: vertical;
 }
