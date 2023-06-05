@@ -55,13 +55,23 @@ public class ActivityServiceImpl implements ActivityService {
 	@Transactional
 	@Override
 	public List<ActivityVO> search(String value) {
-		return  activityRepository.findByActivityNameContaining(value);
+		List<ActivityVO> list = activityRepository.findByActivityNameContaining(value);
+		for(int i = 0 ; i < list.size(); i++) {
+			// 將byte[]圖片轉為base64 String
+			  String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
+			  list.get(i).setActivityPhotoBase64(base64String);
+		}
+		return list;
 	}
 
 	@Override
 	@Transactional
 	public ActivityVO findByActivityId(Integer activityId) {
-		return activityRepository.findByActivityId(activityId);
+		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+			  String base64String = Base64.getEncoder().encodeToString(activityVO.getActivityPhoto());
+			  activityVO.setActivityPhotoBase64(base64String);
+		return activityVO;
+
 	}
 
 	// 活動申請

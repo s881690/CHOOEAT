@@ -1,7 +1,3 @@
-// 解析會員資訊
-let account = JSON.parse(sessionStorage.getItem("loginReq"));
-let accId = account.accId;
-
 // 接收list資訊
 function fetch3ActivityList() {
   const card_list_3 = document.querySelector(".card_list_3");
@@ -13,9 +9,9 @@ function fetch3ActivityList() {
       return res.json();
     })
     .then((resList) => {
-      console.log(resList);
+      // console.log(resList);
       let resList3 = resList.slice(0, 3);
-      console.log(resList3);
+      // console.log(resList3);
       let resListCollapse = resList.slice(3, 9);
 
       //塞進前三個
@@ -23,7 +19,7 @@ function fetch3ActivityList() {
         console.log(reser);
         let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
-        image.src = `data:image/jpeg;base64,${base64Photo}`;
+        image.src = `data:image/*;base64,${base64Photo}`;
         card_list_3.innerHTML += `
         <div class="col-4 mt-5">
           <div class="card">
@@ -158,12 +154,13 @@ function viewmore() {
 // ======== 活動收藏相關函式要放在fetch資料後的函式下，這樣才抓的到資料 ========
 // like按鈕點擊事件
 function like() {
-  // console.log(like);
   // 取得like按鈕的內層path標籤
   let likebtn = $("svg.like");
 
   likebtn.click(function (e) {
-    // let accId = account.accId;
+    // 解析會員資訊
+    let account = JSON.parse(sessionStorage.getItem("loginReq"));
+    let accId = account.acc_id;
     let activityId = $(e.target).closest(".card-body").attr("data-activityId");
 
     // 判斷是否已登入
@@ -187,7 +184,6 @@ function like() {
       }).then((res) => {
         console.log(res);
       });
-      // console.log("yyyyyyy");
       //更改顏色與data-like屬性
       $(e.target).attr("data-like", "true");
       $(e.target).css("fill", "#FF0000");
@@ -214,11 +210,16 @@ function like() {
 // 取得收藏活動
 function getlikes() {
   // 判斷會員是否已登入
-  if (accId == null) {
+  if (JSON.parse(sessionStorage.getItem("loginReq")) == null) {
+    // console.log("請先會員登入");
     return;
   }
+
+  // 解析會員資訊
+  let account = JSON.parse(sessionStorage.getItem("loginReq"));
+  let accId = account.acc_id;
+
   if (accId != null) {
-    console.log(accId);
     // 取得該會員已收藏的活動，若已收藏，愛心就會是實心
     // let accId = sessionStorage.getItem("accId");
     let getLikeURL = "getlike?accId=" + accId;
@@ -233,7 +234,7 @@ function getlikes() {
         for (let i = 0; i < resJSON.length; i++) {
           activityId_arr.push(resJSON[i].activityId);
         }
-        console.log(activityId_arr);
+        // console.log(activityId_arr);
 
         // 跑迴圈，判斷活動編號是否符合
         let cardBodys = document.querySelectorAll("div.card-body");
