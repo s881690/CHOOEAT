@@ -641,7 +641,7 @@ $(document).ready(function () {
       },
     ],
   });
-  $("#v-pills-findosusume-tab").click(function () {
+  $("#v-pills-find-osusume-tab").click(function () {
     table5.ajax.reload();
   });
 
