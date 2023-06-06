@@ -2,16 +2,38 @@ package chooeat.admin.web.admin.pojo;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import chooeat.admin.core.pojo.Core;
 
+@Entity
+@Table(name = "admin")
 public class AdminVO extends Core{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "admin_id", updatable = false)
     private Integer adminId;
+	
+	@Column(name = "admin_acc")
     private String adminAcc;
+	
+	@Column(name = "admin_name")
     private String adminName;
+	
+	@Column(name = "admin_pass")
     private String adminPass;
+	
+	@Column(name = "admin_timestamp")
     private Timestamp adminTimestamp;
+	
+	@Column(name = "admin_permission")
     private Integer adminPermission;
 
     // Constructor

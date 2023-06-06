@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import chooeat.account.service.AccountService;
 import chooeat.admin.core.util.CommonUtil;
-import chooeat.admin.web.acc.pojo.AccountVO;
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
 
 @WebServlet("/admin/adminSearchAccResult")
 public class AccSearchResult extends HttpServlet {
@@ -36,10 +36,10 @@ public class AccSearchResult extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
 
-		AccountVO account = COMMONUTIL.json2Pojo(req, AccountVO.class);
+		AdminAccountVO account = COMMONUTIL.json2Pojo(req, AdminAccountVO.class);
 		
 		if(account == null) {
-			account = new AccountVO();
+			account = new AdminAccountVO();
 			account.setMessage("無此會員資訊");
 			account.setSuccessful(false);
 			COMMONUTIL.writePojo2Json(res, account);

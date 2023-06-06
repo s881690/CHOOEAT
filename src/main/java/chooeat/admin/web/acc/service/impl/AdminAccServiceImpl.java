@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import chooeat.admin.web.acc.dao.AccountDAO;
-import chooeat.admin.web.acc.pojo.AccountVO;
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
 import chooeat.admin.web.acc.service.AccService;
 
 @Service
@@ -16,17 +16,17 @@ public class AdminAccServiceImpl implements AccService{
 	private AccountDAO dao;
 
 	@Override
-	public AccountVO edit() {
+	public AdminAccountVO edit() {
 		return null;
 	}
 
 	@Override
-	public List<AccountVO> findAll() {
+	public List<AdminAccountVO> findAll() {
 		return dao.selectAll();
 	}
 
 	@Override
-	public List<AccountVO> searchBySomething(String searchType, String search) {
+	public List<AdminAccountVO> searchBySomething(String searchType, String search) {
 		String searchCondition = "%" + search + "%";
 		if("1".equals(searchType)) {
 			return dao.selectAllByAccId(searchCondition);

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import chooeat.admin.core.pojo.Core;
 import chooeat.admin.core.util.CommonUtil;
-import chooeat.admin.web.acc.pojo.AccountVO;
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
 import chooeat.admin.web.acc.service.AccService;
 
 @WebServlet("/admin/searchAcc")
@@ -41,7 +41,7 @@ public class AdminSearchAcc extends HttpServlet{
 		String searchType = req.getParameter("searchType");
 		String search = req.getParameter("search");
 		
-		List<AccountVO> accList = new ArrayList<>();
+		List<AdminAccountVO> accList = new ArrayList<>();
 		
 		if("0".equals(searchType) && "".equals(search)) {
 			accList = SERVICE.findAll();

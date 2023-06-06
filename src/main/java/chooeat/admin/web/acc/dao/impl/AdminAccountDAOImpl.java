@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Repository;
 
 import chooeat.admin.web.acc.dao.AccountDAO;
-import chooeat.admin.web.acc.pojo.AccountVO;
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
 
 @Repository
 @Import(DataSourceAutoConfiguration.class)
@@ -24,7 +24,7 @@ public class AdminAccountDAOImpl implements AccountDAO{
 	private DataSource dataSource;
 	
 	@Override
-	public int insert(AccountVO VO) {
+	public int insert(AdminAccountVO VO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -38,14 +38,14 @@ public class AdminAccountDAOImpl implements AccountDAO{
 	
 
 	@Override
-	public int update(AccountVO VO) {
+	public int update(AdminAccountVO VO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 
 	@Override
-	public AccountVO selectById(Integer accId) {
+	public AdminAccountVO selectById(Integer accId) {
 		final String sql = "SELECT * FROM account WHERE acc_id = ?; ";
 		
 		try(Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);){
@@ -54,7 +54,7 @@ public class AdminAccountDAOImpl implements AccountDAO{
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()){
-				AccountVO accountVO = new AccountVO();
+				AdminAccountVO accountVO = new AdminAccountVO();
 				accountVO.setAccId(rs.getInt("acc_id"));
 				accountVO.setAccAcc(rs.getString("acc_acc"));
 				accountVO.setAccPass(rs.getString("acc_pass"));
@@ -79,17 +79,16 @@ public class AdminAccountDAOImpl implements AccountDAO{
 		}
 		return null;
 	}
-	
 
 	@Override
-	public List<AccountVO> selectAll(){
+	public List<AdminAccountVO> selectAll(){
 		String sql = "select * from account; ";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				ResultSet rs = stmt.executeQuery()) {
-			List<AccountVO> list = new ArrayList<AccountVO>();
+			List<AdminAccountVO> list = new ArrayList<AdminAccountVO>();
 			while (rs.next()) {
-				AccountVO accountVO = new AccountVO();
+				AdminAccountVO accountVO = new AdminAccountVO();
 				accountVO.setAccId(rs.getInt("acc_id"));
 				accountVO.setAccAcc(rs.getString("acc_acc"));
 				accountVO.setAccPass(rs.getString("acc_pass"));
@@ -120,16 +119,16 @@ public class AdminAccountDAOImpl implements AccountDAO{
 	}
 	
 	@Override
-	public List<AccountVO> selectAllByAccId(String accId) {
+	public List<AdminAccountVO> selectAllByAccId(String accId) {
 		final String sql = "SELECT * FROM account WHERE acc_id like ? ORDER BY acc_id; ";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.setString(1, accId);
 			ResultSet rs = stmt.executeQuery();
 
-			List<AccountVO> list = new ArrayList<AccountVO>();
+			List<AdminAccountVO> list = new ArrayList<AdminAccountVO>();
 
 			while (rs.next()) {
-				AccountVO accountVO = new AccountVO();
+				AdminAccountVO accountVO = new AdminAccountVO();
 				accountVO.setAccId(rs.getInt("acc_id"));
 				accountVO.setAccAcc(rs.getString("acc_acc"));
 				accountVO.setAccPass(rs.getString("acc_pass"));
@@ -158,16 +157,16 @@ public class AdminAccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public List<AccountVO> selectAllByAccAcc(String accAcc) {
+	public List<AdminAccountVO> selectAllByAccAcc(String accAcc) {
 		final String sql = "SELECT * FROM account WHERE acc_acc like ? ORDER BY acc_id; ";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.setString(1, accAcc);
 			ResultSet rs = stmt.executeQuery();
 
-			List<AccountVO> list = new ArrayList<AccountVO>();
+			List<AdminAccountVO> list = new ArrayList<AdminAccountVO>();
 
 			while (rs.next()) {
-				AccountVO accountVO = new AccountVO();
+				AdminAccountVO accountVO = new AdminAccountVO();
 				accountVO.setAccId(rs.getInt("acc_id"));
 				accountVO.setAccAcc(rs.getString("acc_acc"));
 				accountVO.setAccPass(rs.getString("acc_pass"));
@@ -196,16 +195,16 @@ public class AdminAccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public List<AccountVO> selectAllByAccName(String accName) {
+	public List<AdminAccountVO> selectAllByAccName(String accName) {
 		final String sql = "SELECT * FROM account WHERE acc_name like ? ORDER BY acc_id; ";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.setString(1, accName);
 			ResultSet rs = stmt.executeQuery();
 
-			List<AccountVO> list = new ArrayList<AccountVO>();
+			List<AdminAccountVO> list = new ArrayList<AdminAccountVO>();
 
 			while (rs.next()) {
-				AccountVO accountVO = new AccountVO();
+				AdminAccountVO accountVO = new AdminAccountVO();
 				accountVO.setAccId(rs.getInt("acc_id"));
 				accountVO.setAccAcc(rs.getString("acc_acc"));
 				accountVO.setAccPass(rs.getString("acc_pass"));

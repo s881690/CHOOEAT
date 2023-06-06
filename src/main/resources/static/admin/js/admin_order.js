@@ -1,9 +1,9 @@
 (() => {
     let searchType = $("#searchType");
     let search = $("#search");
-    let prodListBody = $("#prodListBody");
+    let orderListBody = $("#orderListBody");
     let listCountArea = $("#listCount");
-    let prodCount = $("#listCountNumber");
+    let orderCount = $("#listCountNumber");
     let findNothingMsg = $("#findNothingMsg");
     const pagination = $("#pagination");
 
@@ -73,11 +73,11 @@
             search.trigger("focus");
             return;
         } else {
-            fetch("/adminSearchProd/selectAll")
+            fetch("/adminSearchOrder/selectAll")
                 .then(res => res.json())
                 .then(body => {
-                    prodListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
-                    prodCount.empty();
+                    orderListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
+                    orderCount.empty();
                     findNothingMsg.empty();
                     pagination.empty();
                     listCountArea.attr("hidden", true);
@@ -108,17 +108,21 @@
                     const currentPageData = body.slice(startIndex, endIndex);
 
                     //顯示新分頁資料
-                    $.each(currentPageData, function(index, prod){
+                    $.each(currentPageData, function(index, order){
 
-                        const prodState = prod.prodState;
-                        let prodStateText = "";
+                        const orderState = order.orderState;
+                        let orderStateText = "";
 
-                        if(prodState == 0){
-                            prodStateText = "審核中";
-                        } else if (prodState == 1){
-                            prodStateText = "上架中";
+                        if(orderState == 0){
+                            orderStateText = "新訂單";
+                        } else if(orderState == 1){
+                            orderStateText = "處理中";
+                        } else if(orderState == 2){
+                            orderStateText = "已確認";
+                        } else if(orderState == 3){
+                            orderStateText = "已退貨";
                         } else {
-                            prodStateText = "已下架";
+                            orderStateText = "已完成";
                         }
 
                         //列表編號
@@ -127,17 +131,19 @@
                         let html = `
                                 <tr>
                                     <th scope="row">${rowIndex}</th>
-                                    <td class="prodId">${prod.prodId}</td>
-                                    <td>${prod.prodName}</td>
-                                    <td>${prod.restaurantId}</td>
-                                    <td>${prod.adminRestaurantVO.resName}</td>
-                                    <td>${prodStateText}</td>
+                                    <td class="prodId">${order.orderId}</td>
+                                    <td>${order.orderTimestamp}</td>
+                                    <td>${order.accId}</td>
+                                    <td>${order.adminAccountVO.accAcc}</td>
+                                    <td>${order.adminAccountVO.accName}</td>
+                                    <td>${orderStateText}</td>
+                                    <td>${order.finalAmount}</td>
                                     <td>
                                         <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
                                     </td>
                                 </tr>
                                 `;
-                        prodListBody.append(html);
+                        orderListBody.append(html);
                     });
 
                     // 更新分頁區域的內容

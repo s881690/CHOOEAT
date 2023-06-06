@@ -84,7 +84,7 @@ th, tr, td{
 div#listCount p {
     display: inline-block;
 }
-.stateBtn, .editBtn{
+.stateBtn, .editBtn, .deleteBtn{
     background-color: white;
 }
 #registerBtn{

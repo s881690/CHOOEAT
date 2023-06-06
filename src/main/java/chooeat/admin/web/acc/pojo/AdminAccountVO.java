@@ -3,30 +3,76 @@ package chooeat.admin.web.acc.pojo;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
 import chooeat.admin.core.pojo.Core;
 
-public class AccountVO extends Core{
+@Entity
+@Table(name = "account")
+public class AdminAccountVO extends Core{
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "acc_id", updatable = false)
 	private Integer accId;
+	
+	@Column(name = "acc_acc")
     private String accAcc;
+	
+	@Column(name = "acc_pass")
     private String accPass;
+	
+	@Column(name = "acc_name")
     private String accName;
+	
+	@Column(name = "acc_nickname")
     private String accNickname;
+	
+	@Column(name = "acc_phone")
     private String accPhone;
+	
+	@Column(name = "acc_mail")
     private String accMail;
+	
+	@Column(name = "acc_add1")
     private String accAdd1;
+	
+	@Column(name = "acc_add2")
 	private String accAdd2;
+	
+	@Column(name = "acc_add3")
     private String accAdd3;
+	
+	@Column(name = "acc_birth")
     private Date accBirth;
+	
+	@Column(name = "acc_gender")
     private Integer accGender;
+	
+	@Lob
+	@Column(name = "acc_pic")
     private byte[] accPic;
+	
+	@Column(name = "acc_text")
     private String accText;
+	
+	@Column(name = "acc_timestamp")
     private Timestamp accTimestamp;
+	
+	@Column(name = "acc_state")
     private Integer accState;
+	
+	@Column(name = "online_status")
     private Integer onlineStatus;
     
-	public AccountVO(Integer accId, String accAcc, String accPass, String accName, String accNickname, String accPhone,
+	public AdminAccountVO(Integer accId, String accAcc, String accPass, String accName, String accNickname, String accPhone,
 			String accMail, String accAdd1, String accAdd2, String accAdd3, Date accBirth, Integer accGender,
 			byte[] accPic, String accText, Timestamp accTimestamp, Integer accState, Integer onlineStatus) {
 		this.accId = accId;
@@ -48,7 +94,7 @@ public class AccountVO extends Core{
 		this.onlineStatus = onlineStatus;
 	}
 	
-	public AccountVO () {
+	public AdminAccountVO () {
 		
 	}
 	

@@ -30,10 +30,10 @@
                 </div>
             </div>
 
-            <form action="#">
+            <form>
                 <div class="row justify-content-center mb-1" style="margin-left: 40px">
                     <div class="col-12 col-md-2">
-                        <select class="form-select" style="width: 170px;">
+                        <select class="form-select" name="searchType" id="searchType" style="width: 170px;">
                             <option selected value="0">請選擇查詢方式</option>
                             <option value="1">餐廳名稱</option>
                             <option value="2">餐廳編號</option>
@@ -42,7 +42,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="text" class="form-control" placeholder="請輸入">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="請輸入">
                     </div>
                     <div class="col-9 col-md-6">
                         <div class="row align-items-center mb-3">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="col-3 col-md-2 ">
-                        <button type="submit" class="btn btn-outline-dark searchBtn">送出查詢</button>
+                        <button type="button" class="btn btn-outline-dark searchBtn" id="submitSearch">送出查詢</button>
                     </div>
                 </div>
             </form>
@@ -68,148 +68,27 @@
                             <tr>
                                 <th scope="col-1"></th>
                                 <th scope="col">評論編號</th>
-                                <th scope="col">日期</th>
+                                <th scope="col">評論時間</th>
                                 <th scope="col">餐廳編號</th>
                                 <th scope="col">會員編號</th>
                                 <th scope="col">會員名稱</th>
-                                <th scope="col">評論狀態</th>
                                 <th scope="col">評論分數</th>
                                 <th scope="col">餐廳回應</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <a class="text-dark" href="#">00000001</a>
-                                </td>
-                                <td></td>
-                                <td>0001</td>
-                                <td>000001</td>
-                                <td>王家瑜</td>
-                                <td>已評論</td>
-                                <td>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </td>
-                                <td>已回應</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="resCommentListBody"></tbody>
                     </table>
                 </div>
             </div>
 
             <div class="row align-items-center">
-                <div class="col-6 col-md-9">
-                    <p>總共 1 筆資料</p>
+                <div class="col-6" id="listCount" hidden>
+                    <p>總共</p>
+                    <p id="listCountNumber"></p>
+                    <p>筆資料</p>
                 </div>
-                <div class="col-6 col-md-3">
-                    <ul class="pagination justify-content-end p-2 mt-2">
-                        <li class="page-item"><a class="page-link" href="#">上一頁</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item me-0"><a class="page-link" href="#">下一頁</a></li>
+                <div class="col-6">
+                    <ul class="pagination justify-content-end p-2 mt-2" id="pagination">
                     </ul>
                 </div>
             </div>
@@ -218,6 +97,8 @@
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
+
+    <script type="text/javascript" src="js/admin_resComment.js"></script>
 </body>
 
 </html>

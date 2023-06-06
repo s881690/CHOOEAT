@@ -3,14 +3,14 @@ package chooeat.admin.web.acc.dao;
 import java.util.List;
 
 import chooeat.admin.core.dao.CoreDao;
-import chooeat.admin.web.acc.pojo.AccountVO;
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
 
-public interface AccountDAO extends CoreDao<AccountVO, Integer>{
+public interface AccountDAO extends CoreDao<AdminAccountVO, Integer>{
 	
-	List<AccountVO> selectAllByAccId (String accId);
+	List<AdminAccountVO> selectAllByAccId (String accId);
 	
-	List<AccountVO> selectAllByAccAcc (String accAcc);
+	List<AdminAccountVO> selectAllByAccAcc (String accAcc);
 	
-	List<AccountVO> selectAllByAccName (String accName);
+	List<AdminAccountVO> selectAllByAccName (String accName);
 	
 }

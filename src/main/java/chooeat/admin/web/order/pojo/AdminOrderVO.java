@@ -3,21 +3,58 @@ package chooeat.admin.web.order.pojo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class OrderVO implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
+
+
+@Entity
+@Table(name = "`order`")
+public class AdminOrderVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_id", updatable = false)
 	private Integer orderId;
+	
+	@Column(name = "acc_id")
 	private Integer accId;
+	
+	@Column(name = "order_state")
 	private Integer orderState;
+	
+	@Column(name = "amount_before_coupon")
 	private Integer amountBeforeCoupon;
+	
+	@Column(name = "final_amount")
 	private Integer finalAmount;
+	
+	@Column(name = "order_timestamp")
 	private Timestamp orderTimestamp;
+	
+	@Column(name = "order_invoice")
 	private String orderInvoice;
+	
+	@Column(name = "tex_id_number")
 	private String texIdNumber;
+	
+	@Column(name = "order_note")
 	private String orderNote;
 	
-	public OrderVO(Integer orderId, Integer accId, Integer orderState, Integer amountBeforeCoupon, Integer finalAmount,
-			Timestamp orderTimestamp, String orderInvoice, String texIdNumber, String orderNote) {
+	@OneToOne
+	@JoinColumn(name = "acc_id", insertable = false, updatable = false)
+	private AdminAccountVO adminAccountVO;
+	
+	public AdminOrderVO(Integer orderId, Integer accId, Integer orderState, Integer amountBeforeCoupon, Integer finalAmount,
+			Timestamp orderTimestamp, String orderInvoice, String texIdNumber, String orderNote, AdminAccountVO adminAccountVO) {
 		this.orderId = orderId;
 		this.accId = accId;
 		this.orderState = orderState;
@@ -27,8 +64,9 @@ public class OrderVO implements Serializable{
 		this.orderInvoice = orderInvoice;
 		this.texIdNumber = texIdNumber;
 		this.orderNote = orderNote;
+		this.adminAccountVO = adminAccountVO;
 	}
-	public OrderVO() {
+	public AdminOrderVO() {
 		
 	}
 	public Integer getOrderId() {
@@ -84,5 +122,11 @@ public class OrderVO implements Serializable{
 	}
 	public void setOrderNote(String orderNote) {
 		this.orderNote = orderNote;
+	}
+	public AdminAccountVO getAdminAccountVO() {
+		return adminAccountVO;
+	}
+	public void setAdminAccountVO(AdminAccountVO adminAccountVO) {
+		this.adminAccountVO = adminAccountVO;
 	}
 }

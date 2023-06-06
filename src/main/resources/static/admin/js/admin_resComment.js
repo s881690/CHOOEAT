@@ -1,9 +1,9 @@
 (() => {
     let searchType = $("#searchType");
     let search = $("#search");
-    let prodListBody = $("#prodListBody");
+    let resCommentListBody = $("#resCommentListBody");
     let listCountArea = $("#listCount");
-    let prodCount = $("#listCountNumber");
+    let resCommentCount = $("#listCountNumber");
     let findNothingMsg = $("#findNothingMsg");
     const pagination = $("#pagination");
 
@@ -62,7 +62,7 @@
     function fetchAndUpdateData() {
         const searchTypeValue = searchType.val();
         const searchValue = search.val();
-        const url = `searchAcc?searchType=${searchTypeValue}&search=${searchValue}`;
+        const url = `searchRestaurant?searchType=${searchTypeValue}&search=${searchValue}`;
 
         if (searchTypeValue === "0" && searchValue !== "") {
             alert("請選擇查詢方式");
@@ -73,11 +73,11 @@
             search.trigger("focus");
             return;
         } else {
-            fetch("/adminSearchProd/selectAll")
+            fetch("/adminSearchReservation/selectAll")
                 .then(res => res.json())
                 .then(body => {
-                    prodListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
-                    prodCount.empty();
+                    resCommentListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
+                    resCommentCount.empty();
                     findNothingMsg.empty();
                     pagination.empty();
                     listCountArea.attr("hidden", true);
@@ -108,17 +108,15 @@
                     const currentPageData = body.slice(startIndex, endIndex);
 
                     //顯示新分頁資料
-                    $.each(currentPageData, function(index, prod){
+                    $.each(currentPageData, function(index, resComment){
 
-                        const prodState = prod.prodState;
-                        let prodStateText = "";
+                        const isResReply = resComment.restaurantCommentReplyDatetime;
+                        let resReply = "";
 
-                        if(prodState == 0){
-                            prodStateText = "審核中";
-                        } else if (prodState == 1){
-                            prodStateText = "上架中";
+                        if(isResReply){
+                            resReply = "已回應";
                         } else {
-                            prodStateText = "已下架";
+                            resReply = "尚未回應"
                         }
 
                         //列表編號
@@ -127,17 +125,19 @@
                         let html = `
                                 <tr>
                                     <th scope="row">${rowIndex}</th>
-                                    <td class="prodId">${prod.prodId}</td>
-                                    <td>${prod.prodName}</td>
-                                    <td>${prod.restaurantId}</td>
-                                    <td>${prod.adminRestaurantVO.resName}</td>
-                                    <td>${prodStateText}</td>
+                                    <td>${resComment.reservationId}</td>
+                                    <td>${resComment.restaurantCommentDatetime}</td>
+                                    <td>${resComment.restaurantId}</td>
+                                    <td>${resComment.accId}</td>
+                                    <td>${resComment.accountVO.accName}</td>
+                                    <td>${resComment.restaurantCommentScore}</td>
+                                    <td>${resReply}</td>
                                     <td>
-                                        <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
+                                        <button class="btn btn-outline-dark btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#editAdminArea${index + 1}" id="editAdmin">編輯</button>
                                     </td>
                                 </tr>
                                 `;
-                        prodListBody.append(html);
+                        resCommentListBody.append(html);
                     });
 
                     // 更新分頁區域的內容
