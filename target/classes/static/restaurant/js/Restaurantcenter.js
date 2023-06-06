@@ -15,7 +15,7 @@
     resAcc:resAcc,
    } ,
     success: function (response) {
-    console.log(response)
+
          
       var resAcc =response.restauranthomepagemyselfList[0]["resAcc"]
       
@@ -560,6 +560,113 @@ $(document).ready(function () {
    });
  });
 
+  //上傳廣告的金額替換
+  $(document).ready(function() {
+    $('select[name="adplan"], input[name="adprice"]').on('change input', function() {
+      var adplan = parseInt($('select[name="adplan"]').val());
+      var adprice = parseInt($('input[name="adprice"]').val());
+      var totalAmount = $('input[name="adprice"]');
 
- 
+      if (adplan === 1) {
+        totalAmount.val(10000);
+      } else if (adplan === 2) {
+        totalAmount.val(20000);
+      } else if (adplan === 3) {
+        totalAmount.val(30000);
+      }
+
+      if (adprice) {
+        totalAmount.val(parseInt(totalAmount.val()));
+      }
+    });
+  });
+
+//上傳廣告
+  $("#restaurantuploadad").on("click", function () {
+    var adplan = parseInt($('select[name="adplan"]').val());
+    var adprice = parseInt($('input[name="adprice"]').val());
+    var adstarttime = $('input[name="adstarttime"]').val();
+    var adendtime = $('input[name="adendtime"]').val();
+    
+    var ccc={
+      restaurantId:restaurantId,
+      adplan:adplan,
+      adprice:adprice,
+      adstarttime:adstarttime,
+      adendtime:adendtime,
+    }    
+    $.ajax({
+      type: "POST",
+      url: "restaurantuploadad",    
+      data: ccc,
+      success: function (response) {
+        if (response === 1) {
+          alert("上傳成功囉,請去查看餐卷");         
+         
+        } else if (response === 2) {        
+          alert("上傳失敗,你在Hello麼");        
+        }
+      },
+    });
+  });
+
+ //餐廳找廣告功能
+ $(document).ready(function () {
+  const table5 = $("#myTable5").DataTable({
+    autoWidth: true,
+
+    ajax: {
+      url: "restaurantfindad",
+      type: "POST",
+      data: function (d) {
+        d.restaurantId = restaurantId;
+      },
+      dataType: "json",
+      dataSrc: "",
+    },
+    columns: [
+      { data: "adId", title: "廣告ID" },
+      { data: "adPlan", title: "廣告方案" },
+      { data: "adApplyTimestamp", title: "廣告申請時間" },
+      { data: "adStartDate", title: "廣告開始時間" },
+      { data: "adEndDate", title: "廣告結束時間" },
+      { data: "adAmount", title: "廣告費用" },
+      { data: "adCheck", title: "審核狀態" }, 
+      {
+        data: null,
+        title: "操作功能", 
+        render: function (data, type) {
+          return '<button type="button" class="btn btn-danger btn-sm">刪除</button>';
+        },
+      },
+    ],
+  });
+  $("#v-pills-findosusume").click(function () {
+    table5.ajax.reload();
+  });
+
+//刪除廣告功能
+$("#myTable5").on("click", ".btn-danger", function () {
+  var data = table5.row($(this).closest("tr")).data();
+  var adId = data.adId;
+
+  $.ajax({
+    url: "restaurantdeletead", 
+    type: "POST",
+    data: { adId: adId, restaurantId: restaurantId },
+    dataType: "json",
+    success: function (response) {
+      if (response === 1) {
+      
+        var row = table5.row(function (idx, data, node) {
+          return data.adId === adId;
+        });
+        if (row) {
+          row.remove().draw();
+        }
+      }
+    },
+  });
+});
+});
 
