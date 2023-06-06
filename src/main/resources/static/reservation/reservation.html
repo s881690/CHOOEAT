@@ -3,6 +3,7 @@
   <head>
     <title>CHOOEAT！</title>
     <meta charset="utf-8" />
+    <link href="./images/header/logo2.png" rel="shortcut icon" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -25,16 +26,9 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="js/header_js/popper.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <!-- 引入Font Awesome 套件 -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
 
     <!-- 引入jquery相關套件 -->
     <link
@@ -51,8 +45,7 @@
     <link rel="stylesheet" href="./styles/all/all.css" />
     <link rel="stylesheet" href="./styles/main_content/reservation.css" />
 
-    <script src="./js/reservation_js/restaurantInfo.js"></script>
-    <script src="./js/reservation_js/selectDate.js"></script>
+    <script src="./js/reservation_js/getrestaurantName.js"></script>
   </head>
 
   <body>
@@ -153,7 +146,7 @@
           <div
             class="col-12 d-flex align-items-center justify-content-center title"
           >
-            <h1>Brun不然早午餐</h1>
+            <h1 id="restaurantName">餐廳名稱</h1>
           </div>
           <div class="border"></div>
           <div
@@ -216,45 +209,165 @@
             class="col-12 d-flex align-items-center justify-content-start choose_time"
           >
             <span>早上：</span>
-            <button type="button" class="meal_time" name="08:00">08:00</button>
-            <button type="button" class="meal_time" name="09:00">09:00</button>
-            <button type="button" class="meal_time" name="10:00">10:00</button>
+            <button type="button" class="meal_time" name="08:00">
+              08:00
+              <div
+                name="08:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="09:00">
+              09:00
+              <div
+                name="09:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="10:00">
+              10:00
+              <div
+                name="10:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
           </div>
 
           <div
             class="col-12 d-flex align-items-center justify-content-start choose_time"
           >
             <span>中午：</span>
-            <button type="button" class="meal_time" name="11:00">11:00</button>
-            <button type="button" class="meal_time" name="12:00">12:00</button>
-            <button type="button" class="meal_time" name="13:00">13:00</button>
+            <button type="button" class="meal_time" name="11:00">
+              11:00
+              <div
+                name="11:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="12:00">
+              12:00
+              <div
+                name="12:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="13:00">
+              13:00
+              <div
+                name="13:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
           </div>
 
           <div
             class="col-12 d-flex align-items-center justify-content-start choose_time"
           >
             <span>下午：</span>
-            <button type="button" class="meal_time" name="14:00">14:00</button>
-            <button type="button" class="meal_time" name="15:00">15:00</button>
-            <button type="button" class="meal_time" name="16:00">16:00</button>
+            <button type="button" class="meal_time" name="14:00">
+              14:00
+              <div
+                name="14:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="15:00">
+              15:00
+              <div
+                name="15:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="16:00">
+              16:00
+              <div
+                name="16:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
           </div>
 
           <div
             class="col-12 d-flex align-items-center justify-content-start choose_time"
           >
             <span>晚上：</span>
-            <button type="button" class="meal_time" name="17:00">17:00</button>
-            <button type="button" class="meal_time" name="18:00">18:00</button>
-            <button type="button" class="meal_time" name="19:00">19:00</button>
+            <button type="button" class="meal_time" name="17:00">
+              17:00
+              <div
+                name="17:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="18:00">
+              18:00
+              <div
+                name="18:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="19:00">
+              19:00
+              <div
+                name="19:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
           </div>
           <div
             class="col-12 d-flex align-items-center justify-content-start choose_time"
           >
             <span style="visibility: hidden">晚上：</span>
 
-            <button type="button" class="meal_time" name="20:00">20:00</button>
-            <button type="button" class="meal_time" name="21:00">21:00</button>
-            <button type="button" class="meal_time" name="22:00">22:00</button>
+            <button type="button" class="meal_time" name="20:00">
+              20:00
+              <div
+                name="20:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="21:00">
+              21:00
+              <div
+                name="21:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
+            <button type="button" class="meal_time" name="22:00">
+              22:00
+              <div
+                name="22:00"
+                class="remainSeat remain d-flex align-items-center justify-content-center"
+              >
+                <div class="remainSeatNumber"></div>
+              </div>
+            </button>
           </div>
 
           <div
@@ -344,6 +457,7 @@
         </div>
       </div>
     </footer>
+    <script src="./js/reservation_js/selectDate.js"></script>
+    <script src="./js/reservation_js/insertReservation.js"></script>
   </body>
-  <script src="./js/reservation_js/insertReservation.js"></script>
 </html>

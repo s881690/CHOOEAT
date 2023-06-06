@@ -26,6 +26,8 @@ import chooeat.reservation.model.RestaurantVO;
 import chooeat.reservation.model.Result;
 import chooeat.reservation.service.ReservationService;
 
+
+
 @Service
 public class ReservationServiceImpl implements ReservationService {
 	@Autowired
@@ -114,11 +116,12 @@ public class ReservationServiceImpl implements ReservationService {
 		System.out.println(details.getSubject().toString());
 
 		// 信件內容
-		details.setMsgBody("親愛的會員 " + emailInfo.getRecipientName() + "\n" 
-						 + "感謝您選擇我們的餐廳！我們很高興通知您，您的訂位已成功完成。\n "
-						 + "以下是您的訂位詳細信息：\n " 
+		details.setMsgBody("親愛的會員 " + emailInfo.getRecipientName() + "您好：\n" 
+						 + "我們很高興通知您，您的訂位已成功完成。以下是您的訂位詳細信息：\n " 
 						 + "時間：" + emailInfo.getReservationTime() + "\n" 
+						 + "餐廳名稱： " + emailInfo.getRestaurantName() + "\n"
 						 + "地點：" + emailInfo.getRestaurantAddress() + "\n" 
+						 + "電話： " + emailInfo.getRestaurantPhone() + "\n"
 						 + "預訂人數：" + emailInfo.getReservationNumber());
 		try {
 
@@ -160,17 +163,6 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationDao.deleteReservation(reservationId);
 	}
 
-	@Override
-	public List<Result> selectallReservation(int memberId) {
-		
-		return reservationDao.selectallReservation(memberId);
-	}
-
-	@Override
-	public Boolean isSavedComment(int reservationId, String comment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<Result> reservationInfo(int reservationId) {
@@ -184,6 +176,18 @@ public class ReservationServiceImpl implements ReservationService {
 	public String memberName(int memberId) {
 		
 		return accountRepository.findById(memberId).get().getAccName();
+	}
+
+	@Override
+	public List<EmailInfo> getAllreservation(int memberId) {
+		
+		return reservationDao.selectAllReservationForMember(memberId);
+	}
+
+	@Override
+	public String getRestaurantNameByReservation(int reservationId) {
+		
+		return reservationDao.getRestaurantNameByReservation(reservationId).get(0);
 	}
 
 	
