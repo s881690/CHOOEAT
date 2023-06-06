@@ -272,6 +272,27 @@ $(document).ready(function() {
  //餐廳找追蹤者功能
  $(document).ready(function () {
    const table = $("#myTable").DataTable({
+    "language": {
+      "processing": "處理中...",
+      "loadingRecords": "載入中...",
+      "lengthMenu": "顯示 _MENU_ 項結果",
+      "zeroRecords": "沒有符合的結果",
+      "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+      "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+      "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+      "infoPostFix": "",
+      "search": "搜尋:",
+      "paginate": {
+          "first": "第一頁",
+          "previous": "上一頁",
+          "next": "下一頁",
+          "last": "最後一頁"
+      },
+      "aria": {
+          "sortAscending": ": 升冪排列",
+          "sortDescending": ": 降冪排列"
+      }
+  },
      autoWidth: true,
      ajax: {
        url: "restaurantfindfollow",
@@ -328,6 +349,27 @@ $(document).ready(function() {
  //餐廳找餐卷功能
  $(document).ready(function () {
    const table3 = $("#myTable3").DataTable({
+    "language": {
+      "processing": "處理中...",
+      "loadingRecords": "載入中...",
+      "lengthMenu": "顯示 _MENU_ 項結果",
+      "zeroRecords": "沒有符合的結果",
+      "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+      "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+      "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+      "infoPostFix": "",
+      "search": "搜尋:",
+      "paginate": {
+          "first": "第一頁",
+          "previous": "上一頁",
+          "next": "下一頁",
+          "last": "最後一頁"
+      },
+      "aria": {
+          "sortAscending": ": 升冪排列",
+          "sortDescending": ": 降冪排列"
+      }
+  },
      autoWidth: true,
 
      ajax: {
@@ -397,6 +439,27 @@ $(document).ready(function() {
  //餐廳找預約功能
  $(document).ready(function () {
    const table2 = $("#myTable2").DataTable({
+    "language": {
+      "processing": "處理中...",
+      "loadingRecords": "載入中...",
+      "lengthMenu": "顯示 _MENU_ 項結果",
+      "zeroRecords": "沒有符合的結果",
+      "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+      "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+      "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+      "infoPostFix": "",
+      "search": "搜尋:",
+      "paginate": {
+          "first": "第一頁",
+          "previous": "上一頁",
+          "next": "下一頁",
+          "last": "最後一頁"
+      },
+      "aria": {
+          "sortAscending": ": 升冪排列",
+          "sortDescending": ": 降冪排列"
+      }
+  },
      autoWidth: true,
 
      ajax: {
@@ -459,6 +522,27 @@ $("#myTable2").on("click", ".btn-danger", function () {
 //餐廳找評論回復功能
 $(document).ready(function () {  
   const table4 = $("#myTable4").DataTable({
+    "language": {
+      "processing": "處理中...",
+      "loadingRecords": "載入中...",
+      "lengthMenu": "顯示 _MENU_ 項結果",
+      "zeroRecords": "沒有符合的結果",
+      "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+      "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+      "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+      "infoPostFix": "",
+      "search": "搜尋:",
+      "paginate": {
+          "first": "第一頁",
+          "previous": "上一頁",
+          "next": "下一頁",
+          "last": "最後一頁"
+      },
+      "aria": {
+          "sortAscending": ": 升冪排列",
+          "sortDescending": ": 降冪排列"
+      }
+  },
     autoWidth: true,  
     ajax: {
       url: "restaurantfindcomment",
@@ -481,7 +565,7 @@ $(document).ready(function () {
       
         return combinedData;
       },
-    },
+    },    
     
     columns: [
       { data: "account.accName", title: "留言者" },
@@ -498,10 +582,36 @@ $(document).ready(function () {
         },
       },
     ],
+
+    
   });
 
   $("#v-pills-hyoga-tab").click(function () {
     table4.ajax.reload();
+  });  
+  
+  $("#myTable4").on("click", ".btn-warning", function () {
+    var data = table4.row($(this).closest("tr")).data();
+    var c = data.account.accName     
+    var commentInput= prompt("輸入評論："); 
+   
+    $.ajax({
+      type: "POST",
+      url: "restaurantupdatecomment",   
+      data:{
+        accName:c,
+        restaurantId: restaurantId,
+        commentInput:commentInput,
+       },
+      success: function (response) {
+        if (response === 1) {
+          alert("上傳成功囉,請去查看餐卷");         
+       
+        } else if (response === 2) {        
+          alert("上傳失敗,你在Hello麼");        
+        }
+      },
+    }); 
   });
 });
 
@@ -613,6 +723,27 @@ $(document).ready(function () {
  //餐廳找廣告功能
  $(document).ready(function () {
   const table5 = $("#myTable5").DataTable({
+    "language": {
+      "processing": "處理中...",
+      "loadingRecords": "載入中...",
+      "lengthMenu": "顯示 _MENU_ 項結果",
+      "zeroRecords": "沒有符合的結果",
+      "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+      "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+      "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+      "infoPostFix": "",
+      "search": "搜尋:",
+      "paginate": {
+          "first": "第一頁",
+          "previous": "上一頁",
+          "next": "下一頁",
+          "last": "最後一頁"
+      },
+      "aria": {
+          "sortAscending": ": 升冪排列",
+          "sortDescending": ": 降冪排列"
+      }
+  },
     autoWidth: true,
 
     ajax: {
