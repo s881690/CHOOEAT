@@ -108,7 +108,9 @@ public class ReservationServiceImpl implements ReservationService {
 		// 這裡輸入會員編號跟預約編號
 		emailInfo = reservationDao.getEmailInfos(memberId, reservationId).get(0);
 		// 收件人email
-		details.setRecipient(emailInfo.getRecipient());
+		//為了方便demo，先寫自己的信箱
+    	details.setRecipient("s88169039@gmail.com");
+//		details.setRecipient(emailInfo.getRecipient());
 		System.out.println(details.getRecipient().toString());
 
 		// 寄件主旨，要+訂位編號

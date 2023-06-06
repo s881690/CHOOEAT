@@ -49,7 +49,9 @@ public class ReservationScheduler {
 	  
 	            	//寄送mail
 	            	// 收件人email
-	            	details.setRecipient(emailInfo.getRecipient());
+	            	//為了方便demo，先寫自己的信箱
+	            	details.setRecipient("s88169039@gmail.com");
+	            	//details.setRecipient(emailInfo.getRecipient());
 	            	// 寄件主旨
 	            	details.setSubject("訂位提醒 - 訂位編號" + emailInfo.getReservationId().toString());
 	            	// 信件內容
