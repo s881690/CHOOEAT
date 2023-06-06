@@ -71,7 +71,9 @@ public class ReservationDaoImpl implements ReservationDao {
 		try {
 			String sql = "update reservation " + "set reservation_number = :reservation_number, "
 					+ "reservation_date_starttime = :reservation_date_starttime, "
-					+ "reservation_date_endtime = :reservation_date_endtime, " + "reservation_note = :reservation_note "
+					+ "reservation_date_endtime = :reservation_date_endtime, " 
+					+ "reservation_note = :reservation_note ,"
+					+ "isNotify = :isNotify "
 					+ "where reservation_id = :reservation_id ; ";
 			Map<String, Object> map = new HashMap<>();
 
@@ -85,6 +87,7 @@ public class ReservationDaoImpl implements ReservationDao {
 			map.put("reservation_date_starttime", reservationVO.getReservationDateStartTime());
 			map.put("reservation_date_endtime", reservationVO.getReservationDateEndTime());
 			map.put("reservation_id", reservationId);
+			map.put("isNotify", 0);
 			if (reservationVO.getReservationNote() != null) {
 				map.put("reservation_note", reservationVO.getReservationNote());
 			} else {
