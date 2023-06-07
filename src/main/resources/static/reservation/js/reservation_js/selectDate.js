@@ -1,11 +1,17 @@
 $(function () {
   $("#datepicker-widget").datepicker({
-    minDate: new Date(), // 添加minDate选项
+    minDate: 1, // Set minDate to 1 to disable selecting the current day and past dates
     onSelect: function (dateText) {
       console.log(dateText);
       var acc_id = JSON.parse(sessionStorage.getItem('loginReq')).acc_id;
       var restaurantId1 = JSON.parse(sessionStorage.getItem('searchResult')).myself[0].restaurantId;
       
+      var selectedPerson = $("#meal_select").val();
+      if (!selectedPerson) {
+        alert("請選擇人數");
+        return;
+      }
+
       $.ajax({
         url: "../getBusinessDay",
         type: "GET",
