@@ -20,6 +20,8 @@ public interface ActivityService {
 	
 	public ActivityVO findEdit(Integer activityId);
 	
+	public Integer addActivityMember(Integer activityId);
+	
 	
 	
 }

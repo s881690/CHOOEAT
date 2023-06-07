@@ -1,3 +1,19 @@
+// 日期格式化 YYYY-MM-DD
+function YYYYMMDD(dateTime) {
+  let date = new Date(dateTime);
+  // 獲取各個時間元素
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2); // 月份需要補零
+  let day = ("0" + date.getDate()).slice(-2); // 日期需要補零
+  let hours = ("0" + date.getHours()).slice(-2); // 小時需要補零
+  let minutes = ("0" + date.getMinutes()).slice(-2); // 分鐘需要補零
+  let seconds = ("0" + date.getSeconds()).slice(-2); // 秒數需要補零
+
+  // 拼接成 YYYY-MM-DDTHH:MM:SS 格式
+  let formattedDateTime = `${year}-${month}-${day}`;
+  return formattedDateTime;
+}
+
 // ======= 搜尋  =========
 function search() {
   document.querySelector("button.submit").addEventListener("click", (e) => {
@@ -59,6 +75,12 @@ function cardList(data) {
           }</p>
           <p class="card-text address">地址：
             ${data.activityrestaurantVO.resAdd}
+          </p>
+          <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
+            data.regesterationStartingTime
+          )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
+    data.regesterationEndingTime
+  )}</span> 23:59 止
           </p>
           <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
     data.activityStartingTime.slice(9) +

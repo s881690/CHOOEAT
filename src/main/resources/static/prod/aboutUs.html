@@ -12,6 +12,7 @@
 	rel="stylesheet"
 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous" />
+
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
 	integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
@@ -30,12 +31,23 @@
 	href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
 	rel="stylesheet" />
 
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet"
+      href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
+    <link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+
+
 <!-- 以下引入我們自己寫的css -->
 <link rel="stylesheet" href="./chooeat/styles/header/footer.css" />
 <link rel="stylesheet" href="./chooeat/styles/header/header.css" />
 <link rel="stylesheet" href="./chooeat/styles/all/all.css" />
-<link rel="stylesheet"
-	href="./chooeat/styles/main_content/mall_add_cart.css" />
+<link rel="stylesheet" href="./chooeat/styles/main_content/aboutUs.css" />
 </head>
 
 <body>
@@ -74,7 +86,8 @@
 							src="./chooeat/images/header/carts.png" />
 						</a> <a href="../account/login.html" class="accountIcon"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
-							<img style="width: 40px; height: 40px; margin-right: 5px;" src="./chooeat/images/header/profile.png" />
+							<img style="width: 40px; height: 40px; margin-right: 5px;"
+							src="./chooeat/images/header/profile.png" />
 						</a> <span
 							style="display: inline-flex; align-items: center; vertical-align: middle; margin-left: 10px;"
 							id="sname"></span>
@@ -92,13 +105,13 @@
 						class="navbar-nav d-flex align-items-center justify-content-center"
 						style="gap: 1rem">
 						<li class="nav-item"><a href="../restaurant/Homepage.html"
-							class="nav-link"style=" margin-left: 100px;" >首頁</a></li>
+							class="nav-link" style="margin-left: 100px;">首頁</a></li>
 						<li class="nav-item"><a href="../restaurant/Homepage.html"
 							class="nav-link">找餐廳</a></li>
 						<li class="nav-item"><a href="mall.html" class="nav-link">找餐券</a></li>
 						<li class="nav-item"><a href="../activity/activity.html"
 							class="nav-link">揪團</a></li>
-						<li class="nav-item"><a href="aboutUs.html" class="nav-link">關於我們</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">關於我們</a></li>
 					</ul>
 				</div>
 			</div>
@@ -113,33 +126,101 @@
 					<nav class="breadcrumbandSearch"
 						style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="../restaurant/Homepage.html">主頁</a></li>
-							<li class="breadcrumb-item"><a href="mall.html">找餐券</a></li>
-							<li class="breadcrumb-item active" aria-current="page">購物車</li>
+							<li class="breadcrumb-item"><a
+								href="../restaurant/Homepage.html">主頁</a></li>
+							<li class="breadcrumb-item active" aria-current="page">關於我們</li>
 						</ol>
 					</nav>
-					<div class="search_area">
-						<input type="text" class="search"> <input type="image"
-							class="search_button" img
-							src="./chooeat/images/mall_image/search.png"></input>
-					</div>
 				</div>
-
 				<div id="parent_container" class="parent_container">
 					<main class="main">
+						<div class="prod" style="margin-bottom: 10px">
+							<div class="prod_detail">
+								<h5 style="color: black; line-height: 1.5;">&nbsp;&nbsp;
+									&nbsp;&nbsp;
+									&nbsp;&nbsp;早餐、午餐、晚餐，每天我們都要花很多時間想今天要吃什麼，是很日常的煩惱。使用我們的 CHOOEAT
+									網站，讓我們推薦你一日三餐的美食，再也不用煩惱要吃什麼！還有尋找食伴功能，讓你不用煩惱想吃美食沒有伴！</h5>
+							</div>
+						</div>
+						<section class="bg-white text-dark pt-5 pb-5">
+							<div class="container">
+								<div class="row text-center">
+									<div class="col">
+										<h3 class="mb-4">Our Team</h3>
+									</div>
+								</div>
+								<div class="row text-center justify-content-around mt-md-5">
+									<div class="col-md-4 mb-5 col-12">
+										<img alt="image"
+											style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+											class="img-fluid mb-4 mt-3 rounded-circle img-rised"
+											src="./chooeat/images/header/logo2.png">
+										<h3>
+											<strong>邱亞欣</strong>
+										</h3>
+										<p>訂位系統</p>
 
-							<div class="prod">
-								<img id="img" src="" /> 
-								<span id="prodTitle" class="prodTitle"></span>
-								<span id="price" class="price"></span>
-								<div class="prod_detail">
-									單人｜平日晚餐 數量*<sapn id="qty"></sapn>
-									<button onclick="location.href='mall.html'">繼續購物</button>
-									<button id="pay_immediately">前往結帳</button>
+									</div>
+									<div class="col-md-4 mb-5 col-12">
+										<img alt="image"
+											style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+											class="img-fluid mb-4 mt-3 rounded-circle img-rised"
+											src="./chooeat/images/header/logo2.png">
+										<h3>
+											<strong>陳珖豪</strong>
+										</h3>
+										<p>餐廳會員</p>
+	
+									</div>
+									<div class="col-md-4 mb-5 col-12">
+										<img alt="image"
+											style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+											class="img-fluid mb-4 mt-3 rounded-circle img-rised"
+											src="./chooeat/images/header/logo2.png">
+										<h3>
+											<strong>趙婕安</strong>
+										</h3>
+										<p>購物商城</p>
+								
+									</div>
+
+									<div class="col-md-4 mb-5 col-12">
+										<img alt="image"
+											style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+											class="img-fluid mb-4 mt-3 rounded-circle img-rised"
+											src="./chooeat/images/header/logo2.png">
+										<h3>
+											<strong>黃彥禓</strong>
+										</h3>
+										<p>一般會員</p>
+										
+									</div>
+									<div class="col-md-4 mb-5 col-12">
+										<img alt="image"
+											style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+											class="img-fluid mb-4 mt-3 rounded-circle img-rised"
+											src="./chooeat/images/header/logo2.png">
+										<h3>
+											<strong>李文甫</strong>
+										</h3>
+										<p>揪團系統</p>
+										
+									</div>
+									<div class="col-md-4 mb-5 col-12">
+										<img alt="image"
+											style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+											class="img-fluid mb-4 mt-3 rounded-circle img-rised"
+											src="./chooeat/images/header/logo2.png">
+										<h3>
+											<strong>賴幸昌</strong>
+										</h3>
+										<p>後臺系統</p>
+										
+									</div>
 								</div>
 							</div>
+						</section>
 
-						<div class="add_cart_successfully">已成功添加至購物車</div>
 					</main>
 				</div>
 			</div>
@@ -161,17 +242,19 @@
 					class="nav-link px-4 text-muted">揪團</a></li>
 				<li class="nav-item"><a href="../activity/activity.html"
 					class="nav-link px-4 text-muted">商家申請</a></li>
-				<li class="nav-item"><a href="aboutUs.html"
+				<li class="nav-item"><a href="#"
 					class="nav-link px-4 text-muted">關於我們</a></li>
 			</ul>
 			<p class="text-center text-muted mb-0 py-2 my-3">CopyRight &copy;
 				THA101 G4</p>
 		</footer>
-		</div>
+	</div>
 	<script src="./chooeat/vendors/jquery-3.6.4.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-
-	<script src="./chooeat/js/mall_js/mall_add_cart.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
 </body>
 </html>

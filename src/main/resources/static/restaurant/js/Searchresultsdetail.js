@@ -10,6 +10,36 @@ var resEndTime = result["myself"][0].resEndTime;
 var resTotalScore = result["myself"][0].resTotalScore;
 var resIntro = result["myself"][0].resIntro;
 
+// 将字节数组转换为 Base64 编码的字符串
+function arrayBufferToBase64(buffer) {
+	var binary = '';
+	var bytes = new Uint8Array(buffer);
+	var len = bytes.byteLength;
+	for (var i = 0; i < len; i++) {
+	  binary += String.fromCharCode(bytes[i]);
+	}
+	return window.btoa(binary);
+}
+console.log(result["myself"][0].resphoto)
+const photoBase64 = arrayBufferToBase64(result["myself"][0].resPhoto);
+const imageSrc = `data:image/jpeg;base64,${photoBase64}`;
+
+//餐廳圖片
+var ddd = document.getElementById("ddd");
+console.log(imageSrc)
+var newDiv = document.createElement("div");
+newDiv.innerHTML = ` 
+<div class="col-sm-12">
+<img
+  src="${imageSrc}"
+  style="width: 100%; height: 300px"
+/>
+</div>
+</div>
+`;
+ddd.appendChild(newDiv);
+
+
 // 餐廳詳細資料
 var newDiv = document.createElement("div");
 newDiv.innerHTML = `
