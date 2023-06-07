@@ -185,8 +185,8 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 
 	@Override
 	public List<ReservationVO> restaurantfindreservation(String resAcc) {
-		String sql = "SELECT reservation_id, reservation_number, reservation_date, reservation_starttime, " +
-                "reservation_endtime, COALESCE(reservation_note, '') AS reservation_note, reservation_state " +
+		String sql = "SELECT reservation_id, reservation_number, reservation_date_starttime, " +
+                "reservation_date_endtime, COALESCE(reservation_note, '') AS reservation_note, reservation_state " +
                 "FROM restaurant " +
                 "JOIN reservation ON restaurant.restaurant_id = reservation.restaurant_id " +
                 "JOIN account ON reservation.acc_id = account.acc_id " +
@@ -200,10 +200,9 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 			while (rs.next()) {
 				ReservationVO reservation = new ReservationVO();
 				reservation.setReservationId(rs.getInt("reservation_id"));
-				reservation.setReservationNumber(rs.getInt("reservation_number"));
-				reservation.setReservationDate(rs.getDate("reservation_date"));
-				reservation.setReservationStartTime(rs.getTime("reservation_starttime"));
-				reservation.setReservationEndTime(rs.getTime("reservation_endtime"));
+				reservation.setReservationNumber(rs.getInt("reservation_number"));				
+				reservation.setReservationStartTime(rs.getTimestamp("reservation_date_starttime"));
+				reservation.setReservationEndTime(rs.getTimestamp("reservation_date_endtime"));
 				reservation.setReservationNote(rs.getString("reservation_note"));
 				reservation.setReservationState(rs.getInt("reservation_state"));
 				resultList.add(reservation);

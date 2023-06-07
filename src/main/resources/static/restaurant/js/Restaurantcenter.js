@@ -474,7 +474,6 @@ $(document).ready(function() {
      columns: [
        { data: "reservationId", title: "預約ID" },
        { data: "reservationNumber", title: "預約人數" },
-       { data: "reservationDate", title: "預約日期" },
        { data: "reservationStartTime", title: "用餐開始時間" },
        { data: "reservationEndTime", title: "用餐結束時間" },
        { data: "reservationNote", title: "備註事項" },
