@@ -14,6 +14,11 @@ function fetch3ActivityList() {
       // console.log(resList3);
       let resListCollapse = resList.slice(3, 9);
 
+      // 在開始顯示資料前隱藏loading
+      hideLoading();
+      // 重置列表的內容
+      card_list_3.innerHTML = "";
+
       //塞進前三個
       for (let reser of resList3) {
         // console.log(reser);
@@ -193,7 +198,7 @@ function like() {
           activityId: activityId,
         }),
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
       });
       //更改顏色與data-like屬性
       $(e.target).attr("data-like", "true");
@@ -293,6 +298,15 @@ function establish() {
   });
 }
 
+// ========= loading =========
+function showLoading() {
+  document.getElementById("loadingContainer").style.display = "block";
+}
+
+function hideLoading() {
+  document.getElementById("loadingContainer").style.display = "none";
+}
+
 $(function () {
   // 接收activityList資訊
   fetch3ActivityList();
@@ -304,4 +318,6 @@ $(function () {
   search();
 
   establish();
+
+  showLoading();
 });
