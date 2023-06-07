@@ -299,7 +299,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 
 	@Override
 	public List<Object> findmyself(String resAcc) {
-		String sql = "SELECT DISTINCT restaurant_id,res_acc,res_name, res_add, res_start_time, res_end_time, \r\n"
+		String sql = "SELECT DISTINCT restaurant_id,res_photo,res_acc,res_name, res_add, res_start_time, res_end_time, \r\n"
 				+ "res_total_score, res_intro FROM restaurant \r\n" + "			WHERE res_acc = ?";
 		List<Object> findmyselfList = new ArrayList<>();
 		try {
@@ -316,7 +316,21 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 				restaurantVO.setResStartTime(rs.getTime("res_start_time"));
 				restaurantVO.setResEndTime(rs.getTime("res_end_time"));
 				restaurantVO.setResTotalScore(rs.getInt("res_total_score"));
-				restaurantVO.setResIntro(rs.getString("res_intro"));				
+				byte[] photoBytes = rs.getBytes("res_photo");
+//				Byte[] photoWrapper = new Byte[photoBytes.length];
+//				for (int i = 0; i < photoBytes.length; i++) {
+//				    photoWrapper[i] = photoBytes[i];
+//				}
+//				restaurant.setResPhoto(photoWrapper);
+				  if (photoBytes != null && photoBytes.length > 0) {
+		                Byte[] photoWrapper = new Byte[photoBytes.length];
+		                for (int i = 0; i < photoBytes.length; i++) {
+		                    photoWrapper[i] = photoBytes[i];
+		                }
+		                restaurantVO.setResPhoto(photoWrapper);
+		            } else {
+		            	restaurantVO.setResPhoto(null);
+		            }					
 				findmyselfList.add(restaurantVO);
 			}
 			rs.close();
