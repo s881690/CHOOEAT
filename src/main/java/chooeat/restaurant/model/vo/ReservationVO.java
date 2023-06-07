@@ -1,7 +1,5 @@
 package chooeat.restaurant.model.vo;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 
@@ -9,10 +7,9 @@ public class ReservationVO {
     private Integer reservationId;
     private Integer accId;
     private Integer restaurantId;
-    private Integer reservationNumber;
-    private Date reservationDate;
-    private Time reservationStartTime;
-    private Time reservationEndTime;
+    private Integer reservationNumber;  
+    private Timestamp reservationStartTime;
+    private Timestamp reservationEndTime;
     private String reservationNote;
     private Integer reservationState;
     private Timestamp restaurantCommentDatetime;
@@ -58,27 +55,19 @@ public class ReservationVO {
 		this.reservationNumber = reservationNumber;
 	}
 
-	public Date getReservationDate() {
-		return reservationDate;
-	}
-
-	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
-	}
-
-	public Time getReservationStartTime() {
+	public Timestamp getReservationStartTime() {
 		return reservationStartTime;
 	}
 
-	public void setReservationStartTime(Time reservationStartTime) {
+	public void setReservationStartTime(Timestamp reservationStartTime) {
 		this.reservationStartTime = reservationStartTime;
 	}
 
-	public Time getReservationEndTime() {
+	public Timestamp getReservationEndTime() {
 		return reservationEndTime;
 	}
 
-	public void setReservationEndTime(Time reservationEndTime) {
+	public void setReservationEndTime(Timestamp reservationEndTime) {
 		this.reservationEndTime = reservationEndTime;
 	}
 
@@ -145,6 +134,7 @@ public class ReservationVO {
 	public void setIsComment(Boolean isComment) {
 		this.isComment = isComment;
 	}
+
 
 	
 
