@@ -171,21 +171,14 @@
 											class="fas fa-star"></i></span>
 									</span>
 									<div class="star_filter">
-										<button class="star_filter_all">全部</button>
-										<button class="star_filter_all">五星</button>
-										<button class="star_filter_all">四星</button>
-										<button class="star_filter_all">三星</button>
-										<button class="star_filter_all">二星</button>
-										<button class="star_filter_all">一星</button>
+										<button class="star_filter_all"
+											onclick="filterComments('all')">全部</button>
+										<button class="star_filter_all" onclick="filterComments(5)">五星</button>
+										<button class="star_filter_all" onclick="filterComments(4)">四星</button>
+										<button class="star_filter_all" onclick="filterComments(3)">三星</button>
+										<button class="star_filter_all" onclick="filterComments(2)">二星</button>
+										<button class="star_filter_all" onclick="filterComments(1)">一星</button>
 									</div>
-								</div>
-								<div class="sort">
-									<div class="sortBy">排序方式</div>
-									<select class="sorting">
-										<option>評分最高</option>
-										<option>價格由高到低</option>
-										<option>價格由低到高</option>
-									</select>
 								</div>
 								<br />
 								<div class="comment" id="comment"></div>
@@ -199,8 +192,8 @@
 								<li>單人｜平日晚餐｜ <span id="price"></span></li>
 							</ul>
 							<br /> <input type="button" id="pay_immediately"
-								class="pay_immediately" value="立即購買" /> <input
-								type="button" id="add_cart" class="add_cart" value="加入購物車" />
+								class="pay_immediately" value="立即購買" /> <input type="button"
+								id="add_cart" class="add_cart" value="加入購物車" />
 						</aside>
 					</div>
 				</div>
