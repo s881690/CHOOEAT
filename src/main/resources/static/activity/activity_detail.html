@@ -59,8 +59,8 @@
                 <img src="./images/header/shopping_cart_Icon.png" />
               </a>
               <a
-                href="#"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
+                href="../account/login.html"
+                class="d-flex align-items-center justify-content-center mr-1 icon accountIcon"
               >
                 <img src="./images/header/member_icon.png" />
               </a>
@@ -122,7 +122,7 @@
               style="--bs-breadcrumb-divider: '>'"
               aria-label="breadcrumb"
             >
-              <ol class="breadcrumb">
+              <ol class="breadcrumb pt-3 ps-3">
                 <li class="breadcrumb-item">
                   <a href="#" class="normal_a">首頁</a>
                 </li>
@@ -212,7 +212,7 @@
               <div class="btns mb-5">
                 <div class="mb-2 signup row">
                   <div
-                    class="btn btn-outline-info col me-3 outter_signup"
+                    class="btn btn-outline-info col me-3 outter_signup signup_and_edit"
                     data-bs-toggle="modal"
                     data-bs-target="#signup"
                   >
@@ -268,11 +268,10 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="other_btns">
-                  <div class="btn btn-outline-dark">有興趣</div>
-                  <div class="btn btn-outline-success pe-2">邀請好友</div>
-                  <div class="btn btn-outline-danger">檢舉</div>
-                </div> -->
+                <div class="other_btns row">
+                  <!-- <div class="btn btn-outline-success pe-2">邀請好友</div>
+                  <div class="btn btn-outline-danger">檢舉</div> -->
+                </div>
               </div>
               <div class="map mb-5 rounded-3" id="map">
                 <!-- <iframe
@@ -351,6 +350,7 @@
     <script src="./js/vendors/jquery/jquery-3.4.1.min.js"></script>
     <!-- 引入 自訂 JS -->
     <script src="./js/activity/activity_detail.js"></script>
+    <script src="./js/activity/activity_login.js"></script>
     <script
       defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkEiyAHe2LCJvgDJ-F4aY5xBaPRNWmsFg&callback=initMap"
