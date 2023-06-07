@@ -4,6 +4,32 @@ const itemsPerPage = 8;
 const pagination = $("#pagination");
 let lastSearchResults = [];
 var star;
+const content = document.getElementById("content");
+// =================================================================
+let account = JSON.parse(sessionStorage.getItem("loginReq"));
+if (sessionStorage.getItem("loginReq") != null) {
+	document.getElementById("sname").innerHTML = account.acc_name;
+
+}
+//=================================================================
+// 拿到會員icon
+let accountIcon = $("a.accountIcon");
+// console.log(accountIcon);
+// 會員中心的判斷
+if (account != null) {
+	accountIcon.attr("href", "../account/usercenter.html");
+} else {
+	accountIcon.attr("href", "../account/login.html");
+}
+//==================================================================
+function showLoading() {
+	content.innerHTML = "";
+ document.getElementById("loadingContainer").style.display = "block";
+}
+
+function hideLoading() {
+ document.getElementById("loadingContainer").style.display = "none";
+}
 // =========================== 分頁方法 ==============================
 function updatePagination(totalPages) {
 	pagination.empty();
@@ -48,8 +74,7 @@ function updatePagination(totalPages) {
 };
 // ======================== 顯示全部餐券方法 ===========================
 function display() {
-	const main = document.querySelector('main');
-	main.innerHTML = "";
+	showLoading(); // 顯示loading示意
 	const url = "Prod/getall";
 	const requestOptions = {
 		method: 'POST',
@@ -59,7 +84,13 @@ function display() {
 		body: JSON.stringify({})
 	};
 	fetch(url, requestOptions)
-		.then(res => res.json())
+		.then(function(response) {
+			// 在接收到回應後隱藏loading示意
+			hideLoading();
+			content.innerHTML = "";
+			return response.json();
+			
+		})
 		.then(prodList => {
 			pagination.empty();
 			const totalPages = Math.ceil(prodList.length / itemsPerPage);
@@ -69,7 +100,7 @@ function display() {
 			lastSearchResults = prodList; // 保存上一次的搜索结果
 
 			for (let prod of currentPageData) {
-//				console.log(prod);
+				//				console.log(prod);
 				const price = prod.prodPrice.toLocaleString();
 				const star = Math.floor(prod.prodCommentScore);
 				// 星星
@@ -84,7 +115,7 @@ function display() {
 				const uint8Array = new Uint8Array(prod.prodPic);
 				let blob = new Blob([uint8Array], { type: "image/*" });
 				let imageUrl = URL.createObjectURL(blob);
-				main.innerHTML += `
+				content.innerHTML += `
 			        <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink">
 			          <div href=""class="prod">
 			         <img src="${imageUrl}" />
@@ -112,8 +143,7 @@ $("#search_text").on("keyup", function(e) {
 });
 //=====================搜尋按鈕點擊事件============================
 document.getElementById('search_button').addEventListener('click', function(event) {
-	const main = document.querySelector('main');
-	main.innerHTML = "";
+	showLoading();
 	let search_text = document.getElementById('search_text').value.trim();
 	if (search_text === "") {
 		event.preventDefault(); // 阻止預設的提交行為
@@ -141,7 +171,7 @@ document.getElementById('search_button').addEventListener('click', function(even
 			const uint8Array = new Uint8Array(prod.prodPic);
 			let blob = new Blob([uint8Array], { type: "image/*" });
 			let imageUrl = URL.createObjectURL(blob);
-			main.innerHTML += `
+			content.innerHTML += `
 			        <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink" target="_blank">
 			          <div href="" target="_blank" class="prod">
 			            <img src="${imageUrl}" />
@@ -170,10 +200,16 @@ document.getElementById('search_button').addEventListener('click', function(even
 		body: JSON.stringify({})
 	};
 	fetch(url, requestOptions)
-		.then(res => res.json())
+		.then(function(response) {
+			// 在接收到回應後隱藏loading示意
+			hideLoading();
+			content.innerHTML = "";
+			return response.json();
+			
+		})
 		.then(prodList => {
 			if (prodList.length === 0) {
-				main.innerHTML += `<h2 style="margin-top:30px; text-align: center;">未找到任何餐廳。</h2>`;
+				content.innerHTML = `<h2 style="margin-top:30px; text-align: center;">未找到任何餐廳。</h2>`;
 				console.log("未找到任何餐廳");
 			} else {
 				pagination.empty();
@@ -202,7 +238,7 @@ document.getElementById('search_button').addEventListener('click', function(even
 					const uint8Array = new Uint8Array(prod.prodPic);
 					let blob = new Blob([uint8Array], { type: "image/*" });
 					let imageUrl = URL.createObjectURL(blob);
-					main.innerHTML += `
+					content.innerHTML += `
 			        <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink" target="_blank">
 			          <div href="" target="_blank" class="prod">
 			            <img src="${imageUrl}" />
@@ -224,8 +260,7 @@ document.getElementById('search_button').addEventListener('click', function(even
 // ============================= 排序 ==============================
 const sortSelect = document.getElementById('sort-select');
 sortSelect.addEventListener('change', () => {
-	const main = document.querySelector('main');
-	main.innerHTML = "";
+	showLoading();
 	const selectedValue = sortSelect.value;
 	const url = "Prod/getall?action=sortBy&sort=" + selectedValue;
 	const requestOptions = {
@@ -236,7 +271,13 @@ sortSelect.addEventListener('change', () => {
 		body: JSON.stringify({})
 	};
 	fetch(url, requestOptions)
-		.then(response => response.json())
+		.then(function(response) {
+			// 在接收到回應後隱藏loading示意
+			hideLoading();
+			content.innerHTML = "";
+			return response.json();
+			
+		})
 		.then(prodList => {
 			const searchKeyword = getSearchKeyword();
 			let filteredProdList = prodList;
@@ -270,7 +311,7 @@ sortSelect.addEventListener('change', () => {
 				const uint8Array = new Uint8Array(prod.prodPic);
 				let blob = new Blob([uint8Array], { type: "image/*" });
 				let imageUrl = URL.createObjectURL(blob);
-				main.innerHTML += `
+				content.innerHTML += `
 			        <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink" target="_blank">
 			          <div href="" target="_blank" class="prod">
 			            <img src="${imageUrl}" />
@@ -297,11 +338,10 @@ const categoryButtons = document.querySelectorAll('.categoryDetail');
 const hotCategoryButtons = document.querySelectorAll('.hotCategory');
 hotCategoryButtons.forEach(button => {
 	button.addEventListener('click', function(event) {
+		showLoading();
 		const category = this.textContent;
-		// 清空主要內容
-		console.log(category);
-		const main = document.querySelector('main');
-		main.innerHTML = "";
+//		console.log(category);
+	
 		// 發送餐廳分類請求
 		const url = "Prod/getall?category=" + category + "&action=getCategory";
 		const requestOptions = {
@@ -312,10 +352,16 @@ hotCategoryButtons.forEach(button => {
 			body: JSON.stringify({})
 		};
 		fetch(url, requestOptions)
-			.then(res => res.json())
+		.then(function(response) {
+			// 在接收到回應後隱藏loading示意
+			hideLoading();
+			content.innerHTML = "";
+			return response.json();
+			
+		})
 			.then(prodList => {
 				if (prodList.length === 0) {
-					main.innerHTML += `<h2 style="margin-top:30px; text-align: center;">未找到任何餐廳。</h2>`;
+					content.innerHTML = `<h2 style="margin-top:30px; text-align: center;">未找到任何餐廳。</h2>`;
 					console.log("未找到任何餐廳");
 				} else {
 					// 處理獲取的商品資料
@@ -343,7 +389,7 @@ hotCategoryButtons.forEach(button => {
 						const uint8Array = new Uint8Array(prod.prodPic);
 						let blob = new Blob([uint8Array], { type: "image/*" });
 						let imageUrl = URL.createObjectURL(blob);
-						main.innerHTML += `
+						content.innerHTML += `
 			        <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink" target="_blank">
 			          <div href="" target="_blank" class="prod">
 			            <img src="${imageUrl}" />
@@ -366,11 +412,9 @@ hotCategoryButtons.forEach(button => {
 
 categoryButtons.forEach(button => {
 	button.addEventListener('click', function(event) {
+		showLoading();
 		const category = this.textContent;
-		// 清空主要內容
 		console.log(category);
-		const main = document.querySelector('main');
-		main.innerHTML = "";
 		// 發送餐廳分類請求
 		const url = "Prod/getall?category=" + category + "&action=getCategory";
 		const requestOptions = {
@@ -381,10 +425,16 @@ categoryButtons.forEach(button => {
 			body: JSON.stringify({})
 		};
 		fetch(url, requestOptions)
-			.then(res => res.json())
+		.then(function(response) {
+			// 在接收到回應後隱藏loading示意
+			hideLoading();
+			content.innerHTML = "";
+			return response.json();
+			
+		})
 			.then(prodList => {
 				if (prodList.length === 0) {
-					main.innerHTML += `<h2 style="margin-top:30px; text-align: center;">未找到任何餐廳。</h2>`;
+					content.innerHTML = `<h2 style="margin-top:30px; text-align: center;">未找到任何餐廳。</h2>`;
 					console.log("未找到任何餐廳");
 				} else {
 					// 處理獲取的商品資料
@@ -412,7 +462,7 @@ categoryButtons.forEach(button => {
 						const uint8Array = new Uint8Array(prod.prodPic);
 						let blob = new Blob([uint8Array], { type: "image/*" });
 						let imageUrl = URL.createObjectURL(blob);
-						main.innerHTML += `
+						content.innerHTML += `
 			        <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink" target="_blank">
 			          <div href="" target="_blank" class="prod">
 			            <img src="${imageUrl}" />

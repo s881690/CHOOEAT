@@ -1,3 +1,19 @@
+//===========
+let account = JSON.parse(sessionStorage.getItem("loginReq"));
+if (sessionStorage.getItem("loginReq") != null) {
+	document.getElementById("sname").innerHTML = account.acc_name;
+
+}
+//=================================================================
+// 拿到會員icon
+let accountIcon = $("a.accountIcon");
+// console.log(accountIcon);
+// 會員中心的判斷
+if (account != null) {
+  accountIcon.attr("href", "../account/usercenter.html");
+} else {
+  accountIcon.attr("href", "../account/login.html");
+}
 // ================================== 後端 ===================================
 // 獲取購物車內容並顯示在畫面上
 function displayCart() {
@@ -398,23 +414,32 @@ function bindEventsToElements() {
 //		console.log(jsonselectedProducts);
 	} 
 	var btn_pay_el = document.getElementById("pay");
+	
 	btn_pay_el.addEventListener("click", function() {
-		console.log("T");
-		console.log(jsonselectedProducts);
-		fetch('checkout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
-		})
-			.then(data => {
-				console.log("d");
-				window.location.href = 'mall_checkout.html';
+		// 判斷是否已登入
+		 let account = JSON.parse(sessionStorage.getItem("loginReq"));
+		 console.log(account);
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先進行登入");
+      return;
+    }else{
+				console.log("T");
+			console.log(jsonselectedProducts);
+			fetch('checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
 			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(data => {
+					console.log("d");
+					window.location.href = 'mall_checkout.html';
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
 	});
 }
 

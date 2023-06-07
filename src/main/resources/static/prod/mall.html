@@ -34,6 +34,7 @@
 </head>
 
 <body>
+
 	<header>
 		<!-- 設定導覽列標籤在桌機以上size展開 -->
 		<nav class="navbar navbar-expand-lg" id="navbar">
@@ -64,10 +65,12 @@
 						</a> <a href="mall_shopping_cart.html"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
 							<img src="./chooeat/images/header/shopping_cart_Icon.png" />
-						</a> <a href="../account/login.html"
+						</a> <a href="../account/login.html" class="accountIcon"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
 							<img src="./chooeat/images/header/member_icon.png" />
-						</a>
+						</a> <span
+							style="display: inline-flex; align-items: center; vertical-align: middle; margin-left: 5px;"
+							id="sname"></span>
 					</p>
 				</div>
 				<!-- 這個button是漢堡選單的menu按鈕 -->
@@ -81,10 +84,12 @@
 					<ul
 						class="navbar-nav d-flex align-items-center justify-content-center"
 						style="gap: 1rem">
-						<li class="nav-item"><a href="../restaurant/Homepage.html" class="nav-link">首頁</a></li>
-						<li class="nav-item"><a href="../restaurant/Homepage.html" class="nav-link">找餐廳</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html"
+							class="nav-link">首頁</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html"
+							class="nav-link">找餐廳</a></li>
 						<li class="nav-item"><a href="mall.html" class="nav-link">找餐券</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">揪團</a></li>
+						<li class="nav-item"><a href="../activity/activity.html" class="nav-link">揪團</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">美食排行榜</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">關於我們</a></li>
 					</ul>
@@ -101,7 +106,8 @@
 					<nav class="breadcrumbandSearch"
 						style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="../restaurant/Homepage.html">主頁</a></li>
+							<li class="breadcrumb-item"><a
+								href="../restaurant/Homepage.html">主頁</a></li>
 							<li class="breadcrumb-item active" aria-current="page">找餐券</li>
 						</ol>
 					</nav>
@@ -126,15 +132,15 @@
 				<div class="sort">
 					<div class="sortBy">排序方式</div>
 					<select id="sort-select" class="sorting">
-<!-- 						<option value="star">評分最高</option> -->
+						<!-- 						<option value="star">評分最高</option> -->
 						<option value="pricefromhigh">價格由高到低</option>
 						<option value="pricefromlow">價格由低到高</option>
 						<!-- 						<option value="chooeat">Chooeat!推薦</option> -->
 					</select>
 				</div>
 			</div>
-
 			<div class="parent_container">
+
 				<aside class="aside">
 					<div class="category">分類</div>
 					<hr />
@@ -172,8 +178,8 @@
 							<li><a class="dropdown-item categoryDetail" href="#">牛排</a></li>
 							<li><a class="dropdown-item categoryDetail" href="#">沙拉</a></li>
 							<li><a class="dropdown-item categoryDetail" href="#">水餃</a></li>
-							<li><a class="dropdown-item categoryDetail" href="#">餐酒館</a></li>	
-							<li><a class="dropdown-item categoryDetail" href="#">義大利麵</a></li>	
+							<li><a class="dropdown-item categoryDetail" href="#">餐酒館</a></li>
+							<li><a class="dropdown-item categoryDetail" href="#">義大利麵</a></li>
 						</ul>
 					</div>
 					<div class="dropdown">
@@ -187,7 +193,7 @@
 							<li><a class="dropdown-item categoryDetail" href="#">壽喜燒</a></li>
 							<li><a class="dropdown-item categoryDetail" href="#">咖哩</a></li>
 							<li><a class="dropdown-item categoryDetail" href="#">居酒屋</a></li>
-							<li><a class="dropdown-item categoryDetail" href="#">定食</a></li>							
+							<li><a class="dropdown-item categoryDetail" href="#">定食</a></li>
 						</ul>
 					</div>
 					<div class="dropdown">
@@ -230,7 +236,15 @@
 					<button class="categoryDetail">其他</button>
 				</aside>
 
-				<main class="main"></main>
+				<main class="main">
+    					<div id="loadingContainer" class="loading">
+						<div class="loading-container">
+							<div class="spinner"></div>
+							<h2>Loading...</h2>
+						</div>
+					</div>
+					<div id="content"></div>
+				</main>
 			</div>
 		</div>
 		<div class="page">

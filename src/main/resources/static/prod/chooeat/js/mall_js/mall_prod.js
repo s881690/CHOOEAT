@@ -1,3 +1,4 @@
+
 //===============================================================================
 var productName;
 var price;
@@ -5,11 +6,28 @@ var resName;
 var btn_add_cart_el;
 var productId;
 var prodPic;
+let account;
 const overlay = document.querySelector(".confirmation-overlay");
 const confirmationBox = document.querySelector(".confirmation-box");
 //const confirmBtn = document.querySelector(".confirm-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
 var star;
+//===========
+account = JSON.parse(sessionStorage.getItem("loginReq"));
+if (sessionStorage.getItem("loginReq") != null) {
+	document.getElementById("sname").innerHTML = account.acc_name;
+
+}
+//=================================================================
+// 拿到會員icon
+let accountIcon = $("a.accountIcon");
+// console.log(accountIcon);
+// 會員中心的判斷
+if (account != null) {
+  accountIcon.attr("href", "../account/usercenter.html");
+} else {
+  accountIcon.attr("href", "../account/login.html");
+}
 // ========================從URL獲取商品ID並獲取詳細資料====================================
 document.addEventListener("DOMContentLoaded", function() {
 	productId = getProductIdFromURL();
@@ -208,8 +226,16 @@ function bindEventsToElements() {
 			var productId = new URLSearchParams(window.location.search).get("id");
 			var cart_data = {};
 
+			if (sessionStorage.getItem("loginReq")) {
+				var account = JSON.parse(sessionStorage.getItem("loginReq"));
+				cart_data.accId = account.acc_id;
+			} else {
+				cart_data.accId = "";
+			}
+
 			cart_data.productId = productId;
 			cart_data.resName = resName;
+			cart_data.accId = account.acc_id;
 			cart_data.productName = productName;
 			cart_data.price = price;
 			cart_data.qty = 1;
@@ -218,7 +244,7 @@ function bindEventsToElements() {
 
 			sessionStorage.setItem("form_data", JSON.stringify(cart_data));
 			fetchController.abort();
-			location.href = "mall_add_cart.html";
+						location.href = "mall_add_cart.html";
 		});
 	}
 	// ==========
@@ -227,22 +253,33 @@ function bindEventsToElements() {
 	selectedProducts.push(productId);
 	var btn_pay_el = document.getElementById("pay_immediately");
 	btn_pay_el.addEventListener("click", function() {
-		console.log("T");
-		console.log(selectedProducts);
-		fetch('checkout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
-		})
-			.then(data => {
-				console.log("d");
-				window.location.href = 'mall_checkout.html';
+
+
+		account = JSON.parse(sessionStorage.getItem("loginReq"));
+		//		console.log(account);
+//		console.log(account.acc_id);
+		if (sessionStorage.getItem("loginReq") == null) {
+			alert("請先進行登入");
+			return;
+		} else {
+
+			console.log("T");
+			console.log(selectedProducts);
+			fetch('checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
 			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(data => {
+					console.log("d");
+										window.location.href = 'mall_checkout.html';
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
 	});
 	// === more_btn ===
 	const confirmationBox = $(".confirmation-box");
