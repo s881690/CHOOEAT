@@ -329,6 +329,7 @@ body div.main_content div.activity_main_organizer div.container form.participant
 body div.footer_container {
   background-color: blanchedalmond;
   height: 23vh;
+  margin-top: 6vh;
 }
 body div.footer_container footer ul li.nav-item a {
   color: black !important;

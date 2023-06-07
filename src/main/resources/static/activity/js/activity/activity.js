@@ -193,7 +193,7 @@ function like() {
           activityId: activityId,
         }),
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
       });
       //更改顏色與data-like屬性
       $(e.target).attr("data-like", "true");

@@ -17,8 +17,9 @@ function search() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         for (let reser of data) {
+          // console.log(reser);
           let activityDate = reser.activityDate.split(" ");
           // console.log(activityDate);
           let month = activityDate[0];
@@ -38,9 +39,11 @@ function search() {
             />
             <div class="card-body" data-activityId=${reser.activityId}>
               <h5 class="card-title">${reser.activityName}</h5>
-              <p class="restaurant-name">地點：${reser.restaurantVO.resName}</p>
+              <p class="restaurant-name">地點：${
+                reser.activityrestaurantVO.resName
+              }</p>
               <p class="card-text address">地址：
-                ${reser.restaurantVO.resAdd}
+                ${reser.activityrestaurantVO.resAdd}
               </p>
               <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
             reser.activityStartingTime.slice(9) +

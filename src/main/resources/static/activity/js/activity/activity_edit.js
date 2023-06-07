@@ -7,6 +7,22 @@ let form = document.querySelector("form.activity_establish_form");
 // 取得彈窗內的「送出」
 let check_submit = document.querySelector("button.check_submit");
 
+// 日期格式化 YYYY-MM-DDTHH:MM:SS
+function dateTime(dateTime) {
+  let date = new Date(dateTime);
+  // 獲取各個時間元素
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2); // 月份需要補零
+  let day = ("0" + date.getDate()).slice(-2); // 日期需要補零
+  let hours = ("0" + date.getHours()).slice(-2); // 小時需要補零
+  let minutes = ("0" + date.getMinutes()).slice(-2); // 分鐘需要補零
+  let seconds = ("0" + date.getSeconds()).slice(-2); // 秒數需要補零
+
+  // 拼接成 YYYY-MM-DDTHH:MM:SS 格式
+  let formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  return formattedDateTime;
+}
+
 // 編輯畫面，先帶入所有的資訊
 function activity_edit() {
   let activityId = sessionStorage.getItem("activityId");
@@ -21,33 +37,44 @@ function activity_edit() {
       // 將資訊塞入到欄位中
       $("input#activity_name").val(result.activityName); // 活動名稱
       $("select#activity_restaruant").val(result.activityrestaurantVO.resName); // 餐廳名稱(塞不進去)
-      let month = result.activityDate.split(" ")[0].replace("月", "");
-      let date = result.activityDate.split(" ")[1].split(",")[0];
-      if (month < 10) {
-        month = "0" + month;
+      let am = result.activityDate.split(" ")[0].replace("月", "");
+      let ad = result.activityDate.split(" ")[1].split(",")[0];
+      if (am < 10) {
+        am = "0" + am;
       }
-      if (date < 10) {
-        date = "0" + date;
+      if (ad < 10) {
+        ad = "0" + ad;
       }
-      let activityDate = `${
-        result.activityDate.split(" ")[2]
-      }-${month}-${date}`;
+      let activityDate = `${result.activityDate.split(" ")[2]}-${am}-${ad}`;
       $("input#activity_date").val(activityDate); // 活動日期
+      // 活動報名開始時間
       $("input#regesteration_starting_time").val(
-        result.regesterationStartingTime
-      ); // 活動申請開始時間
-      $("input#regesteration_ending_time").val(result.regesterationEndingTime); // 活動申請結束時間
-      $("input#activity_starting_time").val(result.activityStartingTime); // 活動開始時間
-      $("input#activity_ending_time").val(result.activityEndingTime); // 活動結束時間
+        dateTime(result.regesterationStartingTime)
+      );
+      // 活動報名結束時間
+
+      $("input#regesteration_ending_time").val(
+        dateTime(result.regesterationEndingTime)
+      );
+      // 活動開始時間
+      $("input#activity_starting_time").val(
+        result.activityStartingTime.slice(0, 5)
+      );
+      // 活動結束時間
+      $("input#activity_ending_time").val(
+        result.activityEndingTime.slice(0, 5)
+      );
       $("input#min_number").val(result.minNumber); //最少參加人數
       $("input#max_number").val(result.maxNumber); //最多參加人數
       $("textarea#activity_text").val(result.activityText); // 聚會活動內容簡介
 
-      let base64String = result.activityPhoto;
+      // 將圖片byte[] array解碼成base64
+      let uint8Array = new Uint8Array(result.activityPhoto);
+      let binaryString = String.fromCharCode.apply(null, uint8Array);
+      var base64Encoded = btoa(binaryString);
       let image = new Image();
-      console.log(image);
-      image.src = `data:image/*;base64,${base64String}`;
-      image.className = "preview  ";
+      image.src = `data:image/*;base64,${base64Encoded}`;
+      image.className = "preview";
       show_photo.innerHTML = "";
       show_photo.appendChild(image);
     });
@@ -144,6 +171,25 @@ function clickImg() {
     // 裡面觸發 photo_btn 的點擊
     photo_btn.click();
   });
+}
+
+// // 一進到畫面時，判斷表單內容是否有value
+function validateInputAtFirst() {
+  if ($("input").html() == "") {
+    $("input").next().show();
+    $("button.submit").attr("disabled", true);
+  } else {
+    $("input").next().hide();
+    $("button.submit").attr("disabled", false);
+  }
+
+  if ($("select").selectedIndex() == -1 || $("select").val() == "") {
+    $("select").next().show();
+    $("button.submit").attr("disabled", true);
+  } else {
+    $("select").next().hide();
+    $("button.submit").attr("disabled", false);
+  }
 }
 
 // 判斷表單內容是否已經填寫
@@ -426,6 +472,7 @@ $(function () {
   formDefault();
   minRegesterationEndingTime();
   minactivityEndingTime();
+  // validateInputAtFirst();
 
   // //將表單數據轉為JSON，並且提交給後端
   form2JSON();

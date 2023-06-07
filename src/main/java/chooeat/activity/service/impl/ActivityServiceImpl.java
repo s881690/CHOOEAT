@@ -32,25 +32,6 @@ public class ActivityServiceImpl implements ActivityService {
 		return list;
 	}
 
-//	// 顯示前三筆資料於活動首頁
-//	@Transactional
-//	public String get3Activity(){
-//		List<ActivityVO> list = activityDAO.selectAll();
-////		// 使用jackson的object映射，可以將object轉為json
-////		 ObjectMapper mapper = new ObjectMapper();
-//		 // 將object轉為json
-////		 String jsonStr = mapper.writeValueAsString(list.subList(0, 3));
-//		String jsonStr = GsonUtils.toJson(list.subList(0, 3));
-//		return jsonStr;
-//	}
-
-	// 活動id查詢
-//	@Transactional
-//	public ActivityVO selectByActivityId(Integer activityId) {
-////		return activityDAO.selectByActivityId(activityId);
-//		return activityRepository.findByActivityId(activityId);
-//	};
-
 	// 活動名稱查詢
 	@Transactional
 	@Override
@@ -79,6 +60,9 @@ public class ActivityServiceImpl implements ActivityService {
 	@Transactional
 	public Object establish(Map<String, String> map) {
 		ActivityVO activityVO = new ActivityVO();
+		if(!map.get("activityId").isEmpty()) {
+			activityVO.setActivityId(Integer.parseInt(map.get("activityId")));
+		}
 		activityVO.setActivityName(map.get("activityName"));
 		activityVO.setActivityNumber(Integer.parseInt(map.get("activityNumber")));
 		activityVO.setMinNumber(Integer.parseInt(map.get("minNumber")));
@@ -93,7 +77,7 @@ public class ActivityServiceImpl implements ActivityService {
 		activityVO.setActivityText(map.get("activityText"));
 		activityVO.setActivityStatus(Integer.parseInt(map.get("activityStatus")));
 		activityVO.setActivityPhotoBase64(map.get("activityPhotoBase64"));
-//		System.out.println(activityVO);
+		System.out.println(activityVO);
 		
 		if (activityVO.getAccId() == null) {
 			return "請先登入";

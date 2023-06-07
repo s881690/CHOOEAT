@@ -50,13 +50,11 @@ function showDetail() {
       return res.json();
     })
     .then((result) => {
-      console.log(result);
-      // let month = result.activityDate.split(" ")[0];
-      // let date = result.activityDate.split(" ")[1].split(",")[0];
-      let activityDate = result.activityDate.split("-");
-      let date = activityDate[2];
-      let month = activityDate[1];
-      let year = activityDate[0];
+      let activityDate = result.activityDate.split(" ");
+      // console.log(activityDate);
+      let month = activityDate[0];
+      let date = activityDate[1].split(",")[0];
+      let year = activityDate[2];
       let address = result.activityrestaurantVO.resAdd;
       let base64Photo = result.activityPhotoBase64;
       let image = new Image();
@@ -124,6 +122,7 @@ function search() {
 function innerSignup() {
   let confirm = document.querySelector("button.confirm");
   let activityId = sessionStorage.getItem("activityId");
+
   confirm.addEventListener("click", (e) => {
     e.preventDefault();
     //檢查是否登入
@@ -176,8 +175,6 @@ function innerSignup() {
 // 判斷是否為活動建立者，是的話報名按鈕就要變成編輯鈕，並多一個審核頁按鈕
 function isactivityHost(result_accId) {
   let accId = JSON.parse(sessionStorage.getItem("loginReq")).acc_id;
-  console.log(accId);
-  console.log($("div.signup_and_edit"));
 
   if (accId == result_accId) {
     // 刪除彈窗
