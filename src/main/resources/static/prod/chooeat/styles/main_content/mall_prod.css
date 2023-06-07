@@ -31,6 +31,7 @@ aside.aside, main.main {
 
 .prodpicArea {
 	height: 400px;
+	width: 100%;
 	border-radius: 12px;
 	margin-bottom: 10px;
 }

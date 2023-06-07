@@ -63,7 +63,7 @@ function getProductDetails(productId) {
 			const uint8Array = new Uint8Array(prod.prodPic);
 			let blob = new Blob([uint8Array], { type: "image/*" });
 			let imageUrl = URL.createObjectURL(blob);
-			
+
 			document.getElementById("prodpic").src = `${imageUrl}`;
 
 			document.getElementById("breadcrumb-page").innerHTML = `
@@ -93,8 +93,8 @@ function getProductDetails(productId) {
 				document.getElementById("comment").innerHTML = `<h2 style="margin-top:30px; text-align: center;">尚未有任何評論。</h2>`;
 			} else {
 				for (let orderDetail of orderDetails) {
+					console.log(orderDetail);
 					const star = Math.floor(orderDetail.prodCommentScore);
-					// 星星
 					let starHtml = '';
 					for (let i = 1; i <= 5; i++) {
 						if (i <= star) {
@@ -103,30 +103,34 @@ function getProductDetails(productId) {
 							starHtml += `<span class="star" data-star="${i}" style="padding-right:3px;"><i class="fas fa-star"></i></span>`;
 						}
 					}
-					document.getElementById("comment").innerHTML += `
-			<div class="acc_profiles">
-                    <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
-                    <div class="nameandStar">
-                      <div class="acc_name">${orderDetail.accName}</div>
-                      <div class="dot3">
-                       <input type="submit" id="more_button" class="more" value="" data-order-detail-id="${orderDetail.orderDetailId}"
-							style="background-image: url(./chooeat/images/mall_image/more.png);">
-                    </div>
-                      <br />
-                      <div class="commemt_star_block">
-                       ${starHtml}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="comment_area">
-                    <div>${formatTimestamp(orderDetail.prodCommentTimestamp)} 單人｜平日晚餐</div>
-                    <div class="comment_text">
-                     ${orderDetail.prodCommentText}
-                    </div>
-                  </div>
-                  <hr class="comment_hr" style="border: 1.3px solid; margin-bottom:15px;" />`;
+					if (orderDetail.prodCommentScore !== 0) {
+						document.getElementById("comment").innerHTML += `
+        <div class="acc_profiles">
+          <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
+          <div class="nameandStar">
+            <div class="acc_name">${orderDetail.accName}</div>
+            <div class="dot3">
+              <input type="submit" id="more_button" class="more" value="" data-order-detail-id="${orderDetail.orderDetailId}"
+                style="background-image: url(./chooeat/images/mall_image/more.png);">
+            </div>
+            <br />
+            <div class="commemt_star_block">
+              ${starHtml}
+            </div>
+          </div>
+        </div>
+        <div class="comment_area">
+          <div>${formatTimestamp(orderDetail.prodCommentTimestamp)} 單人｜平日晚餐</div>
+          <div class="comment_text">
+            ${orderDetail.prodCommentText}
+          </div>
+        </div>
+        <hr class="comment_hr" style="border: 1.3px solid; margin-bottom:15px;" />
+      `;
+					}
 				}
 			}
+
 
 			document.getElementById("price").innerHTML = ` NT $${price}`;
 			//              <div class="prod">
