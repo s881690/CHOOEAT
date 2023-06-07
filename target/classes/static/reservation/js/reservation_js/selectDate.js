@@ -1,132 +1,173 @@
-//這是datepicker的選取事件
 $(function () {
   $("#datepicker-widget").datepicker({
+    minDate: new Date(), // 添加minDate选项
     onSelect: function (dateText) {
       console.log(dateText);
+      var acc_id = JSON.parse(sessionStorage.getItem('loginReq')).acc_id;
+      var restaurantId1 = JSON.parse(sessionStorage.getItem('searchResult')).myself[0].restaurantId;
+      
       $.ajax({
-        url: "../getBusinessDay?date="+dateText,
+        url: "../getBusinessDay",
         type: "GET",
+        data: {
+          acc_id: acc_id,
+          restaurantId: restaurantId1,
+          date: dateText
+        },
         success: function (response) {
           console.log(response);
           
           if (response.status === "dayoff") {
-            // 遍歷每個按鈕，添加 'stop' 類別
+            // 遍历每个按钮，移除内部的 <div> 标签
             $('.meal_time').each(function () {
               $(this).addClass('stop');
-              
-            });
+              $(this).removeClass('full');
+              $(this).removeClass('notEnough');
+              $(this).removeClass('reserved');
+              $(this).removeClass('meal-time-style');
+              $(this).find('.remainSeat').addClass('hidden-div');
+   
+              });
+    
           } else {
             // 刪除所有 .stop 的 class
             $('.meal_time').removeClass('stop');
-            mealData.date_time = serializeDate(dateText);
+            $('.meal_time').removeClass('full');
+            $('.meal_time').removeClass('notEnough');
+            $('.meal_time').removeClass('reserved');
+            $('.meal_time').removeClass('meal-time-style');
+            $('.meal_time').find('.remainSeat').removeClass('hidden-div');
+            $('.meal_time').find('.remainSeat').removeClass('hasFull');
+            $('.meal_time').find('.remainSeat').removeClass('hasReserved');
+
+            function serializeDate(dateText) {
+              const date = new Date(dateText);
+              const year = date.getFullYear();
+              const month = (date.getMonth() + 1).toString().padStart(2, "0");
+              const day = date.getDate().toString().padStart(2, "0");
+              return `${year}-${month}-${day}`;
+            }            
+
+             mealData.date_time = serializeDate(dateText);
+             console.log(mealData.date_time);
+            
+            updateRemainSeat(response.remainSeat);
             updateMealTimeAvailability(response.resStartTime, response.resEndTime);
             markReservedTimeSlots(response.reservedList);
-            updateButtonClasses(response.HourlySeatlist); 
-            
+            updateButtonStatus(response.HourlySeatlist); 
           }
         }
       });
     }
   });
-  
 });
+
+//印出每個按鈕剩餘座位數的function
+function updateRemainSeat(remainSeat) {
+  $('.remainSeatNumber').each(function () {
+    $(this).text(remainSeat);
+  });
+}
 
 //這個function是檢查按鈕時間，非營業時間不可選取
 function updateMealTimeAvailability(resStartTime, resEndTime) {
-  // 將營業時間轉換為時間物件
   var startTimeArray = resStartTime.split(':');
   var endTimeArray = resEndTime.split(':');
 
   var resStartHour = parseInt(startTimeArray[0]);
   var resEndHour = parseInt(endTimeArray[0]);
 
-  // 迭代每個時間按鈕
+  var currentDate = new Date(); // 獲取當前時間
+  var currentHour = currentDate.getHours(); // 獲取當前小時
+
   $('.meal_time').each(function () {
-    // console.log(this)
     var button = $(this);
     var buttonHour = parseInt(button.text().split(':')[0]);
-    
-    // 檢查按鈕時間是否在營業時間範圍內
+
+
     if (buttonHour < resStartHour || buttonHour >= resEndHour) {
-      // 按鈕不在營業時間範圍內，添加stop類別
       button.addClass('stop');
+      button.find('.remainSeat').addClass('not-business');
     } else {
-      // 按鈕在營業時間範圍內，移除stop類別
       button.removeClass('stop');
+      button.find('.remainSeat').removeClass('not-business');
     }
+
+
+
   });
-  
 }
 
 // 這個function判斷該會員是否在該時段有預約
 function markReservedTimeSlots(reservedList) {
- 
   const timeButtons = document.getElementsByClassName('meal_time');
-  
-  //把timeButtons轉換成陣列並進行迭代操作
-  Array.from(timeButtons).forEach(function(button) {
-    
-    // 抓name屬性，獲得按鈕的時間，例如 "17:00"
-    const buttonName = button.getAttribute('name') 
-    // 提取小時部分並轉換為整數
-    const buttonTime = parseInt(buttonName.split(':')[0]); 
-   
-    //下判斷，如果後端回傳的list包含按鈕的時間，就認為已預約，並改變button的文字及+class去改變css
-    //備註：後端回傳的是一個陣列，上面有該會員在該日所有的預約時段
+
+  Array.from(timeButtons).forEach(function (button) {
+    const buttonName = button.getAttribute('name');
+    const buttonTime = parseInt(buttonName.split(':')[0]);
     if (reservedList.includes(buttonTime)) {
-      button.classList.add('reserved'); 
-      button.classList.remove("full");
-      button.textContent = "已預約"; 
-     
-    }else{
-      button.classList.remove("reserved");
-      button.textContent = buttonName;
-     
+      button.classList.add('reserved');
+      button.classList.remove('full');
+    
+      const divElement = button.querySelector('.remainSeat');
+      divElement.classList.add('hasReserved');
+    
+      const buttonText = button.firstChild;
+      buttonText.textContent = '已預約';
+    } else {
+      button.classList.remove('reserved');
+      button.classList.remove('full');
+    
+      const divElement = button.querySelector('.remainSeat');
+      divElement.classList.remove('hasReserved');
+    
+      const buttonText = button.firstChild;
+      buttonText.textContent = buttonName;
     }
+    
   });
 }
 
 
+
+
+
 //這個function存取各時段剩餘座位數，並判斷是否客滿/剩餘座位不足
-function updateButtonClasses(HourlySeatlist) {
-  //用seatOptions存取人數選項的值
-  const seatOptions = document.getElementById('meal_select').value;
-  console.log("人數" + seatOptions);
-  //buttons存取時間按鈕陣列
+function updateButtonStatus(HourlySeatlist) {
   const buttons = document.getElementsByClassName('meal_time');
+  const remainSeatDivs = document.getElementsByClassName('remainSeatNumber');
 
   for (let i = 0; i < buttons.length; i++) {
-    //把時間按鈕的小時提取出來
-    const h = parseInt(buttons[i].getAttribute('name'));
     const button = buttons[i];
-    
-    let remainSeatValue;
-    const length = HourlySeatlist.length;
-    console.log(length);
-    for (let i = 0; i < HourlySeatlist.length; i++) {
-      if (HourlySeatlist[i].hour === h) {
-        remainSeatValue = HourlySeatlist[i].remainSeat;
-        break; // 找到相符物件後，跳出迴圈
-      }
-    }
+    const h = parseInt(button.getAttribute('name'));
 
-    button.classList.remove('full', 'notEnough');
+    for (let j = 0; j < HourlySeatlist.length; j++) {
+      const { hour, remainSeat } = HourlySeatlist[j];
 
-    if (remainSeatValue !== undefined) {
-      if (remainSeatValue === 0) {
-        button.classList.add('full');
-        button.textContent = "該時段已客滿"; 
-      } else if (remainSeatValue < seatOptions) {
-        button.classList.add('notEnough');
-        button.textContent = "剩餘座位不足"; 
+      if (hour === h) {
+        const remainSeatDiv = remainSeatDivs[i];
+        remainSeatDiv.innerText = remainSeat;
+
+        if (remainSeat === 0) {
+          button.classList.add('full');
+          button.classList.remove('notEnough');
+
+          const divElement = button.querySelector('.remainSeat');
+          divElement.classList.add('hasFull');
+
+          const buttonText = button.firstChild;
+          buttonText.textContent = '該時段已客滿';
+        } else if (remainSeat < parseInt(document.getElementById('meal_select').value)) {
+          button.classList.add('notEnough');
+          button.classList.remove('full');
+
+          const divElement = button.querySelector('.remainSeat');
+          divElement.classList.remove('hasFull');
+        }
       }
     }
   }
 }
-
-
-
-
 
 
 

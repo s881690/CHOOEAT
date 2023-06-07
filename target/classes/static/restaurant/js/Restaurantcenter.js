@@ -723,7 +723,6 @@ $(document).ready(function () {
  //餐廳找廣告功能
  $(document).ready(function () {
   const table5 = $("#myTable5").DataTable({
-<<<<<<< HEAD
     "language": {
       "processing": "處理中...",
       "loadingRecords": "載入中...",
@@ -745,8 +744,6 @@ $(document).ready(function () {
           "sortDescending": ": 降冪排列"
       }
   },
-=======
->>>>>>> origin/main
     autoWidth: true,
 
     ajax: {
@@ -775,11 +772,7 @@ $(document).ready(function () {
       },
     ],
   });
-<<<<<<< HEAD
   $("#v-pills-find-osusume-tab").click(function () {
-=======
-  $("#v-pills-findosusume").click(function () {
->>>>>>> origin/main
     table5.ajax.reload();
   });
 
