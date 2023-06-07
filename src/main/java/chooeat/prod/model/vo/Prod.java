@@ -1,6 +1,7 @@
 package chooeat.prod.model.vo;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Prod implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -12,7 +13,7 @@ public class Prod implements Serializable {
 	private Integer prodPrice;
 	private Integer prodQty;
 	private Integer prodState;
-	private Byte prodPic;
+	private byte[] prodPic;
 	private Integer prodCommentNumber;
 	private Integer prodCommentScore;
 	private String resName;
@@ -21,36 +22,6 @@ public class Prod implements Serializable {
 	private String resType;
 	
 	public Prod() {
-	}
-
-	public Prod(Integer prodId, Integer restaurantId, String prodName, String prodText, String prodUserguide,
-			Integer prodPrice, Integer prodQty, Integer prodState, Byte prodPic, Integer prodCommentNumber,
-			Integer prodCommentScore, String resName, String resAdd, Integer resTypeId, String resType) {
-		super();
-		this.prodId = prodId;
-		this.restaurantId = restaurantId;
-		this.prodName = prodName;
-		this.prodText = prodText;
-		this.prodUserguide = prodUserguide;
-		this.prodPrice = prodPrice;
-		this.prodQty = prodQty;
-		this.prodState = prodState;
-		this.prodPic = prodPic;
-		this.prodCommentNumber = prodCommentNumber;
-		this.prodCommentScore = prodCommentScore;
-		this.resName = resName;
-		this.resAdd = resAdd;
-		this.resTypeId = resTypeId;
-		this.resType = resType;
-	}
-
-	@Override
-	public String toString() {
-		return "Prod [prodId=" + prodId + ", restaurantId=" + restaurantId + ", prodName=" + prodName + ", prodText="
-				+ prodText + ", prodUserguide=" + prodUserguide + ", prodPrice=" + prodPrice + ", prodQty=" + prodQty
-				+ ", prodState=" + prodState + ", prodPic=" + prodPic + ", prodCommentNumber=" + prodCommentNumber
-				+ ", prodCommentScore=" + prodCommentScore + ", resName=" + resName + ", resAdd=" + resAdd
-				+ ", resTypeId=" + resTypeId + ", resType=" + resType + "]";
 	}
 
 	public Integer getProdId() {
@@ -117,11 +88,11 @@ public class Prod implements Serializable {
 		this.prodState = prodState;
 	}
 
-	public Byte getProdPic() {
+	public byte[] getProdPic() {
 		return prodPic;
 	}
 
-	public void setProdPic(Byte prodPic) {
+	public void setProdPic(byte[] prodPic) {
 		this.prodPic = prodPic;
 	}
 
@@ -177,6 +148,37 @@ public class Prod implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "Prod [prodId=" + prodId + ", restaurantId=" + restaurantId + ", prodName=" + prodName + ", prodText="
+				+ prodText + ", prodUserguide=" + prodUserguide + ", prodPrice=" + prodPrice + ", prodQty=" + prodQty
+				+ ", prodState=" + prodState + ", prodPic=" + Arrays.toString(prodPic) + ", prodCommentNumber="
+				+ prodCommentNumber + ", prodCommentScore=" + prodCommentScore + ", resName=" + resName + ", resAdd="
+				+ resAdd + ", resTypeId=" + resTypeId + ", resType=" + resType + "]";
+	}
+
+	public Prod(Integer prodId, Integer restaurantId, String prodName, String prodText, String prodUserguide,
+			Integer prodPrice, Integer prodQty, Integer prodState, byte[] prodPic, Integer prodCommentNumber,
+			Integer prodCommentScore, String resName, String resAdd, Integer resTypeId, String resType) {
+		super();
+		this.prodId = prodId;
+		this.restaurantId = restaurantId;
+		this.prodName = prodName;
+		this.prodText = prodText;
+		this.prodUserguide = prodUserguide;
+		this.prodPrice = prodPrice;
+		this.prodQty = prodQty;
+		this.prodState = prodState;
+		this.prodPic = prodPic;
+		this.prodCommentNumber = prodCommentNumber;
+		this.prodCommentScore = prodCommentScore;
+		this.resName = resName;
+		this.resAdd = resAdd;
+		this.resTypeId = resTypeId;
+		this.resType = resType;
+	}
+
+	
 }
 
 

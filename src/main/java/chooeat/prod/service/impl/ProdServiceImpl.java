@@ -104,12 +104,21 @@ public class ProdServiceImpl implements ProdService {
 	            prod.setProdPrice(rs.getInt("PROD_PRICE"));
 	            prod.setProdQty(rs.getInt("PROD_QTY"));
 	            prod.setProdState(rs.getInt("PROD_STATE"));
-	            prod.setProdPic(rs.getByte("PROD_PIC"));
 	            prod.setProdCommentNumber(rs.getInt("PROD_COMMENT_NUMBER"));
 	            prod.setProdCommentScore(rs.getInt("PROD_COMMENT_SCORE"));
 	            prod.setResName(rs.getString("RES_NAME"));
 	            prod.setResAdd(rs.getString("RES_ADD"));
 	            prod.setResType(rs.getString("category_names"));
+				byte[] photoBytes = rs.getBytes("PROD_PIC");
+				  if (photoBytes != null && photoBytes.length > 0) {
+		                byte[] photoWrapper = new byte[photoBytes.length];
+		                for (int i = 0; i < photoBytes.length; i++) {
+		                    photoWrapper[i] = photoBytes[i];
+		                }
+		                prod.setProdPic(photoWrapper);
+		            } else {
+		            	prod.setProdPic(null);
+		            }	
 	            list.add(prod);
 	        }
 	        return list;

@@ -3,6 +3,7 @@
   <head>
     <title>CHOOEAT！</title>
     <meta charset="utf-8" />
+    <link href="./images/header/logo2.png" rel="shortcut icon" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -147,7 +148,7 @@
           <div
             class="col-12 d-flex align-items-center justify-content-center title"
           >
-            <h1>restaurantName</h1>
+            <h1 id="restaurantName">restaurantName</h1>
           </div>
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div
@@ -180,21 +181,18 @@
               <div
                 class="col d-flex align-items-center justify-content-center resInfo resNumber"
               >
-                <h2><span id="reservedPeoeple">2位</span></h2>
+                <h2><span id="reservedPeople">2位</span></h2>
               </div>
               <div
                 class="col d-flex align-items-center justify-content-center notes"
               >
-                <button type="button" class="resChange">
-                  <a href="./reservationChangeV3.html" class="resChange"
-                    >更改訂位</a
-                  >
-                </button>
                 <button type="button" class="resChange" id="viewButton">
                   查看路線
                 </button>
                 <button type="button" class="resChange">
-                  <a href="#" class="resChange">取消訂位</a>
+                  <a href="../restaurant/Homepage.html" class="resChange"
+                    >回到首頁</a
+                  >
                 </button>
               </div>
             </div>
@@ -266,7 +264,7 @@
         </div>
       </div>
     </footer>
-    <script src="js/reservation_js/restaurantInfo.js"></script>
+    <script src="js/reservation_js/getrestaurantName.js"></script>
     <script src="js/reservation_js/getReservedInfo.js"></script>
     <script src="js/reservation_js/viewRouteV2-FETCH.js"></script>
   </body>

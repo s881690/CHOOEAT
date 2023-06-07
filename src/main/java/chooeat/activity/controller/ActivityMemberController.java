@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +31,13 @@ public class ActivityMemberController {
 		return activityMemberService.memberList(activityId);
 	}
 
-	@Transactional
 	@DeleteMapping("/deleteMember/{accId}")
-	@ResponseBody
 	public String deleteMember(@PathVariable Integer accId) {
 		return activityMemberService.deleteMember(accId);
 	}
+	
+	@GetMapping("/findMember")
+	public List<ActivityMemberVO> findMember(@RequestParam String accName, @RequestParam Integer activityId) {
+		return activityMemberService.findByAccNameAndActivityId(accName, activityId)
+;	}
 }

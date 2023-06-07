@@ -225,6 +225,7 @@ div.type{
 div.prod img {
 	width: 200px;
 	height: 148px;
+	object-fit: cover;
 	float: right;
 	border-radius: 10px;
 }

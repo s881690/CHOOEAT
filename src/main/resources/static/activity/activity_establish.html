@@ -7,12 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="icon" href="./images/header/logo2.png" />
     <!-- 引入bootstrap -->
     <link rel="stylesheet" href="./styles/bootstrap/bootstrap.min.css" />
 
     <!-- 以下引入我們自己寫的css -->
-    <link rel="stylesheet" href="./styles/header/footer.css" />
-    <link rel="stylesheet" href="./styles/header/header.css" />
+    <!-- <link rel="stylesheet" href="./styles/header/footer.css" />
+    <link rel="stylesheet" href="./styles/header/header.css" /> -->
     <link rel="stylesheet" href="./styles/activity/activity.css" />
     <!-- <link rel="stylesheet" href="./styles/all/all.css" /> -->
   </head>
@@ -55,11 +56,19 @@
                 <img src="./images/header/shopping_cart_Icon.png" />
               </a>
               <a
-                href="#"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
+                href="../account/login.html"
+                class="d-flex align-items-center justify-content-center mr-1 icon accountIcon"
               >
                 <img src="./images/header/member_icon.png" />
               </a>
+              <span
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  vertical-align: middle;
+                "
+                id="sname"
+              ></span>
             </p>
           </div>
           <!-- 這個button是漢堡選單的menu按鈕 -->
@@ -118,7 +127,7 @@
               style="--bs-breadcrumb-divider: '>'"
               aria-label="breadcrumb"
             >
-              <ol class="breadcrumb">
+              <ol class="breadcrumb pt-3 ps-3">
                 <li class="breadcrumb-item">
                   <a href="#" class="normal_a">首頁</a>
                 </li>
@@ -165,7 +174,11 @@
                   class="form-control border border-2"
                   name="activity_name"
                   id="activity_name"
+                  required
                 />
+                <span id="activity_name_error" class="error_span"
+                  >*請輸入活動名稱</span
+                >
               </div>
 
               <div>
@@ -176,10 +189,14 @@
                   name="activity_restaruant"
                   class="form-select border border-2"
                   id="activity_restaruant"
+                  required
                 >
                   <option value="recommand_restaurant">推薦餐廳</option>
                   <!--  -->
                 </select>
+                <span id="activity_restaruant_error" class="error_span"
+                  >*請選擇餐廳</span
+                >
               </div>
 
               <div>
@@ -189,7 +206,11 @@
                   type="date"
                   name="activity_date"
                   id="activity_date"
+                  required
                 />
+                <span id="activity_date_error" class="error_span"
+                  >*請選擇日期</span
+                >
               </div>
 
               <div>
@@ -201,7 +222,11 @@
                   class="form-control border border-2"
                   name="regesteration_starting_time"
                   id="regesteration_starting_time"
+                  required
                 />
+                <span id="regesteration_starting_time_error" class="error_span"
+                  >*請選擇日期</span
+                >
               </div>
 
               <div>
@@ -213,7 +238,11 @@
                   class="form-control border border-2"
                   name="regesteration_ending_time"
                   id="regesteration_ending_time"
+                  required
                 />
+                <span id="regesteration_ending_time_error" class="error_span"
+                  >*請選擇日期</span
+                >
               </div>
 
               <div>
@@ -225,7 +254,11 @@
                   class="form-control border border-2"
                   name="activity_starting_time"
                   id="activity_starting_time"
+                  required
                 />
+                <span id="activity_starting_time_error" class="error_span"
+                  >*請選擇時間</span
+                >
               </div>
 
               <div>
@@ -237,27 +270,40 @@
                   class="form-control border border-2"
                   name="activity_ending_time"
                   id="activity_ending_time"
+                  required
                 />
+                <span id="activity_ending_time_error" class="error_span"
+                  >*請選擇時間</span
+                >
               </div>
 
               <div>
                 <label class="form-label" for="min_number">最少參加人數</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control border border-2"
-                  name="min_member"
-                  id="min_member"
+                  name="min_number"
+                  id="min_number"
+                  min="1"
+                  required
                 />
+                <span id="min_number_error" class="error_span"
+                  >*請填入最少人數</span
+                >
               </div>
 
               <div>
                 <label class="form-label" for="max_number">最多參加人數</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control border border-2"
-                  name="max_member"
-                  id="max_member"
+                  name="max_number"
+                  id="max_number"
+                  required
                 />
+                <span id="max_number_error" class="error_span"
+                  >*請填入最多人數</span
+                >
               </div>
             </section>
             <!-- 表單右側 -->
@@ -272,7 +318,12 @@
                   class="form-control border border-2"
                   name="activity_photo"
                   id="activity_photo"
+                  accept=".jpg, .jpeg, .png"
+                  required
                 />
+                <span id="activity_photo_error" class="error_span"
+                  >*請上傳照片</span
+                >
                 <div class="show_photo mt-3 border border-2">照片預覽</div>
               </div>
 
@@ -392,5 +443,6 @@
     <!-- 引入自己的JS -->
     <script src="./js/vendors/jquery/jquery-3.4.1.min.js"></script>
     <script src="./js/activity/activity_estiblish.js"></script>
+    <script src="./js/activity/activity_login.js"></script>
   </body>
 </html>

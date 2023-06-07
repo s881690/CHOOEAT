@@ -7,11 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="icon" href="./images/header/logo2.png" />
     <!-- 引入bootstrap -->
     <link rel="stylesheet" href="./styles/bootstrap/bootstrap.min.css" />
 
     <!-- 以下引入我們自己寫的css -->
     <link rel="stylesheet" href="./styles/activity/activity.css" />
+    <link rel="stylesheet" href="./styles/activity/loading.css" />
   </head>
 
   <body>
@@ -57,6 +59,14 @@
               >
                 <img src="./images/header/member_icon.png" />
               </a>
+              <span
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  vertical-align: middle;
+                "
+                id="sname"
+              ></span>
             </p>
           </div>
           <!-- 這個button是漢堡選單的menu按鈕 -->
@@ -102,7 +112,6 @@
         </div>
       </nav>
     </header>
-
     <!-- 以下為內容區域，主要對這裡做修改 -->
     <div class="main_content">
       <div class="activity_main_search h-100">
@@ -115,7 +124,7 @@
               style="--bs-breadcrumb-divider: '>'"
               aria-label="breadcrumb"
             >
-              <ol class="breadcrumb">
+              <ol class="breadcrumb pt-3 ps-3">
                 <li class="breadcrumb-item">
                   <a href="#" class="normal_a">首頁</a>
                 </li>
@@ -149,6 +158,13 @@
           </div>
 
           <!--活動列表-->
+          <!-- loading圈圈 -->
+          <div id="loadingContainer" class="loading text-center">
+            <div class="loading-container">
+              <div class="spinner"></div>
+              <h2>Loading...</h2>
+            </div>
+          </div>
           <div class="row justify-content-center activity_list">
             <div class="row card_list"></div>
           </div>

@@ -1,3 +1,19 @@
+//===========
+let account = JSON.parse(sessionStorage.getItem("loginReq"));
+if (sessionStorage.getItem("loginReq") != null) {
+	document.getElementById("sname").innerHTML = account.acc_name;
+
+}
+//=================================================================
+// 拿到會員icon
+let accountIcon = $("a.accountIcon");
+// console.log(accountIcon);
+// 會員中心的判斷
+if (account != null) {
+  accountIcon.attr("href", "../account/usercenter.html");
+} else {
+  accountIcon.attr("href", "../account/login.html");
+}
 // ================================== 後端 ===================================
 // 獲取購物車內容並顯示在畫面上
 function displayCart() {
@@ -7,19 +23,22 @@ function displayCart() {
 	fetch(url)
 		.then(function(response) { return response.json(); })
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			const productsMap = data;
 			for (let [productId, value] of Object.entries(productsMap)) {
 				const key = productId;
 				const productName = value.productName;
 				const productPrice = value.price.toLocaleString();
 				const productqty = value.qty;
+				const uint8Array = new Uint8Array(value.prodPic);
+				let blob = new Blob([uint8Array], { type: "image/*" });
+				let imageUrl = URL.createObjectURL(blob);
 				cartContainer.innerHTML += `
 					<div data-product-id="${key}" class="prod">
 						<table>
 							<tr>
 								<td><input type="checkbox" class="prod_checkbox" /></td>
-								<td width="120"><img src="./chooeat/images/mall_image/mall4.jpg" class="prod_img" /></td>
+								<td width="120"><img src="${imageUrl}" class="prod_img" /></td>
 								<td>
 									<h5 data-product-name="${productName}">${productName}</h5>
 									<span style="color: gray;">單人｜平日晚餐</span>
@@ -390,28 +409,37 @@ function bindEventsToElements() {
 				selectedProducts.push(productId);
 			}
 		});
-		console.log(selectedProducts);
+//		console.log(selectedProducts);
 		jsonselectedProducts = JSON.stringify(selectedProducts);
-		console.log(jsonselectedProducts);
+//		console.log(jsonselectedProducts);
 	} 
 	var btn_pay_el = document.getElementById("pay");
+	
 	btn_pay_el.addEventListener("click", function() {
-		console.log("T");
-		console.log(jsonselectedProducts);
-		fetch('checkout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
-		})
-			.then(data => {
-				console.log("d");
-				window.location.href = 'mall_checkout.html';
+		// 判斷是否已登入
+		 let account = JSON.parse(sessionStorage.getItem("loginReq"));
+		 console.log(account);
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先進行登入");
+      return;
+    }else{
+				console.log("T");
+			console.log(jsonselectedProducts);
+			fetch('checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
 			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(data => {
+					console.log("d");
+					window.location.href = 'mall_checkout.html';
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
 	});
 }
 

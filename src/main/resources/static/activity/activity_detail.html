@@ -7,6 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="icon" href="./images/header/logo2.png" />
     <!-- 引入bootstrap -->
     <link rel="stylesheet" href="./styles/bootstrap/bootstrap.min.css" />
 
@@ -59,11 +60,19 @@
                 <img src="./images/header/shopping_cart_Icon.png" />
               </a>
               <a
-                href="#"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
+                href="../account/login.html"
+                class="d-flex align-items-center justify-content-center mr-1 icon accountIcon"
               >
                 <img src="./images/header/member_icon.png" />
               </a>
+              <span
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  vertical-align: middle;
+                "
+                id="sname"
+              ></span>
             </p>
           </div>
           <!-- 這個button是漢堡選單的menu按鈕 -->
@@ -122,7 +131,7 @@
               style="--bs-breadcrumb-divider: '>'"
               aria-label="breadcrumb"
             >
-              <ol class="breadcrumb">
+              <ol class="breadcrumb pt-3 ps-3">
                 <li class="breadcrumb-item">
                   <a href="#" class="normal_a">首頁</a>
                 </li>
@@ -154,7 +163,7 @@
           <!-- 活動詳細資訊 -->
           <!-- 圖片 -->
           <div class="row mt-5">
-            <div class="col activity_img">
+            <div class="col activity_img" style="height: 40vh">
               <img
                 src="./images/reservation_image/res_exp.png"
                 alt="活動上傳照片"
@@ -191,20 +200,6 @@
                 corrupti, nisi fuga cupiditate atque cum debitis iste tempora.
                 Quo error totam ea dolore!
               </div>
-
-              <!-- 認識主辦人 -->
-              <div class="activity_host row align-items-center">
-                <div class="col">
-                  <h3 class="fw-bolder">認識主辦人</h3>
-                </div>
-                <div class="col">
-                  <img
-                    src="https://fakeimg.pl/250x250/"
-                    alt="大頭照"
-                    class="border rounded-circle img-fluid"
-                  />
-                </div>
-              </div>
             </div>
 
             <!-- 報名、檢舉、googlemap等側邊攔 -->
@@ -212,13 +207,26 @@
               <div class="btns mb-5">
                 <div class="mb-2 signup row">
                   <div
-                    class="btn btn-outline-info col me-3 outter_signup"
+                    class="btn btn-outline-info col me-3 outter_signup signup_and_edit mb-3"
                     data-bs-toggle="modal"
                     data-bs-target="#signup"
                   >
                     報名
                   </div>
-                  <div class="btn btn-outline-success pe-2 col">邀請好友</div>
+                  <!-- 認識主辦人 -->
+                  <!-- <div class="activity_host row align-items-center">
+                    <div class="col">
+                      <h3 class="fw-bolder">認識主辦人</h3>
+                    </div>
+                    <div class="col">
+                      <img
+                        src="https://fakeimg.pl/250x250/"
+                        alt="大頭照"
+                        class="border rounded-circle img-fluid"
+                      />
+                    </div>
+                  </div> -->
+                  <!-- <div class="btn btn-outline-success pe-2 col">邀請好友</div> -->
                   <!-- 報名彈窗 -->
                   <div
                     class="modal fade"
@@ -268,11 +276,10 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="other_btns">
-                  <div class="btn btn-outline-dark">有興趣</div>
-                  <div class="btn btn-outline-success pe-2">邀請好友</div>
-                  <div class="btn btn-outline-danger">檢舉</div>
-                </div> -->
+                <div class="other_btns row">
+                  <!-- <div class="btn btn-outline-success pe-2">邀請好友</div>
+                  <div class="btn btn-outline-danger">檢舉</div> -->
+                </div>
               </div>
               <div class="map mb-5 rounded-3" id="map">
                 <!-- <iframe
@@ -286,7 +293,7 @@
               </div>
 
               <!-- 邀請好友列表 -->
-              <div class="list-group invite_friends">
+              <!-- <div class="list-group invite_friends">
                 <h3 class="text-center">邀請你的飯友</h3>
                 <div class="list-group-item list-group-item-action">
                   <img class="me-3" src="" alt="大頭照" />
@@ -304,7 +311,7 @@
                   <img class="me-3" src="" alt="大頭照" />
                   <p>用戶名稱</p>
                 </div>
-              </div>
+              </div> -->
             </aside>
           </div>
         </div>
@@ -351,6 +358,7 @@
     <script src="./js/vendors/jquery/jquery-3.4.1.min.js"></script>
     <!-- 引入 自訂 JS -->
     <script src="./js/activity/activity_detail.js"></script>
+    <script src="./js/activity/activity_login.js"></script>
     <script
       defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkEiyAHe2LCJvgDJ-F4aY5xBaPRNWmsFg&callback=initMap"

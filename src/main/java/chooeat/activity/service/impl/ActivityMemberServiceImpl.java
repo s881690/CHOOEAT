@@ -2,6 +2,8 @@ package chooeat.activity.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +43,7 @@ public class ActivityMemberServiceImpl implements ActivityMemberService{
 
 	}
 
+	@Transactional
 	@Override
 	public String deleteMember(Integer accId) {
 		try {
@@ -62,6 +65,12 @@ public class ActivityMemberServiceImpl implements ActivityMemberService{
 			return null;
 		}
 		
+		return list;
+	}
+
+	@Override
+	public List<ActivityMemberVO> findByAccNameAndActivityId(String accName, Integer activityId) {
+		List<ActivityMemberVO> list = activityMemberRepository.findByAccNameAndActivityId(accName, activityId);
 		return list;
 	};
 	

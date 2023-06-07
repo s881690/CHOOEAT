@@ -5,13 +5,15 @@ body {
 body header {
   background-color: white;
   /* 設定固定寬，在進行RWD設計之前不可移除，同樣設定會出現在內容區塊的DIV標籤及FOOTER */
-  width: 1200px;
   margin: 0 auto;
   border-bottom: 1px solid black;
-  position: sticky;
   top: 0px;
   /* 圖層為最上層 */
   z-index: 100;
+}
+body header a.navbar-brand img {
+  height: 10vh;
+  width: auto;
 }
 body header nav.navbar div.container div.collapse {
   /* border: 1px solid green; */
@@ -46,29 +48,32 @@ body li.active {
 body div.main_content {
   min-height: calc(100% - 25vh);
 }
-body div.main_content div.activity_main {
-  /* height: 80vh; */
-  /* border: 1px solid red; */
-  margin-bottom: 1rem !important;
+body div.main_content div.bread_and_search li {
+  font-size: 20px;
 }
-body div.main_content div.activity_main div.container div.bread_and_search {
-  margin-top: 15px;
+body div.main_content div.bread_and_search li a {
+  font-size: 20px;
 }
-body div.main_content div.activity_main div.container div.bread_and_search form.search {
+body div.main_content div.bread_and_search form.search {
   display: flex;
   align-items: center;
   justify-content: end;
 }
-body div.main_content div.activity_main div.container div.bread_and_search form.search button.submit {
+body div.main_content div.bread_and_search form.search button.submit {
   margin-left: 10px;
   width: 50px;
   height: auto;
   border: none;
   background-color: white;
 }
-body div.main_content div.activity_main div.container div.bread_and_search form.search button.submit img {
+body div.main_content div.bread_and_search form.search button.submit img {
   width: 100%;
   height: 100%;
+}
+body div.main_content div.activity_main {
+  /* height: 80vh; */
+  /* border: 1px solid red; */
+  margin-bottom: 1rem !important;
 }
 body div.main_content div.activity_main div.container div.activity_list {
   /* border: 1px solid blue; */
@@ -89,7 +94,8 @@ body div.main_content div.activity_main div.container div.activity_list div.card
   pointer-events: none;
 }
 body div.main_content div.activity_main div.container div.activity_list a.viewmore {
-  padding-left: 92%;
+  padding-left: 88%;
+  margin-right: 2%;
 }
 body div.main_content div.activity_main div.container div.seperate_line {
   margin-top: 10vh;
@@ -139,25 +145,6 @@ body div.main_content div.activity_main_search {
   /* height: 80vh; */
   /* border: 1px solid red; */
   margin-bottom: 1rem !important;
-}
-body div.main_content div.activity_main_search div.container div.bread_and_search {
-  margin-top: 15px;
-}
-body div.main_content div.activity_main_search div.container div.bread_and_search form.search {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-body div.main_content div.activity_main_search div.container div.bread_and_search form.search button.submit {
-  margin-left: 10px;
-  width: 50px;
-  height: auto;
-  border: none;
-  background-color: white;
-}
-body div.main_content div.activity_main_search div.container div.bread_and_search form.search button.submit img {
-  width: 100%;
-  height: 100%;
 }
 body div.main_content div.activity_main_search div.container div.activity_list {
   /* border: 1px solid blue; */
@@ -212,25 +199,6 @@ body div.main_content div.activity_establish_container div.activity_establish bu
   padding: 15px 20px 15px 20px;
   border-radius: 15px;
 }
-body div.main_content div.activity_establish_main div.container div.bread_and_search {
-  margin-top: 15px;
-}
-body div.main_content div.activity_establish_main div.container div.bread_and_search form.search {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-body div.main_content div.activity_establish_main div.container div.bread_and_search form.search button.submit {
-  margin-left: 10px;
-  width: 50px;
-  height: auto;
-  border: none;
-  background-color: white;
-}
-body div.main_content div.activity_establish_main div.container div.bread_and_search form.search button.submit img {
-  width: 100%;
-  height: 100%;
-}
 body div.main_content div.activity_establish_main div.container div.activity_title {
   margin-top: 20px;
   margin-bottom: 15px;
@@ -243,6 +211,12 @@ body div.main_content div.activity_establish_main div.container form.activity_es
   border-radius: 1rem;
   padding: 1rem;
   margin-bottom: 10px;
+  margin-left: 3vh;
+  margin-right: 3vh;
+}
+body div.main_content div.activity_establish_main div.container form.activity_establish_form span.error_span {
+  display: none;
+  color: red;
 }
 body div.main_content div.activity_establish_main div.container form.activity_establish_form section.activity_establish_form_left div {
   margin-bottom: 20px;
@@ -267,28 +241,7 @@ body div.main_content div.activity_establish_main div.container form.activity_es
   justify-content: center;
 }
 body div.main_content div.activity_main_detail {
-  /* height: 80vh; */
-  /* border: 1px solid red; */
   margin-bottom: 1rem !important;
-}
-body div.main_content div.activity_main_detail div.container div.bread_and_search {
-  margin-top: 15px;
-}
-body div.main_content div.activity_main_detail div.container div.bread_and_search form.search {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-body div.main_content div.activity_main_detail div.container div.bread_and_search form.search button.submit {
-  margin-left: 10px;
-  width: 50px;
-  height: auto;
-  border: none;
-  background-color: white;
-}
-body div.main_content div.activity_main_detail div.container div.bread_and_search form.search button.submit img {
-  width: 100%;
-  height: 100%;
 }
 body div.main_content div.activity_main_detail div.container div.activity_img {
   display: flex;
@@ -340,22 +293,19 @@ body div.main_content div.activity_main_detail div.container div.activity_detail
   text-align: center;
   margin-bottom: 0;
 }
-body div.main_content div.activity_main_organizer div.container div.bread_and_search {
-  margin-top: 15px;
-}
-body div.main_content div.activity_main_organizer div.container div.bread_and_search form.search {
+body div.main_content div.activity_main_organizer div.container form.participant_search {
   display: flex;
   align-items: center;
   justify-content: end;
 }
-body div.main_content div.activity_main_organizer div.container div.bread_and_search form.search button.submit {
+body div.main_content div.activity_main_organizer div.container form.participant_search button.submit {
   margin-left: 10px;
   width: 50px;
   height: auto;
   border: none;
   background-color: white;
 }
-body div.main_content div.activity_main_organizer div.container div.bread_and_search form.search button.submit img {
+body div.main_content div.activity_main_organizer div.container form.participant_search button.submit img {
   width: 100%;
   height: 100%;
 }
@@ -377,10 +327,12 @@ body div.main_content div.activity_main_organizer div.container form.participant
 }
 body div.footer_container {
   background-color: blanchedalmond;
-  height: 25vh;
+  height: 23vh;
+  margin-top: 6vh;
 }
 body div.footer_container footer ul li.nav-item a {
   color: black !important;
+  font-size: small;
 }
 body div.footer_container footer ul li.nav-item a:hover {
   font-weight: bolder;
@@ -388,6 +340,7 @@ body div.footer_container footer ul li.nav-item a:hover {
 }
 body div.footer_container footer p {
   color: black !important;
+  font-size: small;
 }
 body div.footer_container footer p:hover {
   font-weight: bolder;

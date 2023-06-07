@@ -9,6 +9,26 @@ public class EmailInfo {
 	private Integer reservationNumber;
 	private String reservationTime;
 	private String restaurantName;
+	private String restaurantPhone;
+	private Integer isNotify;
+	
+	
+	public Integer getIsNotify() {
+		return isNotify;
+	}
+
+	public void setIsNotify(Integer isNotify) {
+		this.isNotify = isNotify;
+	}
+
+	public String getRestaurantPhone() {
+		return restaurantPhone;
+	}
+
+	public void setRestaurantPhone(String restaurantPhone) {
+		this.restaurantPhone = restaurantPhone;
+	}
+
 	private String restaurantAddress;
 	private String recipient;
 

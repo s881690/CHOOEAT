@@ -1,14 +1,33 @@
+
 //===============================================================================
 var productName;
 var price;
 var resName;
 var btn_add_cart_el;
 var productId;
+var prodPic;
+let account;
 const overlay = document.querySelector(".confirmation-overlay");
 const confirmationBox = document.querySelector(".confirmation-box");
 //const confirmBtn = document.querySelector(".confirm-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
 var star;
+//===========
+account = JSON.parse(sessionStorage.getItem("loginReq"));
+if (sessionStorage.getItem("loginReq") != null) {
+	document.getElementById("sname").innerHTML = account.acc_name;
+
+}
+//=================================================================
+// 拿到會員icon
+let accountIcon = $("a.accountIcon");
+// console.log(accountIcon);
+// 會員中心的判斷
+if (account != null) {
+  accountIcon.attr("href", "../account/usercenter.html");
+} else {
+  accountIcon.attr("href", "../account/login.html");
+}
 // ========================從URL獲取商品ID並獲取詳細資料====================================
 document.addEventListener("DOMContentLoaded", function() {
 	productId = getProductIdFromURL();
@@ -32,9 +51,9 @@ function formatTimestamp(timestampString) {
 }
 //===================================送到餐券詳細頁面=================================
 function initMap() {
-	const uluru = { lat: -25.344, lng: 131.031 };
+	const uluru = { lat: 25.105, lng: 121.597 };
 	const map = new google.maps.Map(document.getElementById("map"), {
-		zoom: 14,
+		zoom: 10,
 		center: uluru,
 	});
 	const marker = new google.maps.Marker({
@@ -50,7 +69,7 @@ function getProductDetails(productId) {
 	fetch(url, { signal: fetchSignal })
 		.then(response => response.json())
 		.then(data => {
-//			console.log(data);
+			//			console.log(data);
 			const prod = data.prod;
 			const orderDetails = data.orderDetails;
 			const address = prod.resAdd;
@@ -58,6 +77,13 @@ function getProductDetails(productId) {
 			productName = prod.resName + "｜" + prod.prodName;
 			price = prod.prodPrice.toLocaleString();
 			star = Math.floor(prod.prodCommentScore);
+			prodPic = prod.prodPic;
+			const uint8Array = new Uint8Array(prod.prodPic);
+			let blob = new Blob([uint8Array], { type: "image/*" });
+			let imageUrl = URL.createObjectURL(blob);
+
+			document.getElementById("prodpic").src = `${imageUrl}`;
+
 			document.getElementById("breadcrumb-page").innerHTML = `
 			${prod.resName} | ${prod.prodName}
 			`;
@@ -85,8 +111,8 @@ function getProductDetails(productId) {
 				document.getElementById("comment").innerHTML = `<h2 style="margin-top:30px; text-align: center;">尚未有任何評論。</h2>`;
 			} else {
 				for (let orderDetail of orderDetails) {
+					console.log(orderDetail);
 					const star = Math.floor(orderDetail.prodCommentScore);
-					// 星星
 					let starHtml = '';
 					for (let i = 1; i <= 5; i++) {
 						if (i <= star) {
@@ -95,30 +121,34 @@ function getProductDetails(productId) {
 							starHtml += `<span class="star" data-star="${i}" style="padding-right:3px;"><i class="fas fa-star"></i></span>`;
 						}
 					}
-					document.getElementById("comment").innerHTML += `
-			<div class="acc_profiles">
-                    <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
-                    <div class="nameandStar">
-                      <div class="acc_name">${orderDetail.accName}</div>
-                      <div class="dot3">
-                       <input type="submit" id="more_button" class="more" value="" data-order-detail-id="${orderDetail.orderDetailId}"
-							style="background-image: url(./chooeat/images/mall_image/more.png);">
-                    </div>
-                      <br />
-                      <div class="commemt_star_block">
-                       ${starHtml}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="comment_area">
-                    <div>${formatTimestamp(orderDetail.prodCommentTimestamp)} 單人｜平日晚餐</div>
-                    <div class="comment_text">
-                     ${orderDetail.prodCommentText}
-                    </div>
-                  </div>
-                  <hr class="comment_hr" style="border: 1.3px solid; margin-bottom:15px;" />`;
+					if (orderDetail.prodCommentScore !== 0) {
+						document.getElementById("comment").innerHTML += `
+        <div class="acc_profiles">
+          <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
+          <div class="nameandStar">
+            <div class="acc_name">${orderDetail.accName}</div>
+            <div class="dot3">
+              <input type="submit" id="more_button" class="more" value="" data-order-detail-id="${orderDetail.orderDetailId}"
+                style="background-image: url(./chooeat/images/mall_image/more.png);">
+            </div>
+            <br />
+            <div class="commemt_star_block">
+              ${starHtml}
+            </div>
+          </div>
+        </div>
+        <div class="comment_area">
+          <div>${formatTimestamp(orderDetail.prodCommentTimestamp)} 單人｜平日晚餐</div>
+          <div class="comment_text">
+            ${orderDetail.prodCommentText}
+          </div>
+        </div>
+        <hr class="comment_hr" style="border: 1.3px solid; margin-bottom:15px;" />
+      `;
+					}
 				}
 			}
+
 
 			document.getElementById("price").innerHTML = ` NT $${price}`;
 			//              <div class="prod">
@@ -196,16 +226,25 @@ function bindEventsToElements() {
 			var productId = new URLSearchParams(window.location.search).get("id");
 			var cart_data = {};
 
+			if (sessionStorage.getItem("loginReq")) {
+				var account = JSON.parse(sessionStorage.getItem("loginReq"));
+				cart_data.accId = account.acc_id;
+			} else {
+				cart_data.accId = "";
+			}
+
 			cart_data.productId = productId;
 			cart_data.resName = resName;
+			cart_data.accId = account.acc_id;
 			cart_data.productName = productName;
 			cart_data.price = price;
 			cart_data.qty = 1;
+			cart_data.prodPic = prodPic;
 			console.log(cart_data);
 
 			sessionStorage.setItem("form_data", JSON.stringify(cart_data));
 			fetchController.abort();
-			location.href = "mall_add_cart.html";
+						location.href = "mall_add_cart.html";
 		});
 	}
 	// ==========
@@ -214,22 +253,33 @@ function bindEventsToElements() {
 	selectedProducts.push(productId);
 	var btn_pay_el = document.getElementById("pay_immediately");
 	btn_pay_el.addEventListener("click", function() {
-		console.log("T");
-		console.log(selectedProducts);
-		fetch('checkout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
-		})
-			.then(data => {
-				console.log("d");
-				window.location.href = 'mall_checkout.html';
+
+
+		account = JSON.parse(sessionStorage.getItem("loginReq"));
+		//		console.log(account);
+//		console.log(account.acc_id);
+		if (sessionStorage.getItem("loginReq") == null) {
+			alert("請先進行登入");
+			return;
+		} else {
+
+			console.log("T");
+			console.log(selectedProducts);
+			fetch('checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
 			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(data => {
+					console.log("d");
+										window.location.href = 'mall_checkout.html';
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
 	});
 	// === more_btn ===
 	const confirmationBox = $(".confirmation-box");
@@ -285,7 +335,7 @@ function bindEventsToElements() {
 			})
 				.then(function(response) { return response.json(); })
 				.then((data) => {
-					 console.log(data);
+					console.log(data);
 				})
 				.catch((error) => {
 					console.log("哀哀哀：" + error);
