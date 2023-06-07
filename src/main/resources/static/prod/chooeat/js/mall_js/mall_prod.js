@@ -24,9 +24,9 @@ let accountIcon = $("a.accountIcon");
 // console.log(accountIcon);
 // 會員中心的判斷
 if (account != null) {
-  accountIcon.attr("href", "../account/usercenter.html");
+	accountIcon.attr("href", "../account/usercenter.html");
 } else {
-  accountIcon.attr("href", "../account/login.html");
+	accountIcon.attr("href", "../account/login.html");
 }
 // ========================從URL獲取商品ID並獲取詳細資料====================================
 document.addEventListener("DOMContentLoaded", function() {
@@ -104,7 +104,7 @@ function getProductDetails(productId) {
 			                 <li>${prod.prodUserguide}</li>
 			                </ul>`;
 			document.getElementById("star_score").innerHTML = `
-			${prod.prodCommentScore.toFixed(1)} <span style="font-size: 16px;">/ 5</span>
+			${prod.prodCommentScore} <span style="font-size: 18px;">/ 5</span>
 			`;
 
 			if (orderDetails.length === 0) {
@@ -244,7 +244,7 @@ function bindEventsToElements() {
 
 			sessionStorage.setItem("form_data", JSON.stringify(cart_data));
 			fetchController.abort();
-						location.href = "mall_add_cart.html";
+			location.href = "mall_add_cart.html";
 		});
 	}
 	// ==========
@@ -257,7 +257,7 @@ function bindEventsToElements() {
 
 		account = JSON.parse(sessionStorage.getItem("loginReq"));
 		//		console.log(account);
-//		console.log(account.acc_id);
+		//		console.log(account.acc_id);
 		if (sessionStorage.getItem("loginReq") == null) {
 			alert("請先進行登入");
 			return;
@@ -274,7 +274,7 @@ function bindEventsToElements() {
 			})
 				.then(data => {
 					console.log("d");
-										window.location.href = 'mall_checkout.html';
+					window.location.href = 'mall_checkout.html';
 				})
 				.catch(error => {
 					console.error('Error:', error);
@@ -386,4 +386,78 @@ function prodStar() {
 			$(this).removeClass("-on");
 		}
 	});
+}
+// ==========================================
+// 獲取所有按鈕元素
+var buttons = document.getElementsByClassName("star_filter_all");
+// 綁定按鈕點擊事件
+for (var i = 0; i < buttons.length; i++) {
+	buttons[i].addEventListener("click", filterComments(rating));
+}
+// 評論篩選函式
+function filterComments(rating) {
+	var starRating = rating; // 獲取按鈕的值
+	console.log(starRating);
+	const url = "prod/commentSort?sort=" + starRating + "&id=" + productId;
+	const requestOptions = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({})
+	};
+	fetch(url, requestOptions)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(orderDetails => {
+			if (orderDetails.length === 0) {
+				document.getElementById("comment").innerHTML = `<h2 style="margin-top:30px; text-align: center;">尚未有任何評論。</h2>`;
+			} else {
+				document.getElementById("comment").innerHTML = "";
+				for (let orderDetail of orderDetails) {
+					console.log(orderDetail);
+
+					const star = Math.floor(orderDetail.prodCommentScore);
+					let starHtml = '';
+					for (let i = 1; i <= 5; i++) {
+						if (i <= star) {
+							starHtml += `<span class="star -on" data-star="${i}" style="padding-right:3px;"><i class="fas fa-star"></i></span>`;
+						} else {
+							starHtml += `<span class="star" data-star="${i}" style="padding-right:3px;"><i class="fas fa-star"></i></span>`;
+						}
+					}
+					if (orderDetail.prodCommentScore !== 0) {
+						document.getElementById("comment").innerHTML += `
+        <div class="acc_profiles">
+          <div class="acc_photo" style="background-image: url('./chooeat/images/header/logo2.png');"></div>
+          <div class="nameandStar">
+            <div class="acc_name">${orderDetail.accName}</div>
+            <div class="dot3">
+              <input type="submit" id="more_button" class="more" value="" data-order-detail-id="${orderDetail.orderDetailId}"
+                style="background-image: url(./chooeat/images/mall_image/more.png);">
+            </div>
+            <br />
+            <div class="commemt_star_block">
+              ${starHtml}
+            </div>
+          </div>
+        </div>
+        <div class="comment_area">
+          <div>${formatTimestamp(orderDetail.prodCommentTimestamp)} 單人｜平日晚餐</div>
+          <div class="comment_text">
+            ${orderDetail.prodCommentText}
+          </div>
+        </div>
+        <hr class="comment_hr" style="border: 1.3px solid; margin-bottom:15px;" />
+      `;
+					}
+				}
+			}
+		})
+		.catch(error => {
+			console.error('發生錯誤:', error);
+		});
+
+	console.log("篩選評論：" + starRating);
 }

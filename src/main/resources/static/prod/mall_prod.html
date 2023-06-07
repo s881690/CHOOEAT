@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="./chooeat/styles/main_content/mall_prod.css" />
   </head>
 
+<<<<<<< HEAD
   <body>
     <header>
       <!-- 設定導覽列標籤在桌機以上size展開 -->
@@ -45,6 +46,24 @@
         <!-- div class="container-fluid"置中且滿版 -->
         <div class="container">
           <!-- .navbar-brand 標示為公司，產品或專案名稱。
+=======
+<!-- 以下引入我們自己寫的css -->
+<link rel="stylesheet" href="./chooeat/styles/header/footer.css" />
+<link rel="stylesheet" href="./chooeat/styles/header/header.css" />
+<link rel="stylesheet" href="./chooeat/styles/all/all.css" />
+<link rel="stylesheet"
+	href="./chooeat/styles/main_content/mall_prod.css" />
+
+</head>
+
+<body>
+	<header>
+		<!-- 設定導覽列標籤在桌機以上size展開 -->
+		<nav class="navbar navbar-expand-lg" id="navbar">
+			<!-- div class="container-fluid"置中且滿版 -->
+			<div class="container">
+				<!-- .navbar-brand 標示為公司，產品或專案名稱。
+>>>>>>> joanne
               這裡放的是chooeat文字logo
                       這裡的連結之後要改，跳轉到首頁
                   內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
@@ -74,7 +93,8 @@
 							src="./chooeat/images/header/carts.png" />
 						</a> <a href="../account/login.html" class="accountIcon"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
-							<img style="width: 40px; height: 40px; margin-right: 5px;" src="./chooeat/images/header/profile.png" />
+							<img style="width: 40px; height: 40px; margin-right: 5px;"
+							src="./chooeat/images/header/profile.png" />
 						</a> <span
 							style="display: inline-flex; align-items: center; vertical-align: middle; margin-left: 10px;"
 							id="sname"></span>
@@ -92,7 +112,7 @@
 						class="navbar-nav d-flex align-items-center justify-content-center"
 						style="gap: 1rem">
 						<li class="nav-item"><a href="../restaurant/Homepage.html"
-							class="nav-link"style=" margin-left: 100px;" >首頁</a></li>
+							class="nav-link" style="margin-left: 100px;">首頁</a></li>
 						<li class="nav-item"><a href="../restaurant/Homepage.html"
 							class="nav-link">找餐廳</a></li>
 						<li class="nav-item"><a href="mall.html" class="nav-link">找餐券</a></li>
@@ -105,6 +125,7 @@
 		</nav>
 	</header>
 
+<<<<<<< HEAD
     <!-- 以下為內容區域，主要對這裡做修改 -->
     <div id="product-details" class="main_content">
       <div id="product-details" class="main_content">
@@ -254,9 +275,116 @@
         </div>
       </div>
     </div>
+=======
+	<!-- 以下為內容區域，主要對這裡做修改 -->
+	<div id="product-details" class="main_content">
+
+		<div id="product-details" class="main_content">
+			<div class="container">
+				<div class="row">
+					<div class="breadcrumbandSearch">
+						<nav class="breadcrumbandSearch"
+							style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a
+									href="../restaurant/Homepage.html">主頁</a></li>
+								<li class="breadcrumb-item"><a href="mall.html">找餐券</a></li>
+								<li id="breadcrumb-page" class="breadcrumb-item active"
+									aria-current="page"></li>
+							</ol>
+						</nav>
+						<div class="search_area">
+							<input type="text" id="search_text" class="search_text"
+								name="search"> <input type="hidden" name="action"
+								value="getByCompositeQuery"> <input type="submit"
+								id="search_button" class="search_button" value=""
+								style="background-image: url(./chooeat/images/mall_image/search.png);">
+						</div>
+					</div>
+					<div class="parent_container">
+						<main class="main">
+							<div class="prodpicArea">
+								<img id="prodpic" src="">
+							</div>
+							<!--               <div id="carouselExampleIndicators" class="carousel slide carousel-dark" data-bs-ride="carousel"> -->
+							<!--                 <div class="carousel-indicators"> -->
+							<!--                   <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> -->
+							<!--                   <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> -->
+							<!--                   <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
+							<!--                 </div> -->
+							<!--                 <div class="carousel-inner"> -->
+							<!--                   <div class="carousel-item active"><img src="./chooeat/images/mall_image/mall1.jpg" class="d-block prod_img" alt="..."></div> -->
+							<!--                   <div class="carousel-item"><img src="./chooeat/images/mall_image/mall2.jpg" class="d-block prod_img" alt="..."></div> -->
+							<!--                   <div class="carousel-item"><img src="./chooeat/images/mall_image/mall3.jpg" class="d-block prod_img" alt="..."></div> -->
+							<!--                 </div> -->
+							<!--                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"> -->
+							<!--                   <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+							<!--                   <span class="visually-hidden">Previous</span> -->
+							<!--                 </button> -->
+							<!--                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"> -->
+							<!--                   <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+							<!--                   <span class="visually-hidden">Next</span> -->
+							<!--                 </button> -->
+							<!--               </div> -->
+							<div class="prod">
+								<div id="prodInfor"></div>
+								<div id="map"></div>
+
+							</div>
+							<div class="prod" id="prodText"></div>
+							<div class="prod" id="prodUserguide"></div>
+							<div class="prod">
+								<span class="prodTitle">商品評價</span> <br />
+								<div class="star_area">
+									<span id="star_score" class="star_score"></span> <span
+										class="star_block"> <span class="star" data-star="1"><i
+											class="fas fa-star"></i></span> <span class="star" data-star="2"><i
+											class="fas fa-star"></i></span> <span class="star" data-star="3"><i
+											class="fas fa-star"></i></span> <span class="star" data-star="4"><i
+											class="fas fa-star"></i></span> <span class="star" data-star="5"><i
+											class="fas fa-star"></i></span>
+									</span>
+									<div class="star_filter">
+										<button class="star_filter_all"
+											onclick="filterComments('all')">全部</button>
+										<button class="star_filter_all" onclick="filterComments('5')">五星</button>
+										<button class="star_filter_all" onclick="filterComments('4')">四星</button>
+										<button class="star_filter_all" onclick="filterComments('3')">三星</button>
+										<button class="star_filter_all" onclick="filterComments('2')">二星</button>
+										<button class="star_filter_all" onclick="filterComments('1')">一星</button>
+									</div>
+								</div>
+								<div class="sort">
+									<div class="sortBy">排序方式</div>
+									<select class="sorting">
+										<option value="" selected>請選擇排序方式</option>
+										<option>評分由高到低</option>
+										<option>評分由低到高</option>
+									</select>
+								</div>
+								<br />
+								<div class="comment" id="comment"></div>
+							</div>
+						</main>
+
+						<aside class="aside">
+							<div class="pay_area">費用詳情</div>
+							<hr />
+							<ul class="price_list">
+								<li>單人｜平日晚餐｜ <span id="price"></span></li>
+							</ul>
+							<br /> <input type="button" id="pay_immediately"
+								class="pay_immediately" value="立即購買" /> <input
+								type="button" id="add_cart" class="add_cart" value="加入購物車" />
+						</aside>
+					</div>
+				</div>
+			</div>
+		</div>
+>>>>>>> joanne
 	</div>
-	
-	
+
+
 	<div class="confirmation-overlay">
 		<div class="confirmation-box">
 			<h5>檢舉評論</h5>
@@ -270,7 +398,7 @@
 		</div>
 	</div>
 	<!-- class="navbar-fixed-bottom"讓footer置底 -->
-		<div class="container-fluid footer_container">
+	<div class="container-fluid footer_container">
 		<footer>
 			<ul
 				class="nav justify-content-center border-bottom pb-3 mb-3 py-2 my-2">
@@ -290,13 +418,16 @@
 			<p class="text-center text-muted mb-0 py-2 my-3">CopyRight &copy;
 				THA101 G4</p>
 		</footer>
-		</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 	<script src="./chooeat/vendors/jquery-3.6.4.min.js"></script>
 	<script src="./chooeat/js/mall_js/mall_prod.js"></script>
-	<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMQXNM3OAmGz9Xj5y1Q7qbEPeg-h4m9Hs&callback=initMap">
+	<script defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMQXNM3OAmGz9Xj5y1Q7qbEPeg-h4m9Hs&callback=initMap">
+		
 	</script>
-<!-- 	<script src="./chooeat/js/mall_js/mall2.js"></script> -->
+	<!-- 	<script src="./chooeat/js/mall_js/mall2.js"></script> -->
 
     <div class="confirmation-overlay">
       <div class="confirmation-box">

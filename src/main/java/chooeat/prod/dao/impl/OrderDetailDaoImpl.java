@@ -191,4 +191,35 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		return null;
 	}
 
+	public List<OrderDetail> selectByProductId(String prodId) {
+	    String sql = "SELECT * FROM ORDER_DETAIL WHERE PROD_ID = ?";
+	    List<OrderDetail> orderDetails = new ArrayList<>();
+
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, prodId);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                OrderDetail orderDetail = new OrderDetail();
+	                orderDetail.setOrderDetailId(rs.getInt("ORDER_DETAIL_ID"));
+	                orderDetail.setOrderId(rs.getInt("ORDER_ID"));
+	                orderDetail.setProdId(rs.getInt("PROD_ID"));
+	                orderDetail.setProdPrice(rs.getInt("PROD_PRICE"));
+	                orderDetail.setOrderProdQty(rs.getInt("ORDER_PROD_QTY"));
+	                orderDetail.setProdCommentScore(rs.getInt("PROD_COMMENT_SCORE"));
+	                orderDetail.setProdCommentText(rs.getString("PROD_COMMENT_TEXT"));
+	                orderDetail.setResProdReplyText(rs.getString("RES_PROD_REPLY_TEXT"));
+	                orderDetail.setProdCommentTimestamp(rs.getTimestamp("PROD_COMMENT_TIMESTAMP"));
+	                orderDetail.setResProdReplyTimestamp(rs.getTimestamp("RES_PROD_REPLY_TIMESTAMP"));
+	                orderDetail.setAccCouponId(rs.getInt("ACC_COUPON_ID"));
+	                orderDetails.add(orderDetail);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return orderDetails;
+	}
 }
