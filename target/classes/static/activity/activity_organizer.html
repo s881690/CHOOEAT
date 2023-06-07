@@ -59,8 +59,8 @@
                 <img src="./images/header/shopping_cart_Icon.png" />
               </a>
               <a
-                href="#"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
+                href="../account/login.html"
+                class="d-flex align-items-center justify-content-center mr-1 icon accountIcon"
               >
                 <img src="./images/header/member_icon.png" />
               </a>
@@ -122,7 +122,7 @@
               style="--bs-breadcrumb-divider: '>'"
               aria-label="breadcrumb"
             >
-              <ol class="breadcrumb">
+              <ol class="breadcrumb pt-3 ps-3">
                 <li class="breadcrumb-item">
                   <a href="#" class="normal_a">首頁</a>
                 </li>
@@ -152,13 +152,13 @@
           </div>
 
           <!-- 搜尋報名人員 -->
-          <form class="participant_search" action="" method="">
+          <form class="participant_search">
             <input
-              class="col-2 rounded-3"
+              class="col-2 rounded-3 member_search_value"
               type="text"
               placeholder="搜尋報名者"
             />
-            <button class="col-2" type="submit">
+            <button class="col-2 member_search" type="submit">
               <img src="./images/search_icon.png" alt="search_icon" />
             </button>
           </form>
@@ -251,5 +251,6 @@
     <script src="./js/activity/activity_organizer.js"></script>
     <!-- 引入 Bootstrap JS -->
     <script src="./js/bootstrap/bootstrap.min.js"></script>
+    <script src="./js/activity/activity_login.js"></script>
   </body>
 </html>

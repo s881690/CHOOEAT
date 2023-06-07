@@ -1,9 +1,11 @@
 package chooeat.activity.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +26,20 @@ public class ActivityEstablishController {
 	
 	
 	@PostMapping("/establish")
-	public ActivityVO establish(@RequestBody ActivityVO activityVO) {
-		return activityService.establish(activityVO);
+	public Object establish(@RequestBody Map<String, String> map) {
+		System.out.println(map);
+		return activityService.establish(map);
 	}
 	
 
 	@GetMapping("/restaurantList")
 	public List<ActivityRestaurantVO> restaurantList(){
 		return activityRestaurantService.restaurantList();
+	}
+	
+	@GetMapping("/findEdit/{activityId}")
+	public Object findEdit(@PathVariable(value = "activityId") Integer activityId) {
+		System.out.println(activityId);
+		return activityService.findEdit(activityId);
 	}
 }

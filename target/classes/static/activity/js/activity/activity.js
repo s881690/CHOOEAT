@@ -16,7 +16,12 @@ function fetch3ActivityList() {
 
       //塞進前三個
       for (let reser of resList3) {
-        console.log(reser);
+        // console.log(reser);
+        let activityDate = reser.activityDate.split(" ");
+        // console.log(activityDate);
+        let month = activityDate[0];
+        let date = activityDate[1].split(",")[0];
+        let year = activityDate[2];
         let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
         image.src = `data:image/*;base64,${base64Photo}`;
@@ -36,10 +41,11 @@ function fetch3ActivityList() {
             <p class="card-text address">地址：
               ${reser.activityrestaurantVO.resAdd}
             </p>
-            <p class="card-text date_time">活動時間：${
-              reser.activityStartingTime.slice(0, 5) +
-              reser.activityStartingTime.slice(9)
-            }</p>
+            <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+          reser.activityStartingTime.slice(9) +
+          " " +
+          reser.activityStartingTime.slice(0, 5)
+        }</p>
             <p class="card-text expected">
             預計參加人數：${reser.minNumber}-${reser.maxNumber}人
           </p>
@@ -68,6 +74,10 @@ function fetch3ActivityList() {
 
       // 塞進摺疊區塊內
       for (let reser of resListCollapse) {
+        let activityDate = reser.activityDate.split("-");
+        let month = activityDate[1];
+        let date = activityDate[2];
+        let year = activityDate[0];
         let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
         image.src = `data:image/jpeg;base64,${base64Photo}`;
@@ -87,10 +97,11 @@ function fetch3ActivityList() {
                 <p class="card-text address">地址：
                   ${reser.activityrestaurantVO.resAdd}
                 </p>
-                <p class="card-text date_time">活動時間：${
-                  reser.activityStartingTime.slice(0, 5) +
-                  reser.activityStartingTime.slice(9)
-                }</p>
+                <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+          reser.activityStartingTime.slice(9) +
+          " " +
+          reser.activityStartingTime.slice(0, 5)
+        }</p>
                 <p class="card-text expected">
                     預計參加人數：${reser.minNumber}-${reser.maxNumber}人
                     </p>
@@ -268,6 +279,20 @@ function signup() {
   });
 }
 
+// 點擊「建立活動」按鈕
+function establish() {
+  $("a.establish").click((e) => {
+    e.preventDefault();
+    // 判斷是否登入
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入!");
+      return;
+    }
+
+    document.location.href = "activity_establish.html";
+  });
+}
+
 $(function () {
   // 接收activityList資訊
   fetch3ActivityList();
@@ -277,4 +302,6 @@ $(function () {
 
   //搜尋功能
   search();
+
+  establish();
 });
