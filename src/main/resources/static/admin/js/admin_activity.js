@@ -1,9 +1,9 @@
 (() => {
     let searchType = $("#searchType");
     let search = $("#search");
-    let orderListBody = $("#orderListBody");
+    let activityListBody = $("#activityListBody");
     let listCountArea = $("#listCount");
-    let orderCount = $("#listCountNumber");
+    let activityCount = $("#listCountNumber");
     let findNothingMsg = $("#findNothingMsg");
     const pagination = $("#pagination");
 
@@ -62,7 +62,7 @@
     function fetchAndUpdateData() {
         const searchTypeValue = searchType.val();
         const searchValue = search.val();
-        const url = `/adminSearchOrder/selectAll?searchType=${searchTypeValue}&search=${searchValue}`;
+        const url = `/adminSearchActivity/selectAll?searchType=${searchTypeValue}&search=${searchValue}`;
 
         if (searchTypeValue === "0" && searchValue !== "") {
             alert("請選擇查詢方式");
@@ -76,8 +76,8 @@
             fetch(url)
                 .then(res => res.json())
                 .then(body => {
-                    orderListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
-                    orderCount.empty();
+                    activityListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
+                    activityCount.empty();
                     findNothingMsg.empty();
                     pagination.empty();
                     listCountArea.attr("hidden", true);
@@ -108,21 +108,17 @@
                     const currentPageData = body.slice(startIndex, endIndex);
 
                     //顯示新分頁資料
-                    $.each(currentPageData, function(index, order){
+                    $.each(currentPageData, function(index, activity){
 
-                        const orderState = order.orderState;
-                        let orderStateText = "";
+                        const activityStatus = activity.activityStatus;
+                        let activityStatusText = "";
 
-                        if(orderState == 0){
-                            orderStateText = "新訂單";
-                        } else if(orderState == 1){
-                            orderStateText = "處理中";
-                        } else if(orderState == 2){
-                            orderStateText = "已確認";
-                        } else if(orderState == 3){
-                            orderStateText = "已退貨";
+                        if(activityStatus == 0){
+                            activityStatusText = "報名中";
+                        } else if (activityStatus == 1){
+                            activityStatusText = "已成團";
                         } else {
-                            orderStateText = "已完成";
+                            activityStatusText = "已流團";
                         }
 
                         //列表編號
@@ -131,19 +127,18 @@
                         let html = `
                                 <tr>
                                     <th scope="row">${rowIndex}</th>
-                                    <td class="orderId">${order.orderId}</td>
-                                    <td>${order.orderTimestamp}</td>
-                                    <td>${order.accId}</td>
-                                    <td>${order.adminAccountVO.accAcc}</td>
-                                    <td>${order.adminAccountVO.accName}</td>
-                                    <td>${orderStateText}</td>
-                                    <td>${order.finalAmount}</td>
+                                    <td class="activityId">${activity.activityId}</td>
+                                    <td>${activity.activityName}</td>
+                                    <td>${activity.activityDate}</td>
+                                    <td>${activity.adminRestaurantVO.resName}</td>
+                                    <td>${activity.adminAccountVO.accName}</td>
+                                    <td>${activityStatusText}</td>
                                     <td>
                                         <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
                                     </td>
                                 </tr>
                                 `;
-                        orderListBody.append(html);
+                        activityListBody.append(html);
                     });
 
                     // 更新分頁區域的內容

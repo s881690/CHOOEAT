@@ -10,4 +10,8 @@ public interface ProdService {
 	
 	public ProdVO findByProdId(Integer prodId);
 	
+	public List<ProdVO> searchBySomethingId(Integer searchType, Integer id);
+	
+	public List<ProdVO> searchBySomethingName(Integer searchType, String name);
+	
 }
