@@ -10,7 +10,7 @@ function displayCart() {
 	fetch(url)
 		.then(function(response) { return response.json(); })
 		.then(data => {
-			//			console.log(data);
+			//		console.log(data);
 			let total = 0;
 			for (const key in data) {
 				if (data.hasOwnProperty(key)) {
@@ -18,7 +18,6 @@ function displayCart() {
 				}
 			}
 			const totalPrice = total.toLocaleString();
-
 			const productsMap = data;
 			for (let [productId, value] of Object.entries(productsMap)) {
 				const key = productId;
@@ -26,9 +25,12 @@ function displayCart() {
 				const productPrice = value.price.toLocaleString();
 				const productqty = value.qty;
 				const producttotalPrice = (value.price * productqty).toLocaleString();
+				const uint8Array = new Uint8Array(value.prodPic);
+				let blob = new Blob([uint8Array], { type: "image/*" });
+				let imageUrl = URL.createObjectURL(blob);
 				tbodyContainer.innerHTML += `
 									<tr data-product-id="${key}" class="key">
-										<td style="width: 120px;"><img src="./chooeat/images/mall_image/mall3.jpg"
+										<td style="width: 120px;"><img src="${imageUrl}"
 											class="pord_img" /></td>
 										<td><h5>${productName}</h5>
 											<span style="color: gray;">單人｜平日晚餐</span></td>
@@ -102,7 +104,7 @@ function sendCartDataToBackend() {
 	})
 		.then(response => {
 			if (response.ok) {
-//				console.log("d");
+				//				console.log("d");
 				window.location.href = 'mall_pay_successfully.html';
 			} else {
 
@@ -115,5 +117,93 @@ function sendCartDataToBackend() {
 }
 
 document.getElementById("pay_check_btn").addEventListener("click", function() {
-	sendCartDataToBackend();
+
+	// 判斷信用卡卡號欄位
+	const creditNumberInputs = document.getElementsByClassName("credit_number");
+	let isCreditNumberValid = true;
+
+	for (let i = 0; i < creditNumberInputs.length; i++) {
+		const input = creditNumberInputs[i];
+		if (input.value.length !== input.maxLength || !/^\d+$/.test(input.value)) {
+			isCreditNumberValid = false;
+			break;
+		}
+	}
+
+	// 判斷信用卡到期日欄位
+	const creditDateInput = document.getElementsByClassName("credit_date")[0];
+	const creditDateValue = creditDateInput.value;
+	const creditDateParts = creditDateValue.split("/");
+	const isCreditDateValid = creditDateParts.length === 2 && /^\d{2}$/.test(creditDateParts[0]) && /^\d{2}$/.test(creditDateParts[1]);
+
+	// 判斷安全碼欄位
+	const creditSecurityInput = document.getElementsByClassName("credit_security")[0];
+	const isCreditSecurityValid = /^\d{3}$/.test(creditSecurityInput.value);
+
+
+	const creditNumberValue = document.querySelector(".credit_number").value;
+	const creditSecurityValue = document.querySelector(".credit_security").value;
+	// 判斷結果
+	const creditCardRadio = document.querySelector('input[type="radio"]');
+	if (creditCardRadio.checked) {
+		if (isCreditNumberValid && isCreditDateValid && isCreditSecurityValid) {
+			console.log("所有欄位都已輸入數字並且數量符合預期");
+			sendCartDataToBackend();
+		} else if (creditNumberValue.trim() === "" && creditDateValue.trim() === "" && creditSecurityValue.trim() === "") {
+			alert("請輸入信用卡資訊");
+			return;
+		} else if (!isCreditNumberValid) {
+			alert("信用卡卡號有誤，請重新輸入");
+			return;
+		} else if (!isCreditDateValid) {
+			alert("信用卡到期日有誤，請重新輸入");
+			return;
+		} else if (!isCreditSecurityValid) {
+			alert("信用卡安全碼有誤，請重新輸入");
+			return;
+		}
+	} else {
+		// 信用卡未被選中
+		alert("請選擇信用卡付款方式（目前僅提供使用信用卡付款）");
+	}
 });
+
+function jumpToNextInput(event) {
+	const input = event.target;
+	const maxLength = input.getAttribute('maxlength');
+	const currentLength = input.value.length;
+
+	if (currentLength >= maxLength) {
+		const nextInput = input.nextElementSibling;
+		if (nextInput && nextInput.tagName === 'INPUT') {
+			nextInput.focus();
+		}
+	}
+}
+function insertSlash(input) {
+	const value = input.value;
+	let formattedValue = value.replace(/\D/g, ""); // 移除非數字字符
+
+	if (formattedValue.length > 4) {
+		formattedValue = formattedValue.substr(0, 4); // 限制最大長度為 4
+	}
+
+	if (formattedValue.length >= 2) {
+		const firstTwoDigits = formattedValue.substr(0, 2);
+		if (parseInt(firstTwoDigits) > 12) {
+			formattedValue = "12" + formattedValue.substr(2); // 前兩個數字大於 12，將其設置為 12
+		}
+	}
+
+	if (formattedValue.length >= 4) {
+		const lastTwoDigits = formattedValue.substr(2, 2);
+		if (parseInt(lastTwoDigits) < 23) {
+			formattedValue = formattedValue.substr(0, 2) + "23"; // 後兩個數字小於 23，將其設置為 23
+		}
+	}
+
+	const formattedInputValue = formattedValue.replace(/(\d{2})(\d{2})/, "$1/$2"); // 在第二個和第三個數字之間插入斜線
+
+	input.value = formattedInputValue;
+}
+

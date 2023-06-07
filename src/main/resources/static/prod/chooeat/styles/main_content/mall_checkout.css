@@ -197,23 +197,31 @@ div.credit_area h4, input, span {
 
 div.credit_area input {
 	border: none;
-	margin-right: 20px;
+/* 	margin-right: 20px; */
 	height: 35px;
 	border-radius: 5px;
-	padding-left: 10px;
+/* 	padding-left: 10px; */
 }
 
 input.credit_number {
-	width: 400px;
-	margin-left: 200px;
+	width: 100px;
+	margin-left: 5px;
+	text-align: center;
+    letter-spacing: 0.6em;
 }
 
 input.credit_date {
-	width: 150px;
+	width: 200px;
+	margin-left: 20px;
+	text-align: center;
+    letter-spacing: 0.1em;
 }
 
 input.credit_security {
+	margin-left: 20px;
 	width: 90px;
+	text-align: center;
+    letter-spacing: 0.6em;
 }
 
 div.pay_check_area {

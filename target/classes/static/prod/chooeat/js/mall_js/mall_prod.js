@@ -4,6 +4,7 @@ var price;
 var resName;
 var btn_add_cart_el;
 var productId;
+var prodPic;
 const overlay = document.querySelector(".confirmation-overlay");
 const confirmationBox = document.querySelector(".confirmation-box");
 //const confirmBtn = document.querySelector(".confirm-btn");
@@ -32,9 +33,9 @@ function formatTimestamp(timestampString) {
 }
 //===================================送到餐券詳細頁面=================================
 function initMap() {
-	const uluru = { lat: -25.344, lng: 131.031 };
+	const uluru = { lat: 25.105, lng: 121.597 };
 	const map = new google.maps.Map(document.getElementById("map"), {
-		zoom: 14,
+		zoom: 10,
 		center: uluru,
 	});
 	const marker = new google.maps.Marker({
@@ -50,7 +51,7 @@ function getProductDetails(productId) {
 	fetch(url, { signal: fetchSignal })
 		.then(response => response.json())
 		.then(data => {
-//			console.log(data);
+			//			console.log(data);
 			const prod = data.prod;
 			const orderDetails = data.orderDetails;
 			const address = prod.resAdd;
@@ -58,6 +59,13 @@ function getProductDetails(productId) {
 			productName = prod.resName + "｜" + prod.prodName;
 			price = prod.prodPrice.toLocaleString();
 			star = Math.floor(prod.prodCommentScore);
+			prodPic = prod.prodPic;
+			const uint8Array = new Uint8Array(prod.prodPic);
+			let blob = new Blob([uint8Array], { type: "image/*" });
+			let imageUrl = URL.createObjectURL(blob);
+			
+			document.getElementById("prodpic").src = `${imageUrl}`;
+
 			document.getElementById("breadcrumb-page").innerHTML = `
 			${prod.resName} | ${prod.prodName}
 			`;
@@ -201,6 +209,7 @@ function bindEventsToElements() {
 			cart_data.productName = productName;
 			cart_data.price = price;
 			cart_data.qty = 1;
+			cart_data.prodPic = prodPic;
 			console.log(cart_data);
 
 			sessionStorage.setItem("form_data", JSON.stringify(cart_data));
@@ -285,7 +294,7 @@ function bindEventsToElements() {
 			})
 				.then(function(response) { return response.json(); })
 				.then((data) => {
-					 console.log(data);
+					console.log(data);
 				})
 				.catch((error) => {
 					console.log("哀哀哀：" + error);
