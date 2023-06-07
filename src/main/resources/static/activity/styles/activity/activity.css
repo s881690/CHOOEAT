@@ -7,7 +7,6 @@ body header {
   /* 設定固定寬，在進行RWD設計之前不可移除，同樣設定會出現在內容區塊的DIV標籤及FOOTER */
   margin: 0 auto;
   border-bottom: 1px solid black;
-  position: sticky;
   top: 0px;
   /* 圖層為最上層 */
   z-index: 100;

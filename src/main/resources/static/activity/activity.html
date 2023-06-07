@@ -7,10 +7,12 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="icon" href="./images/header/logo2.png" />
     <!-- 引入bootstrap -->
     <link rel="stylesheet" href="./styles/bootstrap/bootstrap.min.css" />
     <!-- 以下引入我們自己寫的css -->
     <link rel="stylesheet" href="./styles/activity/activity.css" />
+    <link rel="stylesheet" href="./styles/activity/loading.css" />
     <!-- <link rel="stylesheet" href="./styles/all/all.css" /> -->
 
     <!-- 引入Font awesome -->
@@ -31,7 +33,7 @@
                       這裡的連結之後要改，跳轉到首頁
                   內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
           <a class="navbar-brand" href="#">
-            <img src="./images/header/logo2.png" />
+            <img src="./images/header/logo.png" />
           </a>
           <!-- order-lg-last在bootstrap框架中是設定在父元素的排列順序，last的意思是會在最後面
                       function_icons只代表這個class的名稱 -->
@@ -63,6 +65,14 @@
               >
                 <img src="./images/header/member_icon.png" />
               </a>
+              <span
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  vertical-align: middle;
+                "
+                id="sname"
+              ></span>
             </p>
           </div>
           <!-- 這個button是漢堡選單的menu按鈕 -->
@@ -108,7 +118,6 @@
         </div>
       </nav>
     </header>
-
     <!-- 以下為內容區域，主要對這裡做修改 -->
     <div class="main_content">
       <div class="activity_main">
@@ -148,7 +157,15 @@
           <!--活動列表-->
           <div class="row justify-content-center activity_list">
             <!-- 這裡放入後端帶回的前3筆資料 -->
-            <div class="row card_list_3"></div>
+            <div class="row card_list_3">
+              <!-- loading圈圈 -->
+              <div id="loadingContainer" class="loading text-center">
+                <div class="loading-container">
+                  <div class="spinner"></div>
+                  <h2>Loading...</h2>
+                </div>
+              </div>
+            </div>
 
             <!--摺疊，這裡放入後端帶回的剩下資料-->
             <div

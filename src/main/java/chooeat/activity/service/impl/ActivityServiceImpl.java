@@ -12,7 +12,6 @@ import org.springframework.util.Base64Utils;
 import chooeat.activity.dao.ActivityRepository;
 import chooeat.activity.service.ActivityService;
 import chooeat.activity.vo.ActivityVO;
-import chooeat.activity.vo.SavedActivityVO;
 
 @Component
 public class ActivityServiceImpl implements ActivityService {
@@ -113,7 +112,6 @@ public class ActivityServiceImpl implements ActivityService {
 			return "請上傳揪團照片";
 		}
 		
-
 		String activityPhotoBase64 = activityVO.getActivityPhotoBase64();
 		// 解碼base64圖片字串，然後塞回activityPhoto中
 		byte[] activityPhoto = Base64Utils.decodeFromString(activityPhotoBase64);
@@ -124,56 +122,9 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public String get3Activity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void update(ActivityVO activityVO) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void apply(ActivityVO activityVO) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void like(SavedActivityVO savedActivityVO) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dislike(Integer activityId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<SavedActivityVO> getlike(Integer accId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void getMembersbyActivityName(String activityName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean selectByAccIdandActivityId(Integer accId, Integer activityId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public ActivityVO findEdit(Integer activityId) {
 		return activityRepository.findByActivityId(activityId);
 	}
+
 
 }
