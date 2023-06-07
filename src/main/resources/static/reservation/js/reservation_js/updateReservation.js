@@ -1,7 +1,5 @@
-//這個function將日期進行格式化
 function serializeDate(dateString) {
-  
-  var dateArray = dateString.split("/");
+  var dateArray = dateString.split("-");
   var month = dateArray[0];
   var day = dateArray[1];
   var year = dateArray[2];
@@ -12,14 +10,18 @@ function serializeDate(dateString) {
   var mm = (dateObj.getMonth() + 1).toString().padStart(2, "0");
   var dd = dateObj.getDate().toString().padStart(2, "0");
 
-  var formattedDate = yyyy + "-" + mm + "-" + dd;
+  var formattedDate = yyyy + "-" + mm + "-" + dd + " ";
   return formattedDate;
 }
+
+
 const mealData = {
   ppl: "",
-  date_time: "",
+  date_time: null, // 将初始值设为 null
   text: "",
+  reservationId:""
 };
+
 
 const time = document.querySelectorAll(".meal_time");
 const meal_select = document.querySelector("#meal_select");
@@ -54,13 +56,17 @@ time.forEach((e) => {
     // 先把每個時間按鈕的 class 初始化
     // time.forEach((j) => (j.className = "meal_time"));
     // 把時間存在物件裡面
-    mealData.date_time =
-      mealData.date_time.slice(0, 10) + " " + e.textContent + ":00";
+    
+    mealData.date_time = `${mealData.date_time.slice(0, 10)} ${e.getAttribute('name')}:00`;
+    console.log(mealData.date_time);
     // 改變樣式
     e.className = "meal-time-style meal_time";
     selectedButton = e;
   };
 });
+
+
+
 
 // 監聽選擇框變化的時候執行事件
 meal_select.onchange = () => {
@@ -82,6 +88,8 @@ btn.onclick = () => {
     return;
   }
 
+  mealData.reservationId = sessionStorage.getItem('reservationId'); // 新增這行程式碼
+
   console.log(mealData);
   fetch("../reservationUpdate", {
     method: "PUT",
@@ -99,7 +107,5 @@ btn.onclick = () => {
         alert("修改失敗，請重新選擇");
       }
     });
-
-
-  
 };
+

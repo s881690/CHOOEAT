@@ -12,15 +12,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.google.gson.Gson;
 
+import chooeat.prod.dao.impl.ProdDaoImpl;
 import chooeat.prod.model.vo.CartItem;
+import chooeat.prod.model.vo.Prod;
 import redis.clients.jedis.Jedis;
 
 @WebServlet("/prod/get-cart")
 public class AddToCartContronller extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	private ProdDaoImpl prodDaoImpl;
+	
 	private Jedis jedis;
 
 	@Override
@@ -81,42 +88,45 @@ public class AddToCartContronller extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// 設置接收格式
-		req.setCharacterEncoding("utf-8");
-		// 設置跨域
-		res.setHeader("Access-Control-Allow-Origin", "*"); // 允許來自所有網域的請求
-		res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // 允許的 HTTP 方法
-		res.setHeader("Access-Control-Allow-Headers", "Content-Type"); // 允許的請求頭
-		res.setHeader("Access-Control-Allow-Credentials", "true"); // 是否允許帶有憑證的請求
-		// 設置返回格式
-		res.setContentType("application/json; charset=utf-8");
+	    // 設置接收格式
+	    req.setCharacterEncoding("utf-8");
+	    // 設置跨域
+	    res.setHeader("Access-Control-Allow-Origin", "*"); // 允許來自所有網域的請求
+	    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // 允許的 HTTP 方法
+	    res.setHeader("Access-Control-Allow-Headers", "Content-Type"); // 允許的請求頭
+	    res.setHeader("Access-Control-Allow-Credentials", "true"); // 是否允許帶有憑證的請求
+	    // 設置返回格式
+	    res.setContentType("application/json; charset=utf-8");
 
-		String userId = "user1";
-		String cartKey = "cart:" + userId;
+	    String userId = "user1";
+	    String cartKey = "cart:" + userId;
 
-		jedis.select(1);
-		Map<String, String> cartData = jedis.hgetAll(cartKey);
+	    jedis.select(1);
+	    Map<String, String> cartData = jedis.hgetAll(cartKey);
 
-		Map<String, CartItem> cartItems = new HashMap<>();
+	    Map<String, CartItem> cartItems = new HashMap<>();
 
-		for (Map.Entry<String, String> entry : cartData.entrySet()) {
-			String productId = entry.getKey();
-			String cartItemJson = entry.getValue();
-			String redisValue = productId + ", " + cartItemJson;
-//			System.out.println(redisValue);
-			CartItem cartItem = convertToCartItem(redisValue);
-			cartItems.put(extractProductId(productId), cartItem);
-			String json = new Gson().toJson(cartItem);
-		}
+	    for (Map.Entry<String, String> entry : cartData.entrySet()) {
+	        String productId = entry.getKey();
+	        String cartItemJson = entry.getValue();
+	        String redisValue = productId + ", " + cartItemJson;
 
-		String json = new Gson().toJson(cartItems);
-		res.getWriter().write(json);
-//		System.out.println(json);
-	}
+	        // 使用 selectByProdId 方法根據 prodId 取得商品資訊
+	        String[] parts = productId.split(":");
+	        String numberPart = parts[1].trim();
+	        Integer prodId = Integer.parseInt(numberPart);
+	        Prod product = prodDaoImpl.selectByProdId(prodId);
+	        
+	        // 取得圖片的 byte[] 數組
+	        byte[] imageBytes = product.getProdPic();
 
-	public String convertToJsonString(CartItem cartItem) {
-		Gson gson = new Gson();
-		return gson.toJson(cartItem);
+	        CartItem cartItem = convertToCartItem(redisValue);
+	        cartItem.setProdPic(imageBytes); // 將商品圖片路徑設定到 CartItem 中
+	        cartItems.put(extractProductId(productId), cartItem);
+	    }
+
+	    String json = new Gson().toJson(cartItems);
+	    res.getWriter().write(json);
 	}
 
 	private static String extractProductId(String productId) {

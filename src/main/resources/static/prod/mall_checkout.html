@@ -81,8 +81,10 @@
 					<ul
 						class="navbar-nav d-flex align-items-center justify-content-center"
 						style="gap: 1rem">
-						<li class="nav-item"><a href="../restaurant/Homepage.html" class="nav-link">首頁</a></li>
-						<li class="nav-item"><a href="../restaurant/Homepage.html" class="nav-link">找餐廳</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html"
+							class="nav-link">首頁</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html"
+							class="nav-link">找餐廳</a></li>
 						<li class="nav-item"><a href="mall.html" class="nav-link">找餐券</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">揪團</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">美食排行榜</a></li>
@@ -101,7 +103,8 @@
 					<nav class="breadcrumbandSearch"
 						style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="../restaurant/Homepage.html">主頁</a></li>
+							<li class="breadcrumb-item"><a
+								href="../restaurant/Homepage.html">主頁</a></li>
 							<li class="breadcrumb-item"><a href="mall.html">找餐券</a></li>
 							<li class="breadcrumb-item"><a
 								href="mall_shopping_cart.html">購物車</a></li>
@@ -136,21 +139,31 @@
 								</tfoot>
 							</table>
 						</div>
-						<div class="coupon_area">
-							<h4>使用優惠券</h4>
-							<div class="coupon_use">
-								<input type="text" class="coupon_text" placeholder="請輸入優惠券代碼">
-								<button class="coupon_button">使用</button>
-							</div>
-							<button class="coupon_choose_button">選擇優惠券</button>
-						</div>
+<!-- 						<div class="coupon_area"> -->
+<!-- 							<h4>使用優惠券</h4> -->
+<!-- 							<div class="coupon_use"> -->
+<!-- 								<input type="text" class="coupon_text" placeholder="請輸入優惠券代碼"> -->
+<!-- 								<button class="coupon_button">使用</button> -->
+<!-- 							</div> -->
+<!-- 							<button class="coupon_choose_button">選擇優惠券</button> -->
+<!-- 						</div> -->
 						<div class="pay_area">
 							<h4>付款方式</h4>
 							<div class="credit_area">
-								<input type="radio"> <span style="font-size: 24px;">信用卡</span>
-								<input type="text" class="credit_number" placeholder="信用卡卡號">
-								<input type="text" class="credit_date" placeholder="信用卡到期日">
-								<input type="text" class="credit_security" placeholder="安全碼">
+								<input type="radio"> <span
+									style="font-size: 24px; margin-right: 80px">信用卡</span> <input
+									type="text" pattern="[0-9]*" class="credit_number"
+									maxlength="4" oninput="jumpToNextInput(event)"> - <input
+									type="text" pattern="[0-9]*" class="credit_number"
+									maxlength="4" oninput="jumpToNextInput(event)"> - <input
+									type="text" pattern="[0-9]*" class="credit_number"
+									maxlength="4" oninput="jumpToNextInput(event)"> - <input
+									type="text" pattern="[0-9]*" class="credit_number"
+									maxlength="4" oninput="jumpToNextInput(event)"><input
+									type="text" pattern="[0-9]*" maxlength="5" class="credit_date"
+									placeholder="信用卡到期日 MM/YY" oninput="insertSlash(this)" /> <input
+									pattern="[0-9]*" maxlength="3" type="text"
+									class="credit_security" placeholder="安全碼">
 							</div>
 							<div class="pay_check_area">
 								<span class="pay_check_text">點擊「確認付款方式」即表示確認訂單與右方總金額無誤，且同意平台服務條款、退改政策與信用卡/銀行轉帳服務條款</span>

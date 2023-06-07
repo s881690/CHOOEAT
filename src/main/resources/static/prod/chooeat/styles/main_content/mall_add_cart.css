@@ -94,6 +94,8 @@ div.prod img {
 	width: 150px;
 	float: right;
 	border-radius: 10px;
+	object-fit: cover;
+	height:100%;
 }
 
 a.prod {

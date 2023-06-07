@@ -16,7 +16,7 @@ const fetchAllProducts = () => {
 				main.innerHTML += `
           <a href="mall_prod.html?id=${prod.prodId}" value="${prod.prodId}" name="id" data-product-id="${prod.prodId}" class="prodLink" target="_blank">
             <div href="" target="_blank" class="prod">
-              <img src="./chooeat/images/mall_image/mall1.jpg" />
+              <img src="${prod.prodPic}" />
               <span class="prodTitle">${prod.resName} | ${prod.prodName}</span>
               <div class="type">${prod.resType}</div>
               <div class="add">${prod.resAdd}</div>

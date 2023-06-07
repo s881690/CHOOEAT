@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import chooeat.reservation.model.RestaurantDayoffVO;
 
+
+
 @Repository
 public interface RestaurantDayoffRepository extends JpaRepository<RestaurantDayoffVO, Integer> {
 

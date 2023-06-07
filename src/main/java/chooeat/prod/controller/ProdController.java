@@ -32,6 +32,11 @@ public class ProdController extends HttpServlet {
 	private	ProdServiceImpl prodServiceImpl;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req,res);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// 設置接收格式
 		req.setCharacterEncoding("utf-8");
 		// 設置跨域
@@ -92,11 +97,5 @@ public class ProdController extends HttpServlet {
 			String jsonStr = gson.toJson(list);
 			res.getWriter().write(jsonStr);
 		}
-
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 	}
 }

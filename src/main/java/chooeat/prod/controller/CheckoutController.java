@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
+import com.google.gson.JsonArray;
 import chooeat.prod.dao.ProdDao;
 import chooeat.prod.dao.impl.ProdDaoImpl;
 import chooeat.prod.model.vo.CartItem;
@@ -31,6 +31,7 @@ public class CheckoutController extends HttpServlet {
 	private Jedis jedis;
 	@Autowired
 	private ProdDaoImpl prodDaoImpl;
+
 	@Override
 	public void init() throws ServletException {
 		jedis = new Jedis("localhost", 6379);
@@ -105,12 +106,16 @@ public class CheckoutController extends HttpServlet {
 		}
 		boolean isDirectBuy = (boolean) session.getAttribute("isDirectBuy");
 		if (isDirectBuy) {
-			
 			int prodId = Integer.parseInt(keyArray[0]);
 			Prod prod1 = prodDaoImpl.selectByProdId(prodId);
 			String backendData = gson.toJson(prod1);
 //			System.out.println(backendData);
 			JsonObject data = gson.fromJson(backendData, JsonObject.class);
+			byte[] prodPic = gson.fromJson(data.get("prodPic"), byte[].class); // 將 prodPic 轉換為 byte[]
+			JsonArray picArray = new JsonArray();
+			for (byte b : prodPic) {
+				picArray.add(b);
+			}
 
 			JsonObject productObject = new JsonObject();
 			productObject.addProperty("productId", data.get("prodId").getAsString());
@@ -118,12 +123,11 @@ public class CheckoutController extends HttpServlet {
 			productObject.addProperty("productName", productName);
 			productObject.addProperty("price", data.get("prodPrice").getAsInt());
 			productObject.addProperty("qty", 1);
-//			System.out.println(productObject);
-
+			productObject.add("prodPic", picArray);
+			System.out.println(productObject);
 			JsonObject newData = new JsonObject();
 			String productId = productObject.get("productId").getAsString();
 			newData.add(productId, productObject);
-
 			
 			res.getWriter().write(newData.toString());
 
@@ -144,6 +148,15 @@ public class CheckoutController extends HttpServlet {
 					CartItem cartItem = convertToCartItem(redisValue);
 					cartItems.put(extractProductId(productId), cartItem);
 					String json = new Gson().toJson(cartItem);
+					String[] parts = productId.split(":");
+					String numberPart = parts[1].trim();
+					Integer prodId = Integer.parseInt(numberPart);
+					Prod product = prodDaoImpl.selectByProdId(prodId);
+
+					// 取得圖片的 byte[] 數組
+					byte[] imageBytes = product.getProdPic();
+					cartItem.setProdPic(imageBytes);
+
 				} else {
 					System.out.println("未找到商品：" + productKey);
 				}

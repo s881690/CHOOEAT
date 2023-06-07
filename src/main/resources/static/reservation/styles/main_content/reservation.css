@@ -42,6 +42,7 @@ div.remind{
 
 div.choose_time{
  padding-left: 250px;
+ 
 }
 
 div.notes{
@@ -56,16 +57,58 @@ input.time{
 
 /* 選擇用餐時間的所有按鈕 */
 button.meal_time{
-    color:black;
-    background-color: white;
-    width: 150px;
-    height: 40px;
-    border-radius: 10px;
-    border-color: #a9a9a9;
-    margin-left: 10px;
-    font-weight: 800;
+    color: black;
+  background-color: white;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  border-color: #a9a9a9;
+  margin-left: 10px;
+  position: relative;
+  text-indent: -30px;
+  
 
 }
+
+.remainSeat {
+    border-left: 1px solid #a9a9a9;
+    position: absolute;
+    float: left;
+    top: 0;
+    bottom: 0;
+    margin-left: 140px;
+    text-indent: 0px !important;
+  }
+
+  .remainSeatNumber{
+    text-align: center !important;
+    padding-left: 20px;
+  }
+
+  .hidden-div {
+    /* 為了壓住d-flex的display */
+    display: none !important; 
+    border-left: none !important;
+  }
+
+  /* 和 .hidden-div一樣，為了避免按鈕的css刪來刪去才用不同名稱多複製幾個，這是營業時間用 */
+  .not-business {
+    /* 為了壓住d-flex的display */
+    display: none !important; 
+    border-left: none !important;
+  }
+/* 和 .hidden-div一樣，為了避免按鈕的css刪來刪去才用不同名稱多複製幾個，這是判定預約用 */
+  .hasReserved {
+    /* 為了壓住d-flex的display */
+    display: none !important; 
+    border-left: none !important;
+  }
+/* 和 .hidden-div一樣，為了避免按鈕的css刪來刪去才用不同名稱多複製幾個，這是判定客滿用 */
+  .hasFull{
+    display: none !important; 
+    border-left: none !important;
+  }
+  
 
 button.dropdown-toggle{
     background-color: #FFDEB9;
@@ -89,26 +132,37 @@ button.meal_time:hover{
     background-color: #FFDEB9;
 }
 
+/* 表示非營業時間的時間按鈕樣式 */
 button.stop{
     pointer-events: none;
-    background-color:gray;
+  background-color: gray !important;
+  text-indent: 0px !important;
 }
-
+/* 表示客滿的時間按鈕樣式 */
 button.full{
     pointer-events: none;
     background-color: #F8C4B4;
+    text-indent: 0px !important;
   
 }
-
+/* 表示剩餘人數不足的時間按鈕樣式 */
 button.notEnough{
     pointer-events: none;
     background-color: #5fa8d3;
+    text-indent: -30px;
 }
 
+/* 表示該時段已預約的時間按鈕樣式 */
 button.reserved{
     pointer-events: none;
     background-color: #caf4e1;
+    text-indent: 0px !important;
    
+}
+
+button.before{
+    pointer-events: none;
+    color:cadetblue
 }
 
 

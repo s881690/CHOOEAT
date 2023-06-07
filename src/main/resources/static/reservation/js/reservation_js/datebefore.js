@@ -1,66 +1,67 @@
+$("#meal_select").change(function () {
+  var selectedDate = $("#datepicker-widget").datepicker("getDate");
+  if (selectedDate !== null) {
+    var dateText = $.datepicker.formatDate("yy-mm-dd", selectedDate);
+    handleDateSelect(dateText);
+  }
+});
+
 $(function () {
   $("#datepicker-widget").datepicker({
     minDate: new Date(), // 添加minDate选项
-    onSelect: function (dateText) {
-      console.log(dateText);
-      var acc_id = JSON.parse(sessionStorage.getItem('loginReq')).acc_id;
-      var restaurantId1 = JSON.parse(sessionStorage.getItem('searchResult')).myself[0].restaurantId;
-      
-      $.ajax({
-        url: "../getBusinessDay",
-        type: "GET",
-        data: {
-          acc_id: acc_id,
-          restaurantId: restaurantId1,
-          date: dateText
-        },
-        success: function (response) {
-          console.log(response);
-          
-          if (response.status === "dayoff") {
-            // 遍历每个按钮，移除内部的 <div> 标签
-            $('.meal_time').each(function () {
-              $(this).addClass('stop');
-              $(this).removeClass('full');
-              $(this).removeClass('notEnough');
-              $(this).removeClass('reserved');
-              $(this).removeClass('meal-time-style');
-              $(this).find('.remainSeat').addClass('hidden-div');
-   
-              });
-    
-          } else {
-            // 刪除所有 .stop 的 class
-            $('.meal_time').removeClass('stop');
-            $('.meal_time').removeClass('full');
-            $('.meal_time').removeClass('notEnough');
-            $('.meal_time').removeClass('reserved');
-            $('.meal_time').removeClass('meal-time-style');
-            $('.meal_time').find('.remainSeat').removeClass('hidden-div');
-            $('.meal_time').find('.remainSeat').removeClass('hasFull');
-            $('.meal_time').find('.remainSeat').removeClass('hasReserved');
-
-            function serializeDate(dateText) {
-              const date = new Date(dateText);
-              const year = date.getFullYear();
-              const month = (date.getMonth() + 1).toString().padStart(2, "0");
-              const day = date.getDate().toString().padStart(2, "0");
-              return `${year}-${month}-${day}`;
-            }            
-
-             mealData.date_time = serializeDate(dateText);
-             console.log(mealData.date_time);
-            
-            updateRemainSeat(response.remainSeat);
-            updateMealTimeAvailability(response.resStartTime, response.resEndTime);
-            markReservedTimeSlots(response.reservedList);
-            updateButtonStatus(response.HourlySeatlist); 
-          }
-        }
-      });
-    }
+    onSelect: handleDateSelect
   });
 });
+
+//把日期判斷的方法拉出來單獨成一個function，人數選單也可以套
+function handleDateSelect(dateText) {
+  console.log(dateText);
+  var acc_id = JSON.parse(sessionStorage.getItem('loginReq')).acc_id;
+  var restaurantId = JSON.parse(sessionStorage.getItem('searchResult')).myself[0].restaurantId;
+
+  $.ajax({
+    url: "../getBusinessDay",
+    type: "GET",
+    data: {
+      acc_id: acc_id,
+      restaurantId: restaurantId,
+      date: dateText
+    },
+    success: function (response) {
+      console.log(response);
+
+      if (response.status === "dayoff") {
+        // 遍历每个按钮，移除内部的 <div> 标签
+        $('.meal_time').each(function () {
+          $(this).addClass('stop');
+          $(this).removeClass('full');
+          $(this).removeClass('notEnough');
+          $(this).removeClass('reserved');
+
+          $(this).find('.remainSeat').addClass('hidden-div');
+        });
+
+      } else {
+        // 刪除所有 .stop 的 class
+        $('.meal_time').removeClass('stop');
+        $('.meal_time').removeClass('full');
+        $('.meal_time').removeClass('notEnough');
+        $('.meal_time').removeClass('reserved');
+        $('.meal_time').find('.remainSeat').removeClass('hidden-div');
+        $('.meal_time').find('.remainSeat').removeClass('hasFull');
+        $('.meal_time').find('.remainSeat').removeClass('hasReserved');
+
+        mealData.date_time = serializeDate(dateText);
+
+        updateRemainSeat(response.remainSeat);
+        updateMealTimeAvailability(response.resStartTime, response.resEndTime);
+        markReservedTimeSlots(response.reservedList);
+        updateButtonStatus(response.HourlySeatlist);
+      }
+    }
+  });
+}
+
 
 //印出每個按鈕剩餘座位數的function
 function updateRemainSeat(remainSeat) {
@@ -84,7 +85,6 @@ function updateMealTimeAvailability(resStartTime, resEndTime) {
     var button = $(this);
     var buttonHour = parseInt(button.text().split(':')[0]);
 
-
     if (buttonHour < resStartHour || buttonHour >= resEndHour) {
       button.addClass('stop');
       button.find('.remainSeat').addClass('not-business');
@@ -93,8 +93,11 @@ function updateMealTimeAvailability(resStartTime, resEndTime) {
       button.find('.remainSeat').removeClass('not-business');
     }
 
-
-
+    if (buttonHour < currentHour) {
+      button.addClass('before');
+    } else {
+      button.removeClass('before');
+    }
   });
 }
 
