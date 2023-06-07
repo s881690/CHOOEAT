@@ -7,68 +7,21 @@ function search() {
     let search_result = document.querySelector(".search_result");
     search_result.innerHTML = "搜尋結果 ：" + val;
     let card_list = document.querySelector(".card_list");
-    // 重置列表的內容
-    card_list.innerHTML = "";
+
     let url = "search?search_value=" + val;
     // ======= 用fetch 發送請求  =========
     fetch(url)
       .then((res) => {
-        // console.log(res);
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
+        // 在開始顯示資料前隱藏loading
+        hideLoading();
+        // 重置列表的內容
+        card_list.innerHTML = "";
         for (let reser of data) {
-          let activityDate = reser.activityDate.split(" ");
-          // console.log(activityDate);
-          let month = activityDate[0];
-          let date = activityDate[1].split(",")[0];
-          let year = activityDate[2];
-          let base64Photo = reser.activityPhotoBase64;
-          // console.log(base64Photo);
-          let image = new Image();
-          image.src = `data:image/*;base64,${base64Photo}`;
-          card_list.innerHTML += `
-          <div class="col-4 mb-5">
-          <div class="card">
-            <img
-              src="${image.src}"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body" data-activityId=${reser.activityId}>
-              <h5 class="card-title">${reser.activityName}</h5>
-              <p class="restaurant-name">地點：${reser.restaurantVO.resName}</p>
-              <p class="card-text address">地址：
-                ${reser.restaurantVO.resAdd}
-              </p>
-              <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
-            reser.activityStartingTime.slice(9) +
-            " " +
-            reser.activityStartingTime.slice(0, 5)
-          }</p>
-              <p class="card-text expected">
-               預計參加人數：${reser.minNumber}-${reser.maxNumber}人
-              </p>
-              <p class="total">${reser.activityNumber}人已報名參加</p>
-              <div class="btns row align-items-center">
-                <div class="col-10">
-                  <a
-                    href="./activity_detail.html"
-                    class="btn btn-outline-warning signup"
-                    >立刻報名</a
-                  >
-                </div>
-                <div class="col-2">
-                  <svg class="like" data-like="false" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z"  stroke="red" stroke-width="2" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-            `;
+          cardList(reser);
         }
       });
     sessionStorage.setItem("search_value", val);
@@ -76,6 +29,64 @@ function search() {
     getlikes();
     signup();
   });
+}
+
+// 寫入搜尋列表
+function cardList(data) {
+  let card_list = document.querySelector(".card_list");
+  // console.log(reser);
+  let activityDate = data.activityDate.split(" ");
+  // console.log(activityDate);
+  let month = activityDate[0];
+  let date = activityDate[1].split(",")[0];
+  let year = activityDate[2];
+  let base64Photo = data.activityPhotoBase64;
+  let image = new Image();
+  image.src = `data:image/*;base64,${base64Photo}`;
+
+  card_list.innerHTML += `
+      <div class="col-4 mb-5">
+      <div class="card">
+        <img
+          src="${image.src}"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body" data-activityId=${data.activityId}>
+          <h5 class="card-title">${data.activityName}</h5>
+          <p class="restaurant-name">地點：${
+            data.activityrestaurantVO.resName
+          }</p>
+          <p class="card-text address">地址：
+            ${data.activityrestaurantVO.resAdd}
+          </p>
+          <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+    data.activityStartingTime.slice(9) +
+    " " +
+    data.activityStartingTime.slice(0, 5)
+  }</p>
+          <p class="card-text expected">
+           預計參加人數：${data.minNumber}-${data.maxNumber}人
+          </p>
+          <p class="total">${data.activityNumber}人已報名參加</p>
+          <div class="btns row align-items-center">
+            <div class="col-10">
+              <a
+                href="./activity_detail.html"
+                class="btn btn-outline-warning signup"
+                >立刻報名</a
+              >
+            </div>
+            <div class="col-2">
+              <svg class="like" data-like="false" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z"  stroke="red" stroke-width="2" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        `;
 }
 
 // 接收前一頁帶來的搜尋詞，並進行搜尋呈現結果
@@ -88,63 +99,15 @@ function firstSearch() {
   // ======= 用fetch 發送請求  =========
   fetch(url)
     .then((res) => {
+      // 在接收到回應後隱藏loading示意
+      hideLoading();
+      // 重置列表的內容
+      card_list.innerHTML = "";
       return res.json();
     })
     .then((data) => {
       for (let reser of data) {
-        // console.log(reser);
-        let activityDate = reser.activityDate.split(" ");
-        // console.log(activityDate);
-        let month = activityDate[0];
-        let date = activityDate[1].split(",")[0];
-        let year = activityDate[2];
-        let base64Photo = reser.activityPhotoBase64;
-        let image = new Image();
-        image.src = `data:image/*;base64,${base64Photo}`;
-
-        card_list.innerHTML += `
-          <div class="col-4 mb-5">
-          <div class="card">
-            <img
-              src="${image.src}"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body" data-activityId=${reser.activityId}>
-              <h5 class="card-title">${reser.activityName}</h5>
-              <p class="restaurant-name">地點：${
-                reser.activityrestaurantVO.resName
-              }</p>
-              <p class="card-text address">地址：
-                ${reser.activityrestaurantVO.resAdd}
-              </p>
-              <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
-          reser.activityStartingTime.slice(9) +
-          " " +
-          reser.activityStartingTime.slice(0, 5)
-        }</p>
-              <p class="card-text expected">
-               預計參加人數：${reser.minNumber}-${reser.maxNumber}人
-              </p>
-              <p class="total">${reser.activityNumber}人已報名參加</p>
-              <div class="btns row align-items-center">
-                <div class="col-10">
-                  <a
-                    href="./activity_detail.html"
-                    class="btn btn-outline-warning signup"
-                    >立刻報名</a
-                  >
-                </div>
-                <div class="col-2">
-                  <svg class="like" data-like="false" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z"  stroke="red" stroke-width="2" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-            `;
+        cardList(reser);
       }
       like();
       getlikes();
@@ -268,9 +231,20 @@ function signup() {
   });
 }
 
+// ========= loading =========
+function showLoading() {
+  document.getElementById("loadingContainer").style.display = "block";
+}
+
+function hideLoading() {
+  document.getElementById("loadingContainer").style.display = "none";
+}
+
 $(function () {
   // 進行第一次的搜尋
   firstSearch();
   // 接收後端 search資訊
   search();
+
+  showLoading();
 });

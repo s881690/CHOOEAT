@@ -14,10 +14,7 @@ function serializeDate(dateString) {
   return formattedDate;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/main
 const mealData = {
   ppl: "",
   date_time: null, // 将初始值设为 null
@@ -30,17 +27,10 @@ const loginReq = JSON.parse(sessionStorage.getItem('loginReq'));
 const acc_id = loginReq.acc_id;
 
 const searchResult = JSON.parse(sessionStorage.getItem('searchResult'));
-<<<<<<< HEAD
-const restaurantId = searchResult.myself[0].restaurantId;
-
-mealData.acc_id = acc_id;
-mealData.restaurantId = restaurantId;
-=======
 const restaurantId2 = searchResult.myself[0].restaurantId;
 
 mealData.acc_id = acc_id;
 mealData.restaurantId = restaurantId2;
->>>>>>> origin/main
 
 console.log(typeof mealData.acc_id); // 打印acc_id属性的类型
 console.log(typeof mealData.restaurantId); // 打印restaurantId属性的类型

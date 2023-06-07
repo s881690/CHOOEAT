@@ -22,7 +22,7 @@ var password3 ;
 			if(res != null && res.trim() !== '') {
 				console.log("res");
 			alert("更改成功");
-			window.location.href = "login.html";
+			window.location.href = "usercenter.html";
 			}else{
 				alert("新密碼與確認密碼不同");
 			}

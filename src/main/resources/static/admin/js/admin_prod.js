@@ -62,7 +62,7 @@
     function fetchAndUpdateData() {
         const searchTypeValue = searchType.val();
         const searchValue = search.val();
-        const url = `searchAcc?searchType=${searchTypeValue}&search=${searchValue}`;
+        const url = `/adminSearchProd/selectAll?searchType=${searchTypeValue}&search=${searchValue}`;
 
         if (searchTypeValue === "0" && searchValue !== "") {
             alert("請選擇查詢方式");
@@ -73,7 +73,7 @@
             search.trigger("focus");
             return;
         } else {
-            fetch("/adminSearchProd/selectAll")
+            fetch(url)
                 .then(res => res.json())
                 .then(body => {
                     prodListBody.empty();  // 再次按下查詢按鈕時，清空原先的查詢結果
@@ -85,7 +85,7 @@
                     let html = "";  //宣告(或清空)要插入的row
                     const { successful, message } = body;
 
-                    if (successful == false) {
+                    if (body.length === 0) {
                         let html = `
                             <div class="row">
                                 <div class="col text-center mt-3">

@@ -1,6 +1,5 @@
 package chooeat.admin.web.reservation.pojo;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -37,13 +36,10 @@ public class AdminReservationVO extends Core {
 	@Column(name = "reservation_number")
 	private Integer reservationNumber;
 
-	@Column(name = "reservation_date")
-	private Date reservationDate;
-
-	@Column(name = "reservation_starttime")
+	@Column(name = "reservation_date_starttime")
 	private Time reservationStartTime;
 
-	@Column(name = "reservation_endtime")
+	@Column(name = "reservation_date_endtime")
 	private Time reservationEndTime;
 
 	@Column(name = "reservation_note")
@@ -71,17 +67,20 @@ public class AdminReservationVO extends Core {
 	@OneToOne
 	@JoinColumn(name = "acc_id", insertable = false, updatable = false)
 	private AdminAccountVO accountVO;
+	
+	@OneToOne
+	@JoinColumn(name = "restaurant_id", insertable = false, updatable = false)
+	private AdminReservationVO restaurantVO;
 
 	public AdminReservationVO(Integer reservationId, Integer accId, Integer restaurantId, Integer reservationNumber,
-			Date reservationDate, Time reservationStartTime, Time reservationEndTime, String reservationNote,
+			Time reservationStartTime, Time reservationEndTime, String reservationNote,
 			Integer reservationState, Timestamp restaurantCommentDatetime, String restaurantCommentText,
 			Integer restaurantCommentScore, Timestamp restaurantCommentReplyDatetime, String restaurantCommentReplyText,
-			AdminAccountVO accountVO) {
+			AdminAccountVO accountVO, AdminReservationVO restaurantVO) {
 		this.reservationId = reservationId;
 		this.accId = accId;
 		this.restaurantId = restaurantId;
 		this.reservationNumber = reservationNumber;
-		this.reservationDate = reservationDate;
 		this.reservationStartTime = reservationStartTime;
 		this.reservationEndTime = reservationEndTime;
 		this.reservationNote = reservationNote;
@@ -92,6 +91,7 @@ public class AdminReservationVO extends Core {
 		this.restaurantCommentReplyDatetime = restaurantCommentReplyDatetime;
 		this.restaurantCommentReplyText = restaurantCommentReplyText;
 		this.accountVO = accountVO;
+		this.restaurantVO = restaurantVO;
 	}
 	
 	public AdminReservationVO() {
@@ -106,12 +106,12 @@ public class AdminReservationVO extends Core {
 		this.reservationId = reservationId;
 	}
 
-	public Integer getAccID() {
+	public Integer getAccId() {
 		return accId;
 	}
 
-	public void setAccID(Integer accID) {
-		this.accId = accID;
+	public void setAccId(Integer accId) {
+		this.accId = accId;
 	}
 
 	public Integer getRestaurantId() {
@@ -128,14 +128,6 @@ public class AdminReservationVO extends Core {
 
 	public void setReservationNumber(Integer reservationNumber) {
 		this.reservationNumber = reservationNumber;
-	}
-
-	public Date getReservationDate() {
-		return reservationDate;
-	}
-
-	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
 	}
 
 	public Time getReservationStartTime() {
@@ -218,5 +210,12 @@ public class AdminReservationVO extends Core {
 		this.accountVO = accountVO;
 	}
 
+	public AdminReservationVO getRestaurantVO() {
+		return restaurantVO;
+	}
+
+	public void setRestaurantVO(AdminReservationVO restaurantVO) {
+		this.restaurantVO = restaurantVO;
+	}
 	
 }

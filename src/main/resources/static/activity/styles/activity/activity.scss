@@ -7,7 +7,7 @@ body {
     // width: 1200px;
     margin: 0 auto;
     border-bottom: 1px solid black;
-    position: sticky;
+    // position: sticky;
     top: 0px;
     /* 圖層為最上層 */
     z-index: 100;
@@ -445,6 +445,9 @@ body {
   div.footer_container {
     background-color: blanchedalmond;
     height: 23vh;
+    width: 100%;
+    pad: 0;
+    margin-top: 6vh;
     footer {
       ul {
         li.nav-item {

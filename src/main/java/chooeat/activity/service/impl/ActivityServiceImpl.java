@@ -12,7 +12,6 @@ import org.springframework.util.Base64Utils;
 import chooeat.activity.dao.ActivityRepository;
 import chooeat.activity.service.ActivityService;
 import chooeat.activity.vo.ActivityVO;
-import chooeat.activity.vo.SavedActivityVO;
 
 @Component
 public class ActivityServiceImpl implements ActivityService {
@@ -25,31 +24,15 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityVO> sellectAll() {
 		List<ActivityVO> list = activityRepository.findAll();
 		for (int i = 0; i < list.size(); i++) {
-			// 將byte[]圖片轉為base64 String
-			String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
-			list.get(i).setActivityPhotoBase64(base64String);
+			// 若activityPhoto欄位不為空，才進來轉
+			if(list.get(i).getActivityPhoto() != null) {
+				// 將byte[]圖片轉為base64 String
+				String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
+				list.get(i).setActivityPhotoBase64(base64String);
+			}
 		}
 		return list;
 	}
-
-//	// 顯示前三筆資料於活動首頁
-//	@Transactional
-//	public String get3Activity(){
-//		List<ActivityVO> list = activityDAO.selectAll();
-////		// 使用jackson的object映射，可以將object轉為json
-////		 ObjectMapper mapper = new ObjectMapper();
-//		 // 將object轉為json
-////		 String jsonStr = mapper.writeValueAsString(list.subList(0, 3));
-//		String jsonStr = GsonUtils.toJson(list.subList(0, 3));
-//		return jsonStr;
-//	}
-
-	// 活動id查詢
-//	@Transactional
-//	public ActivityVO selectByActivityId(Integer activityId) {
-////		return activityDAO.selectByActivityId(activityId);
-//		return activityRepository.findByActivityId(activityId);
-//	};
 
 	// 活動名稱查詢
 	@Transactional
@@ -79,6 +62,9 @@ public class ActivityServiceImpl implements ActivityService {
 	@Transactional
 	public Object establish(Map<String, String> map) {
 		ActivityVO activityVO = new ActivityVO();
+		if(!map.get("activityId").isEmpty()) {
+			activityVO.setActivityId(Integer.parseInt(map.get("activityId")));
+		}
 		activityVO.setActivityName(map.get("activityName"));
 		activityVO.setActivityNumber(Integer.parseInt(map.get("activityNumber")));
 		activityVO.setMinNumber(Integer.parseInt(map.get("minNumber")));
@@ -93,7 +79,7 @@ public class ActivityServiceImpl implements ActivityService {
 		activityVO.setActivityText(map.get("activityText"));
 		activityVO.setActivityStatus(Integer.parseInt(map.get("activityStatus")));
 		activityVO.setActivityPhotoBase64(map.get("activityPhotoBase64"));
-//		System.out.println(activityVO);
+		System.out.println(activityVO);
 		
 		if (activityVO.getAccId() == null) {
 			return "請先登入";
@@ -129,7 +115,6 @@ public class ActivityServiceImpl implements ActivityService {
 			return "請上傳揪團照片";
 		}
 		
-
 		String activityPhotoBase64 = activityVO.getActivityPhotoBase64();
 		// 解碼base64圖片字串，然後塞回activityPhoto中
 		byte[] activityPhoto = Base64Utils.decodeFromString(activityPhotoBase64);
@@ -140,56 +125,16 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public String get3Activity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void update(ActivityVO activityVO) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void apply(ActivityVO activityVO) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void like(SavedActivityVO savedActivityVO) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dislike(Integer activityId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<SavedActivityVO> getlike(Integer accId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void getMembersbyActivityName(String activityName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean selectByAccIdandActivityId(Integer accId, Integer activityId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public ActivityVO findEdit(Integer activityId) {
 		return activityRepository.findByActivityId(activityId);
 	}
+
+	@Override
+	public Integer addActivityMember(Integer activityId) {
+		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+		activityVO.setActivityNumber(activityVO.getActivityNumber()+1); 
+		return activityVO.getActivityNumber();
+	}
+
 
 }
