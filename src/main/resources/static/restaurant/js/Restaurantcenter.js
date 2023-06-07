@@ -369,7 +369,7 @@ $(document).ready(function() {
           "sortAscending": ": 升冪排列",
           "sortDescending": ": 降冪排列"
       }
-  },
+    },
      autoWidth: true,
 
      ajax: {
@@ -382,6 +382,7 @@ $(document).ready(function() {
        dataSrc: "",
      },
      columns: [
+       { data: "prodId", title: "餐卷ID" },
        { data: "prodName", title: "餐卷名稱" },
        { data: "prodText", title: "餐卷描述" },
        { data: "prodUserGuide", title: "餐卷使用規則" },
@@ -401,11 +402,53 @@ $(document).ready(function() {
      ],
    });
 
-   // 編輯按鈕點擊事件
-   $("#myTable3").on("click", ".edit-btn", function () {
-     var data = table3.row($(this).closest("tr")).data();
+   // 編輯餐卷
+   $("#myTable3").on("click", ".btn-warning", function () {
+    $("#update").removeAttr("hidden");
+       var data = table3.row($(this).closest("tr")).data();  
+       $('input[name="updateprodid"]').val(data.prodId);     
+       $('input[name="updateprodname"]').val(data.prodName);       
+       $('input[name="updateprodprice"]').val(data.prodPrice);
+       $('input[name="updateprodnumber"]').val(data.prodQty);
+       $('textarea[name="updateprodruler"]').val(data.prodUserGuide);
+       $('textarea[name="updateproddiscribe"]').val(data.prodText);
+       $('input[name="updateprodstatus"]').val(data.prodState);   
+  });
   
-   });
+  $("#restaurantupdateprod").on("click", function () {    
+    
+      var a = $('input[name="updateprodname"]').val();
+      var b = $('input[name="updateprodprice"]').val();
+      var c = $('input[name="updateprodnumber"]').val();
+      var d = $('textarea[name="updateprodruler"]').val();
+      var e = $('textarea[name="updateproddiscribe"]').val();
+      var f = $('select[name="updateprodstatus"]').val();  
+      var g=$('input[name="updateprodid"]').val();       
+    $.ajax({
+      type: "POST",
+      url: "restaurantupdateprod",         
+      data:{
+        restaurantId:restaurantId,      
+        prodName:a,
+        prodPrice: b,
+        prodQty: c,
+        prodUserGuide:d,
+        prodText:e,
+        prodState:f,
+        prodId:g,
+       },
+      success: function (response) {
+        if (response === 1) {
+          alert("編輯成功囉");         
+          table3.ajax.reload();
+          $("#update").attr("hidden", true);     
+        } else if (response === 2) {        
+          alert("編輯失敗,你在Hello麼");        
+        }
+      },
+    });  
+  })
+
 
    // 餐卷刪除按鈕點擊事件
    $("#myTable3").on("click", ".btn-danger", function () {
@@ -575,13 +618,16 @@ $(document).ready(function () {
       { data: "restaurantCommentReplyText", title: "餐廳回復評論" },
       {
         data: null,
-        title: "操作功能", 
-        render: function (data, type) {
-          return  '<button type="button" class="btn btn-warning btn-sm">編輯</button>' ;
+       title: "操作功能", 
+        render: function (data, type,row) {
+          if (row.restaurantCommentReplyText) {
+            return '';
+          } else {
+            return '<button type="button" class="btn btn-warning btn-sm">編輯</button>';
+          }          
         },
       },
     ],
-
     
   });
 
@@ -604,10 +650,10 @@ $(document).ready(function () {
        },
       success: function (response) {
         if (response === 1) {
-          alert("上傳成功囉,請去查看餐卷");         
-       
+          alert("評論成功囉");         
+       table4.ajax.reload();
         } else if (response === 2) {        
-          alert("上傳失敗,你在Hello麼");        
+          alert("評論失敗,你在Hello麼");        
         }
       },
     }); 
