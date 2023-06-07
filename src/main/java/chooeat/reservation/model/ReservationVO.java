@@ -11,200 +11,210 @@ import java.sql.Timestamp;
 @Component
 public class ReservationVO {
 
-    @Id
-    @Column(name = "reservation_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reservationId;
+	@Id
+	@Column(name = "reservation_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer reservationId;
 
-    @Column(name = "acc_id")
-    private Integer accId;
+	@Column(name = "acc_id")
+	private Integer accId;
 
-    @Column(name = "restaurant_id")
-    private Integer restaurantId;
+	@Column(name = "restaurant_id")
+	private Integer restaurantId;
 
-    @SerializedName("ppl")
-    @Column(name = "reservation_number")
-    private Integer reservationNumber;
+	@SerializedName("ppl")
+	@Column(name = "reservation_number")
+	private Integer reservationNumber;
 
-    @Column(name = "reservation_date_starttime")
-    @SerializedName("date_time")
-    private Timestamp reservationDateStartTime;
+	@Column(name = "reservation_date_starttime")
+	@SerializedName("date_time")
+	private Timestamp reservationDateStartTime;
 
-    @Column(name = "reservation_date_endtime")
-    private Timestamp reservationDateEndTime;
+	@Column(name = "reservation_date_endtime")
+	private Timestamp reservationDateEndTime;
 
-    @Column(name = "reservation_note")
-    @SerializedName("text")
-    private String reservationNote;
+	@Column(name = "reservation_note")
+	@SerializedName("text")
+	private String reservationNote;
 
-    @Column(name = "reservation_state")
-    private Integer reservationState;
+	@Column(name = "reservation_state")
+	private Integer reservationState;
 
-   @Column(name = "restaurant_comment_datetime")
-    private Timestamp restaurantCommentDatetime;
+	@Column(name = "restaurant_comment_datetime")
+	private Timestamp restaurantCommentDatetime;
 
-   @Column(name = "restaurant_comment_text")
-    private String restaurantCommentText;
+	@Column(name = "restaurant_comment_text")
+	private String restaurantCommentText;
 
-   @Column(name = "restaurant_comment_score")
-    private Integer restaurantCommentScore;
+	@Column(name = "restaurant_comment_score")
+	private Integer restaurantCommentScore;
 
-   @Column(name = "restaurant_comment_reply_datetime")
-   private Timestamp restaurantCommentReplyDatetime;
+	@Column(name = "restaurant_comment_reply_datetime")
+	private Timestamp restaurantCommentReplyDatetime;
 
-   @Column(name = "restaurant_comment_reply_text")
-    private String restaurantCommentReplyText;
-    @Column(name = "isComment")
-   private Boolean isComment;
+	@Column(name = "restaurant_comment_reply_text")
+	private String restaurantCommentReplyText;
+	@Column(name = "isComment")
+	private Boolean isComment;
+	@Column(name = "isNotify")
+	private Integer isNotify;
 
-    // Constructor
-    public ReservationVO() {}
+	public Integer getIsNotify() {
+		return isNotify;
+	}
 
-    public ReservationVO(Integer reservationId, Integer accId, Integer restaurantId, Integer reservationNumber,
-                         Timestamp reservationDateStartTime, Timestamp reservationDateEndTime, String reservationNote,
-                         Integer reservationState, Timestamp restaurantCommentDatetime, String restaurantCommentText,
-                         Integer restaurantCommentScore, Timestamp restaurantCommentReplyDatetime, String restaurantCommentReplyText,
-                         Boolean isComment) {
-        super();
-        this.reservationId = reservationId;
-        this.accId = accId;
-        this.restaurantId = restaurantId;
-        this.reservationNumber = reservationNumber;
-        this.reservationDateStartTime = reservationDateStartTime;
-        this.reservationDateEndTime = reservationDateEndTime;
-        this.reservationNote = reservationNote;
-        this.reservationState = reservationState;
-        this.restaurantCommentDatetime = restaurantCommentDatetime;
-        this.restaurantCommentText = restaurantCommentText;
-        this.restaurantCommentScore = restaurantCommentScore;
-        this.restaurantCommentReplyDatetime = restaurantCommentReplyDatetime;
-        this.restaurantCommentReplyText = restaurantCommentReplyText;
-        this.isComment = isComment;
-    }
+	public void setIsNotify(Integer isNotify) {
+		this.isNotify = isNotify;
+	}
 
-    @Override
-    public String toString() {
-        return "ReservationVO [reservationId=" + reservationId + ", accId=" + accId + ", restaurantId=" + restaurantId
-                + ", reservationNumber=" + reservationNumber + ", reservationDateStartTime=" + reservationDateStartTime
-                + ", reservationDateEndTime=" + reservationDateEndTime + ", reservationNote=" + reservationNote
-                + ", reservationState=" + reservationState + ", restaurantCommentDatetime=" + restaurantCommentDatetime
-                + ", restaurantCommentText=" + restaurantCommentText + ", restaurantCommentScore="
-                + restaurantCommentScore + ", restaurantCommentReplyDatetime=" + restaurantCommentReplyDatetime
-                + ", restaurantCommentReplyText=" + restaurantCommentReplyText + ", isComment=" + isComment + "]";
-    }
+	// Constructor
+	public ReservationVO() {
+	}
 
-    public Integer getReservationId() {
-        return reservationId;
-    }
+	
 
-    public void setReservationId(Integer reservationId) {
-        this.reservationId = reservationId;
-    }
+	
 
-    public Integer getAccId() {
-        return accId;
-    }
+	public ReservationVO(Integer reservationId, Integer accId, Integer restaurantId, Integer reservationNumber,
+			Timestamp reservationDateStartTime, Timestamp reservationDateEndTime, String reservationNote,
+			Integer reservationState, Timestamp restaurantCommentDatetime, String restaurantCommentText,
+			Integer restaurantCommentScore, Timestamp restaurantCommentReplyDatetime, String restaurantCommentReplyText,
+			Boolean isComment, Integer isNotify) {
+		super();
+		this.reservationId = reservationId;
+		this.accId = accId;
+		this.restaurantId = restaurantId;
+		this.reservationNumber = reservationNumber;
+		this.reservationDateStartTime = reservationDateStartTime;
+		this.reservationDateEndTime = reservationDateEndTime;
+		this.reservationNote = reservationNote;
+		this.reservationState = reservationState;
+		this.restaurantCommentDatetime = restaurantCommentDatetime;
+		this.restaurantCommentText = restaurantCommentText;
+		this.restaurantCommentScore = restaurantCommentScore;
+		this.restaurantCommentReplyDatetime = restaurantCommentReplyDatetime;
+		this.restaurantCommentReplyText = restaurantCommentReplyText;
+		this.isComment = isComment;
+		this.isNotify = isNotify;
+	}
 
-    public void setAccId(Integer accId) {
-        this.accId = accId;
-    }
+	@Override
+	public String toString() {
+		return "ReservationVO [accId=" + accId + ", restaurantId=" + restaurantId + ", reservationNumber="
+				+ reservationNumber + ", reservationDateStartTime=" + reservationDateStartTime + ", reservationNote="
+				+ reservationNote + "]";
+	}
 
-    public Integer getRestaurantId() {
-        return restaurantId;
-    }
+	public Integer getReservationId() {
+		return reservationId;
+	}
 
-    public void setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
-    }
+	public void setReservationId(Integer reservationId) {
+		this.reservationId = reservationId;
+	}
 
-    public Integer getReservationNumber() {
-        return reservationNumber;
-    }
+	public Integer getAccId() {
+		return accId;
+	}
 
-    public void setReservationNumber(Integer reservationNumber) {
-        this.reservationNumber = reservationNumber;
-    }
+	public void setAccId(Integer accId) {
+		this.accId = accId;
+	}
 
-    public Timestamp getReservationDateStartTime() {
-        return reservationDateStartTime;
-    }
+	public Integer getRestaurantId() {
+		return restaurantId;
+	}
 
-    public void setReservationDateStartTime(Timestamp reservationDateStartTime) {
-        this.reservationDateStartTime = reservationDateStartTime;
-    }
+	public void setRestaurantId(Integer restaurantId) {
+		this.restaurantId = restaurantId;
+	}
 
-    public Timestamp getReservationDateEndTime() {
-        return reservationDateEndTime;
-    }
+	public Integer getReservationNumber() {
+		return reservationNumber;
+	}
 
-    public void setReservationDateEndTime(Timestamp reservationDateEndTime) {
-        this.reservationDateEndTime = reservationDateEndTime;
-    }
+	public void setReservationNumber(Integer reservationNumber) {
+		this.reservationNumber = reservationNumber;
+	}
 
-    public String getReservationNote() {
-        return reservationNote;
-    }
+	public Timestamp getReservationDateStartTime() {
+		return reservationDateStartTime;
+	}
 
-    public void setReservationNote(String reservationNote) {
-        this.reservationNote = reservationNote;
-    }
+	public void setReservationDateStartTime(Timestamp reservationDateStartTime) {
+		this.reservationDateStartTime = reservationDateStartTime;
+	}
 
-    public Integer getReservationState() {
-        return reservationState;
-    }
+	public Timestamp getReservationDateEndTime() {
+		return reservationDateEndTime;
+	}
 
-    public void setReservationState(Integer reservationState) {
-        this.reservationState = reservationState;
-    }
+	public void setReservationDateEndTime(Timestamp reservationDateEndTime) {
+		this.reservationDateEndTime = reservationDateEndTime;
+	}
 
-    public Timestamp getRestaurantCommentDatetime() {
-        return restaurantCommentDatetime;
-    }
+	public String getReservationNote() {
+		return reservationNote;
+	}
 
-    public void setRestaurantCommentDatetime(Timestamp restaurantCommentDatetime) {
-        this.restaurantCommentDatetime = restaurantCommentDatetime;
-    }
+	public void setReservationNote(String reservationNote) {
+		this.reservationNote = reservationNote;
+	}
 
-    public String getRestaurantCommentText() {
-        return restaurantCommentText;
-    }
+	public Integer getReservationState() {
+		return reservationState;
+	}
 
-    public void setRestaurantCommentText(String restaurantCommentText) {
-        this.restaurantCommentText = restaurantCommentText;
-    }
+	public void setReservationState(Integer reservationState) {
+		this.reservationState = reservationState;
+	}
 
-    public Integer getRestaurantCommentScore() {
-        return restaurantCommentScore;
-    }
+	public Timestamp getRestaurantCommentDatetime() {
+		return restaurantCommentDatetime;
+	}
 
-    public void setRestaurantCommentScore(Integer restaurantCommentScore) {
-        this.restaurantCommentScore = restaurantCommentScore;
-    }
+	public void setRestaurantCommentDatetime(Timestamp restaurantCommentDatetime) {
+		this.restaurantCommentDatetime = restaurantCommentDatetime;
+	}
 
-    public Timestamp getRestaurantCommentReplyDatetime() {
-        return restaurantCommentReplyDatetime;
-    }
+	public String getRestaurantCommentText() {
+		return restaurantCommentText;
+	}
 
-    public void setRestaurantCommentReplyDatetime(Timestamp restaurantCommentReplyDatetime) {
-        this.restaurantCommentReplyDatetime = restaurantCommentReplyDatetime;
-    }
+	public void setRestaurantCommentText(String restaurantCommentText) {
+		this.restaurantCommentText = restaurantCommentText;
+	}
 
-    public String getRestaurantCommentReplyText() {
-        return restaurantCommentReplyText;
-    }
+	public Integer getRestaurantCommentScore() {
+		return restaurantCommentScore;
+	}
 
-    public void setRestaurantCommentReplyText(String restaurantCommentReplyText) {
-        this.restaurantCommentReplyText = restaurantCommentReplyText;
-    }
+	public void setRestaurantCommentScore(Integer restaurantCommentScore) {
+		this.restaurantCommentScore = restaurantCommentScore;
+	}
 
-    public Boolean getIsComment() {
-        return isComment;
-    }
+	public Timestamp getRestaurantCommentReplyDatetime() {
+		return restaurantCommentReplyDatetime;
+	}
 
-    public void setIsComment(Boolean isComment) {
-        this.isComment = isComment;
-    }
+	public void setRestaurantCommentReplyDatetime(Timestamp restaurantCommentReplyDatetime) {
+		this.restaurantCommentReplyDatetime = restaurantCommentReplyDatetime;
+	}
 
+	public String getRestaurantCommentReplyText() {
+		return restaurantCommentReplyText;
+	}
 
+	public void setRestaurantCommentReplyText(String restaurantCommentReplyText) {
+		this.restaurantCommentReplyText = restaurantCommentReplyText;
+	}
+
+	public Boolean getIsComment() {
+		return isComment;
+	}
+
+	public void setIsComment(Boolean isComment) {
+		this.isComment = isComment;
+	}
 
 }

@@ -17,9 +17,16 @@ public class Result {
 	private Integer reservedPeople;
 	private String member;
 	private String restaurantName;
+	private Integer remainSeat;
 	
 	
 	
+	public Integer getRemainSeat() {
+		return remainSeat;
+	}
+	public void setRemainSeat(Integer remainSeat) {
+		this.remainSeat = remainSeat;
+	}
 	public String getRestaurantName() {
 		return restaurantName;
 	}
