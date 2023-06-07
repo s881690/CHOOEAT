@@ -19,7 +19,12 @@ function search() {
       .then((data) => {
         console.log(data);
         for (let reser of data) {
-          let base64Photo = reser.activityPhoto;
+          let activityDate = reser.activityDate.split(" ");
+          // console.log(activityDate);
+          let month = activityDate[0];
+          let date = activityDate[1].split(",")[0];
+          let year = activityDate[2];
+          let base64Photo = reser.activityPhotoBase64;
           // console.log(base64Photo);
           let image = new Image();
           image.src = `data:image/*;base64,${base64Photo}`;
@@ -37,10 +42,11 @@ function search() {
               <p class="card-text address">地址：
                 ${reser.restaurantVO.resAdd}
               </p>
-              <p class="card-text date_time">活動時間：${
-                reser.activityStartingTime.slice(0, 5) +
-                reser.activityStartingTime.slice(9)
-              }</p>
+              <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+            reser.activityStartingTime.slice(9) +
+            " " +
+            reser.activityStartingTime.slice(0, 5)
+          }</p>
               <p class="card-text expected">
                預計參加人數：${reser.minNumber}-${reser.maxNumber}人
               </p>
@@ -86,7 +92,12 @@ function firstSearch() {
     })
     .then((data) => {
       for (let reser of data) {
-        console.log(reser);
+        // console.log(reser);
+        let activityDate = reser.activityDate.split(" ");
+        // console.log(activityDate);
+        let month = activityDate[0];
+        let date = activityDate[1].split(",")[0];
+        let year = activityDate[2];
         let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
         image.src = `data:image/*;base64,${base64Photo}`;
@@ -107,10 +118,11 @@ function firstSearch() {
               <p class="card-text address">地址：
                 ${reser.activityrestaurantVO.resAdd}
               </p>
-              <p class="card-text date_time">活動時間：${
-                reser.activityStartingTime.slice(0, 5) +
-                reser.activityStartingTime.slice(9)
-              }</p>
+              <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+          reser.activityStartingTime.slice(9) +
+          " " +
+          reser.activityStartingTime.slice(0, 5)
+        }</p>
               <p class="card-text expected">
                預計參加人數：${reser.minNumber}-${reser.maxNumber}人
               </p>

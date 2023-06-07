@@ -1,6 +1,7 @@
 package chooeat.activity.service;
 
 import java.util.List;
+import java.util.Map;
 
 import chooeat.activity.vo.ActivityVO;
 import chooeat.activity.vo.SavedActivityVO;
@@ -31,7 +32,10 @@ public interface ActivityService {
 	
 	public boolean selectByAccIdandActivityId(Integer accId,  Integer activityId);
 	
-	public ActivityVO establish(ActivityVO activityVO);
+	public Object establish(Map<String, String> map);
+	
+	public ActivityVO findEdit(Integer activityId);
+	
 	
 	
 }

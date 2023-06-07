@@ -7,6 +7,52 @@ let form = document.querySelector("form.activity_establish_form");
 // 取得彈窗內的「送出」
 let check_submit = document.querySelector("button.check_submit");
 
+// 編輯畫面，先帶入所有的資訊
+function activity_edit() {
+  let activityId = sessionStorage.getItem("activityId");
+  console.log(activityId);
+  fetch(`findEdit/${activityId}`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      console.log(result);
+
+      // 將資訊塞入到欄位中
+      $("input#activity_name").val(result.activityName); // 活動名稱
+      $("select#activity_restaruant").val(result.activityrestaurantVO.resName); // 餐廳名稱(塞不進去)
+      let month = result.activityDate.split(" ")[0].replace("月", "");
+      let date = result.activityDate.split(" ")[1].split(",")[0];
+      if (month < 10) {
+        month = "0" + month;
+      }
+      if (date < 10) {
+        date = "0" + date;
+      }
+      let activityDate = `${
+        result.activityDate.split(" ")[2]
+      }-${month}-${date}`;
+      $("input#activity_date").val(activityDate); // 活動日期
+      $("input#regesteration_starting_time").val(
+        result.regesterationStartingTime
+      ); // 活動申請開始時間
+      $("input#regesteration_ending_time").val(result.regesterationEndingTime); // 活動申請結束時間
+      $("input#activity_starting_time").val(result.activityStartingTime); // 活動開始時間
+      $("input#activity_ending_time").val(result.activityEndingTime); // 活動結束時間
+      $("input#min_number").val(result.minNumber); //最少參加人數
+      $("input#max_number").val(result.maxNumber); //最多參加人數
+      $("textarea#activity_text").val(result.activityText); // 聚會活動內容簡介
+
+      let base64String = result.activityPhoto;
+      let image = new Image();
+      console.log(image);
+      image.src = `data:image/*;base64,${base64String}`;
+      image.className = "preview  ";
+      show_photo.innerHTML = "";
+      show_photo.appendChild(image);
+    });
+}
+
 // 取得 餐廳名稱
 function getResName() {
   let restaurant_list = document.querySelector("select#activity_restaruant");
@@ -277,10 +323,15 @@ function form2JSON() {
     let maxNumber = $("input#max_number").val();
     let activityText = $("textarea#activity_text").val();
     let activityStatus = 0; // 0：報名中 1：成團 2：流團，預設為0
-    // let accId = 1; //先假定會員編號為1
     let accId = JSON.parse(sessionStorage.getItem("loginReq")).acc_id;
     let activityNumber = 1; //預設會有1人
     let activityPhotoBase64;
+
+    let activityId;
+    // 若有activityId存在，就放進來
+    if (sessionStorage.getItem("activityId") != "") {
+      activityId = sessionStorage.getItem("activityId");
+    }
 
     //取得上傳的圖片
     // type="file"的input標籤會回傳filesList物件
@@ -296,6 +347,7 @@ function form2JSON() {
 
       // 準備好空物件，拿來裝form資料的key-value
       let jsonObject = {
+        activityId: activityId,
         activityName: activityName,
         activityNumber: activityNumber,
         minNumber: minNumber,
@@ -356,6 +408,9 @@ function search() {
 
 $(function () {
   search();
+
+  //帶入所有資訊
+  activity_edit();
 
   // 顯示圖片功能
   showImg();
