@@ -29,4 +29,9 @@
             $("#accTimestamp").attr("placeholder", `${accTimestamp}`);
             $("#accState").attr("placeholder", stateString);
         })
+
+
+    $("#goBack").on("click", () => {
+        window.history.back();
+    })
 })();
