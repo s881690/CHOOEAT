@@ -24,9 +24,13 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityVO> sellectAll() {
 		List<ActivityVO> list = activityRepository.findAll();
 		for (int i = 0; i < list.size(); i++) {
-			// 將byte[]圖片轉為base64 String
-			String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
-			list.get(i).setActivityPhotoBase64(base64String);
+			// 若activityPhoto欄位不為空，才進來轉
+			if(list.get(i).getActivityPhoto() != null) {
+				// 將byte[]圖片轉為base64 String
+				String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
+				list.get(i).setActivityPhotoBase64(base64String);
+			}
+
 		}
 		return list;
 	}
@@ -124,6 +128,13 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public ActivityVO findEdit(Integer activityId) {
 		return activityRepository.findByActivityId(activityId);
+	}
+
+	@Override
+	public Integer addActivityMember(Integer activityId) {
+		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+		activityVO.setActivityNumber(activityVO.getActivityNumber()+1); 
+		return activityVO.getActivityNumber();
 	}
 
 
