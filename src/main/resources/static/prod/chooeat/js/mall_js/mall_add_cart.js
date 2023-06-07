@@ -1,6 +1,6 @@
 var form_data = JSON.parse(sessionStorage.getItem("form_data"));
 var productId = form_data.productId;
-var AccId = form_data.AccId;
+var accId = form_data.accId;
 var productName = form_data.productName;
 var price = removeThousandsSeparator(form_data.price);
 var qty = form_data.qty;
@@ -47,7 +47,7 @@ window.addEventListener("load", function() {
 // === 傳進redis ===
 function addToCart() {
 	// 構建請求URL
-	const url = "get-cart?operation=addcart&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty;
+	const url = "get-cart?operation=addcart&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty + "&accId=" + accId;
 	// 發送POST請求到後端
 	fetch(url, {
 		method: "POST",
