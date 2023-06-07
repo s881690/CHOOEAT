@@ -301,6 +301,16 @@ public class RestaurantServiceImpl<K> implements RestaurantService {
 	
 		return dao.restaurantdeletead(adId, restaurantId);
 	}
+	@Override
+	public int restaurantupdatecomment(String accName, String restaurantId, String commentInput) {
+		
+		return dao.restaurantupdatecomment(accName, restaurantId,commentInput);
+	}
 
+	@Override
+	public int restaurantupdateprod(String restaurantId, String prodName, String prodPrice, String prodQty,
+			String prodUserGuide, String prodText, String prodState,String prodId) {
+		return dao.restaurantupdateprod(restaurantId,prodName,prodPrice,prodQty,prodUserGuide,prodText,prodState,prodId);
+	}
 
 }
