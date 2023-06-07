@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -895,5 +896,42 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 		return 1;
 	}
 
-
+	@Override
+	public 	List<RestaurantVO>  getcarousel(int var1, int var2, int var3, int var4, int var5) {
+		String sql = "SELECT restaurant_id,res_photo,res_acc FROM restaurant WHERE \r\n"
+				+ "restaurant_id = ? or restaurant_id = ? or restaurant_id = ? or restaurant_id = ? or restaurant_id = ?";
+		List<RestaurantVO> restaurantlList = new ArrayList<>();
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, var1);
+			pstmt.setLong(2, var2);
+			pstmt.setLong(3, var3);
+			pstmt.setLong(4, var4);
+			pstmt.setLong(5, var5);			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				RestaurantVO restaurantVO = new RestaurantVO();
+				restaurantVO.setRestaurantId(rs.getInt("restaurant_id"));
+				restaurantVO.setResAcc(rs.getString("res_acc"));
+				byte[] photoBytes = rs.getBytes("res_photo");
+				  if (photoBytes != null && photoBytes.length > 0) {
+		                Byte[] photoWrapper = new Byte[photoBytes.length];
+		                for (int i = 0; i < photoBytes.length; i++) {
+		                    photoWrapper[i] = photoBytes[i];
+		                }
+		                restaurantVO.setResPhoto(photoWrapper);
+		            } else {
+		            	restaurantVO.setResPhoto(null);
+		            }					
+				  restaurantlList.add(restaurantVO);
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return restaurantlList;
+	}
 }
