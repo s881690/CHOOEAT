@@ -2,14 +2,15 @@ package chooeat.admin.web.restaurant.service;
 
 import java.util.List;
 
-import chooeat.admin.web.restaurant.pojo.RestaurantVO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantPOJO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantVO;
 
 public interface RestaurantService {
 	
-	RestaurantVO edit(Integer resId);
+	AdminRestaurantVO edit(Integer resId);
 	
-	List<RestaurantVO> findAll();
+	List<AdminRestaurantPOJO> findAll();
 		
-	List<RestaurantVO> searchBySomething(String searchType, String searchCondition);
+	List<AdminRestaurantPOJO> searchBySomething(String searchType, String searchCondition);
 
 }

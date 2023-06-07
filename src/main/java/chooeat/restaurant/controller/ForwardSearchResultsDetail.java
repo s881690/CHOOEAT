@@ -35,7 +35,7 @@ public class ForwardSearchResultsDetail extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("utf-8");
 		// 取得請求參數
-
+		System.out.println("我是");
 		String y = request.getParameter("abcde");
 		Map<String, Object> d = RestaurantService.forwardresdetail(y);
 		Gson gson = new GsonBuilder().registerTypeAdapter(Time.class, new CustomTimeSerializer()).create();

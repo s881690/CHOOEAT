@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import chooeat.restaurant.model.vo.AdVO;
 import chooeat.restaurant.model.vo.ProdVO;
 import chooeat.restaurant.model.vo.ReservationVO;
 import chooeat.restaurant.model.vo.RestaurantVO;
@@ -30,4 +31,7 @@ public interface RestaurantService {
 	int restaurantuploadtype(String restaurantId, String type);
 	int restaurantuploadintro(String restaurantId, String intro);
 	int restaurantuploadimage(String restaurantId, byte[] image);
+	int restaurantuploadad(String restaurantId, String adplan, String adprice, String adstarttime, String adendtime, String strTimestamp, String adcheck);
+	List<AdVO> restaurantfindad(String restaurantId);
+	int restaurantdeletead(String adId, String restaurantId);
 }

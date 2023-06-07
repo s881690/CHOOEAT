@@ -3,6 +3,8 @@ package chooeat.activity.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import chooeat.activity.vo.ActivityMemberVO;
 
@@ -12,4 +14,6 @@ public interface ActivityMemberRepository extends JpaRepository<ActivityMemberVO
 	List<ActivityMemberVO> findByActivityId(Integer activityId);
 	void deleteByAccId(Integer accId);
 	ActivityMemberVO findByAccIdAndActivityId(Integer accId,Integer activityId);
+	@Query("SELECT am FROM ActivityMemberVO am JOIN am.accountVO account WHERE account.accName LIKE %:accName% AND am.activityId = :activityId")
+	List<ActivityMemberVO> findByAccNameAndActivityId(@Param(value = "accName") String accName, @Param(value = "activityId") Integer activityId);
 }

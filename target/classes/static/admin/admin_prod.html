@@ -14,6 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/admin_util.css">
+    <link rel="shortcut icon" href="images/header/logo2.png">
 </head>
 
 <body>
@@ -27,9 +28,9 @@
                 </div>
             </div>
 
-            <form class="row g-3 mb-4 justify-content-center" action="#" style="margin-left: 60px">
+            <form class="row g-3 mb-4 justify-content-center" method="get" style="margin-left: 60px">
                 <div class="col-12 col-md-2">
-                    <select class="form-select">
+                    <select class="form-select" name="searchType" id="searchType">
                         <option selected value="0">請選擇查詢方式</option>
                         <option value="1">餐券編號</option>
                         <option value="2">餐券名稱</option>
@@ -37,19 +38,19 @@
                         <option value="4">餐廳名稱</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-2">
+                <!-- <div class="col-12 col-md-2">
                     <select class="form-select">
                         <option selected value="0">請選擇審核狀態</option>
                         <option value="1">通過審核</option>
                         <option value="2">尚未審核</option>
                         <option value="3">未通過審核</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="col-12 col-md-3">
-                    <input type="text" class="form-control" placeholder="請輸入">
+                    <input type="text" class="form-control" name="search" id="search" placeholder="請輸入">
                 </div>
                 <div class="col-3 col-md-2 ">
-                    <button type="submit" class="btn btn-outline-dark searchBtn">送出查詢</button>
+                    <button type="button" class="btn btn-outline-dark searchBtn" id="submitSearch">送出查詢</button>
                 </div>
             </form>
 
@@ -67,131 +68,19 @@
                                 <th scope="col-1"></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>0000001</td>
-                                <td>樂活蔬食餐廳-餐券</td>
-                                <td>0001</td>
-                                <td>樂活蔬食餐廳</td>
-                                <td>審核通過</td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="prodListBody"></tbody>
                     </table>
                 </div>
             </div>
 
             <div class="row align-items-center">
-                <div class="col-6 col-md-9">
-                    <p>總共 1 筆資料</p>
+                <div class="col-6" id="listCount" hidden>
+                    <p>總共</p>
+                    <p id="listCountNumber"></p>
+                    <p>筆資料</p>
                 </div>
-                <div class="col-6 col-md-3">
-                    <ul class="pagination justify-content-end p-2 mt-2">
-                        <li class="page-item"><a class="page-link" href="#">上一頁</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item me-0"><a class="page-link" href="#">下一頁</a></li>
+                <div class="col-6">
+                    <ul class="pagination justify-content-end p-2 mt-2" id="pagination">
                     </ul>
                 </div>
             </div>
@@ -200,6 +89,8 @@
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
+    
+    <script type="text/javascript" src="js/admin_prod.js"></script>
 </body>
 
 </html>

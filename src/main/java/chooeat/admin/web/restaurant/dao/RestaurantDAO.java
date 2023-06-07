@@ -2,17 +2,18 @@ package chooeat.admin.web.restaurant.dao;
 
 import java.util.List;
 
-import chooeat.admin.web.restaurant.pojo.RestaurantVO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantPOJO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantVO;
 
 public interface RestaurantDAO {
 
 	int register(List<String> values);	
 
-	int updateByRestaurantId(RestaurantVO RestaurantVO);
+	int updateByRestaurantId(AdminRestaurantVO RestaurantVO);
 	
-	List<RestaurantVO> searchRestaurants(String searchString);
+	List<AdminRestaurantVO> searchRestaurants(String searchString);
 	
-	List<RestaurantVO> login(String account,String password);
+	List<AdminRestaurantVO> login(String account,String password);
 	
 	List<Object> findfollow(String resAcc);
 	
@@ -24,9 +25,11 @@ public interface RestaurantDAO {
 	
 	List<Object> findmyself(String resAcc);
 	
-	List<RestaurantVO> selectAll (); 
+	List<AdminRestaurantVO> selectAll (); 
 	
-	List<RestaurantVO> selectAllByResId (String resId);
+	List<AdminRestaurantPOJO> selectAllPOJO();
 	
-	List<RestaurantVO> selectAllByResName (String resName);
+	List<AdminRestaurantPOJO> selectAllPOJOByResId (String resId);
+	
+	List<AdminRestaurantPOJO> selectAllPOJOByResName (String resName);
 }

@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import chooeat.admin.web.restaurant.dao.RestaurantDAO;
-import chooeat.admin.web.restaurant.pojo.RestaurantVO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantPOJO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantVO;
 import chooeat.admin.web.restaurant.service.RestaurantService;
 
 @Service
@@ -16,23 +17,23 @@ public class AdminRestaurantServiceImpl implements RestaurantService{
 	private RestaurantDAO dao;
 
 	@Override
-	public RestaurantVO edit(Integer resId) {
+	public AdminRestaurantVO edit(Integer resId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<RestaurantVO> findAll() {
-		return dao.selectAll();
+	public List<AdminRestaurantPOJO> findAll() {
+		return dao.selectAllPOJO();
 	}
 
 	@Override
-	public List<RestaurantVO> searchBySomething(String searchType, String search) {
+	public List<AdminRestaurantPOJO> searchBySomething(String searchType, String search) {
 		String searchCondition = "%" + search + "%";
 		if("1".equals(searchType)) {
-			return dao.selectAllByResId(searchCondition);
+			return dao.selectAllPOJOByResId(searchCondition);
 		} else {
-			return dao.selectAllByResName(searchCondition);			
+			return dao.selectAllPOJOByResName(searchCondition);			
 		}
 	}
 

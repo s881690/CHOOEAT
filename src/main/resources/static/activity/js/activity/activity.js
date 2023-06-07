@@ -11,12 +11,18 @@ function fetch3ActivityList() {
     .then((resList) => {
       // console.log(resList);
       let resList3 = resList.slice(0, 3);
+      // console.log(resList3);
       let resListCollapse = resList.slice(3, 9);
 
       //塞進前三個
       for (let reser of resList3) {
-        let base64Photo = reser.activityPhoto;
-        // console.log(base64Photo);
+        // console.log(reser);
+        let activityDate = reser.activityDate.split(" ");
+        // console.log(activityDate);
+        let month = activityDate[0];
+        let date = activityDate[1].split(",")[0];
+        let year = activityDate[2];
+        let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
         image.src = `data:image/*;base64,${base64Photo}`;
         card_list_3.innerHTML += `
@@ -29,14 +35,17 @@ function fetch3ActivityList() {
             />
             <div class="card-body" data-activityid=${reser.activityId}>
               <h5 class="card-title">${reser.activityName}</h5>
-              <p class="restaurant-name">地點：${reser.restaurantVO.resName}</p>
+              <p class="restaurant-name">地點：${
+                reser.activityrestaurantVO.resName
+              }</p>
             <p class="card-text address">地址：
-              ${reser.restaurantVO.resAdd}
+              ${reser.activityrestaurantVO.resAdd}
             </p>
-            <p class="card-text date_time">活動時間：${
-              reser.activityStartingTime.slice(0, 5) +
-              reser.activityStartingTime.slice(9)
-            }</p>
+            <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+          reser.activityStartingTime.slice(9) +
+          " " +
+          reser.activityStartingTime.slice(0, 5)
+        }</p>
             <p class="card-text expected">
             預計參加人數：${reser.minNumber}-${reser.maxNumber}人
           </p>
@@ -65,10 +74,13 @@ function fetch3ActivityList() {
 
       // 塞進摺疊區塊內
       for (let reser of resListCollapse) {
-        let base64Photo = reser.activityPhoto;
-        // console.log(base64Photo);
+        let activityDate = reser.activityDate.split("-");
+        let month = activityDate[1];
+        let date = activityDate[2];
+        let year = activityDate[0];
+        let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
-        image.src = `data:image/*;base64,${base64Photo}`;
+        image.src = `data:image/jpeg;base64,${base64Photo}`;
         card_list_collapse.innerHTML += `
             <div class="col-4 mt-5">
             <div class="card">
@@ -80,15 +92,16 @@ function fetch3ActivityList() {
               <div class="card-body" data-activityid=${reser.activityId}>
                 <h5 class="card-title">${reser.activityName}</h5>
                 <p class="restaurant-name">地點：${
-                  reser.restaurantVO.resName
+                  reser.activityrestaurantVO.resName
                 }</p>
                 <p class="card-text address">地址：
-                  ${reser.restaurantVO.resAdd}
+                  ${reser.activityrestaurantVO.resAdd}
                 </p>
-                <p class="card-text date_time">活動時間：${
-                  reser.activityStartingTime.slice(0, 5) +
-                  reser.activityStartingTime.slice(9)
-                }</p>
+                <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+          reser.activityStartingTime.slice(9) +
+          " " +
+          reser.activityStartingTime.slice(0, 5)
+        }</p>
                 <p class="card-text expected">
                     預計參加人數：${reser.minNumber}-${reser.maxNumber}人
                     </p>
@@ -152,16 +165,17 @@ function viewmore() {
 // ======== 活動收藏相關函式要放在fetch資料後的函式下，這樣才抓的到資料 ========
 // like按鈕點擊事件
 function like() {
-  // console.log(like);
   // 取得like按鈕的內層path標籤
   let likebtn = $("svg.like");
 
   likebtn.click(function (e) {
-    let accId = sessionStorage.getItem("accId");
+    // 解析會員資訊
+    let account = JSON.parse(sessionStorage.getItem("loginReq"));
+    let accId = account.acc_id;
     let activityId = $(e.target).closest(".card-body").attr("data-activityId");
 
     // 判斷是否已登入
-    if (sessionStorage.getItem("login") == null) {
+    if (sessionStorage.getItem("loginReq") == null) {
       alert("請先進行登入");
       return;
     }
@@ -181,7 +195,6 @@ function like() {
       }).then((res) => {
         console.log(res);
       });
-      // console.log("yyyyyyy");
       //更改顏色與data-like屬性
       $(e.target).attr("data-like", "true");
       $(e.target).css("fill", "#FF0000");
@@ -208,9 +221,18 @@ function like() {
 // 取得收藏活動
 function getlikes() {
   // 判斷會員是否已登入
-  if (sessionStorage.getItem("accId") != null) {
+  if (JSON.parse(sessionStorage.getItem("loginReq")) == null) {
+    // console.log("請先會員登入");
+    return;
+  }
+
+  // 解析會員資訊
+  let account = JSON.parse(sessionStorage.getItem("loginReq"));
+  let accId = account.acc_id;
+
+  if (accId != null) {
     // 取得該會員已收藏的活動，若已收藏，愛心就會是實心
-    let accId = sessionStorage.getItem("accId");
+    // let accId = sessionStorage.getItem("accId");
     let getLikeURL = "getlike?accId=" + accId;
     // 準備好array，用來接活動id
     let activityId_arr = [];
@@ -223,7 +245,7 @@ function getlikes() {
         for (let i = 0; i < resJSON.length; i++) {
           activityId_arr.push(resJSON[i].activityId);
         }
-        console.log(activityId_arr);
+        // console.log(activityId_arr);
 
         // 跑迴圈，判斷活動編號是否符合
         let cardBodys = document.querySelectorAll("div.card-body");
@@ -237,8 +259,6 @@ function getlikes() {
           }
         });
       });
-  } else {
-    console.log("請先進行會員登入");
   }
 }
 
@@ -259,6 +279,20 @@ function signup() {
   });
 }
 
+// 點擊「建立活動」按鈕
+function establish() {
+  $("a.establish").click((e) => {
+    e.preventDefault();
+    // 判斷是否登入
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入!");
+      return;
+    }
+
+    document.location.href = "activity_establish.html";
+  });
+}
+
 $(function () {
   // 接收activityList資訊
   fetch3ActivityList();
@@ -268,4 +302,6 @@ $(function () {
 
   //搜尋功能
   search();
+
+  establish();
 });

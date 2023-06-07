@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,7 +24,7 @@ public class ActivityMemberVO {
 	@Column(name = "group_note")
 	private String groupNote;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "acc_id", insertable = false, updatable = false)
 	private AccountVO accountVO;
 

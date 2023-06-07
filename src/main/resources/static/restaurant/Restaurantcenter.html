@@ -233,6 +233,18 @@
               >
                 上傳廣告推銷
               </button>
+              <button
+                class="nav-link"
+                id="v-pills-find-osusume-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-findosusume"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-findosusume"
+                aria-selected="false"
+              >
+                查看廣告推銷
+              </button>
             </div>
           </div>
           <div class="col-9" id="comment">
@@ -1009,7 +1021,87 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-osusume-tab"
               >
-                上傳廣告推銷內容
+                <div class="row">
+                  <div class="col-2"></div>
+                  <div class="col-8">
+                    <h1><i class="fas fa-upload"></i>上傳廣告推銷</h1>
+                    <div>
+                      <div>
+                        <i class="fa fa-ticket fa-sm"></i>
+                      </div>
+                      <select name="adplan" class="form-control">
+                        <option value="" disabled selected>請選擇方案</option>
+                        <option value="1">廣告餐廳</option>
+                        <option value="2">廣告餐卷</option>
+                        <option value="3">廣告餐廳+餐卷</option>
+                      </select>
+                    </div>
+                    <div>
+                      <div>
+                        <i class="fas fa-yen-sign"></i>
+                      </div>
+                      <input
+                        name="adprice"
+                        class="form-control"
+                        placeholder="金額計算結果"
+                        type="text"
+                        disabled
+                      />
+                    </div>
+                    <div>
+                      <br />
+                      <div>請輸入開始時間</div>
+                      <input
+                        type="date"
+                        name="adstarttime"
+                        class="form-control"
+                      />
+                    </div>
+                    <div>
+                      <br />
+                      <div>請輸入結束時間</div>
+                      <input
+                        type="date"
+                        name="adendtime"
+                        class="form-control"
+                      />
+                    </div>
+                    <div>
+                      <button
+                        id="restaurantuploadad"
+                        type="button"
+                        class="btn"
+                        style="width: 100%"
+                      >
+                        送出
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="col-2"></div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="v-pills-findosusume"
+                role="tabpanel"
+                aria-labelledby="v-pills-findosusume-tab"
+              >
+                <table id="myTable5" class="display" style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th>廣告ID</th>
+                      <th>廣告方案</th>
+                      <th>廣告申請時間</th>
+                      <th>廣告開始時間</th>
+                      <th>廣告結束時間</th>
+                      <th>廣告費用</th>
+                      <th>審核狀態</th>
+                      <th>操作功能</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </div>
             </div>
           </div>

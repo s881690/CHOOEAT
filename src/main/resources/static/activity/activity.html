@@ -32,7 +32,7 @@
                       這裡的連結之後要改，跳轉到首頁
                   內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
           <a class="navbar-brand" href="#">
-            <img src="./images/header/logo.png" />
+            <img src="./images/header/logo2.png" />
           </a>
           <!-- order-lg-last在bootstrap框架中是設定在父元素的排列順序，last的意思是會在最後面
                       function_icons只代表這個class的名稱 -->
@@ -59,8 +59,8 @@
                 <img src="./images/header/shopping_cart_Icon.png" />
               </a>
               <a
-                href="#"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
+                href="../account/login.html"
+                class="d-flex align-items-center justify-content-center mr-1 icon accountIcon"
               >
                 <img src="./images/header/member_icon.png" />
               </a>
@@ -122,7 +122,7 @@
               style="--bs-breadcrumb-divider: '>'"
               aria-label="breadcrumb"
             >
-              <ol class="breadcrumb">
+              <ol class="breadcrumb pt-3 ps-3">
                 <li class="breadcrumb-item">
                   <a href="#" class="normal_a">首頁</a>
                 </li>
@@ -262,7 +262,7 @@
                 class="img-fluid h-100 opacity-75 rounded-3"
               />
               <a
-                class="btn btn-outline-warning w-10"
+                class="btn btn-warning w-10 establish"
                 href="./activity_establish.html"
                 >開始揪團</a
               >
@@ -273,9 +273,8 @@
     </div>
 
     <!--footer-->
-    <div
-      class="container-fluid footer_container border-2 border-secondary border-top"
-    >
+    <!--  border-2 border-secondary border-top -->
+    <div class="container-fluid footer_container">
       <footer>
         <ul
           class="nav justify-content-center border-bottom pb-3 mb-3 py-2 my-2"
@@ -302,7 +301,9 @@
             <a href="#" class="nav-link px-4 text-muted">關於我們</a>
           </li>
         </ul>
-        <p class="text-center text-muted mb-0 py-2 my-3">&copy; THA101 G4</p>
+        <p class="text-center text-muted mb-0 py-2 my-3">
+          CopyRight &copy; THA101 G4
+        </p>
       </footer>
     </div>
 
@@ -312,5 +313,6 @@
     <script src="./js/vendors/jquery/jquery-3.4.1.min.js"></script>
     <!-- 引入 自訂 JS -->
     <script src="./js/activity/activity.js"></script>
+    <script src="./js/activity/activity_login.js"></script>
   </body>
 </html>

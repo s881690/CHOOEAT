@@ -2,14 +2,14 @@ package chooeat.admin.web.acc.service;
 
 import java.util.List;
 
-import chooeat.admin.web.acc.pojo.AccountVO;
+import chooeat.admin.web.acc.pojo.AdminAccountVO;
 
 public interface AccService {
 
-	AccountVO edit();
+	AdminAccountVO edit();
 	
-	List<AccountVO> findAll();
+	List<AdminAccountVO> findAll();
 	
-	List<AccountVO> searchBySomething(String searchType, String searchCondition);
+	List<AdminAccountVO> searchBySomething(String searchType, String searchCondition);
 	
 }

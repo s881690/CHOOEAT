@@ -15,11 +15,26 @@ function serializeDate(dateString) {
   var formattedDate = yyyy + "-" + mm + "-" + dd;
   return formattedDate;
 }
+
 const mealData = {
   ppl: "",
   date_time: "",
   text: "",
+  acc_id:"",
+  restaurantId :""
 };
+
+const loginReq = JSON.parse(sessionStorage.getItem('loginReq'));
+const acc_id = loginReq.acc_id;
+
+const searchResult = JSON.parse(sessionStorage.getItem('searchResult'));
+const restaurantId = searchResult.myself[0].restaurantId;
+
+mealData.acc_id = acc_id;
+mealData.restaurantId = restaurantId;
+
+console.log(typeof mealData.acc_id); // 打印acc_id属性的类型
+console.log(typeof mealData.restaurantId); // 打印restaurantId属性的类型
 
 const time = document.querySelectorAll(".meal_time");
 const meal_select = document.querySelector("#meal_select");
@@ -83,7 +98,7 @@ btn.onclick = () => {
   }
 
   console.log(mealData);
-  fetch("../reservation", {
+  fetch("../reservationRedis", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -93,7 +108,7 @@ btn.onclick = () => {
     .then((r) => r.json())
     .then((data) => {
       if (data.status === "success") {
-        window.location.href = "reservationSucess.html";
+        window.location.href = "reservationCheckout.html";
         console.log("success");
       } else {
         alert("訂位失敗，請重新選擇");

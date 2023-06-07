@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import chooeat.admin.core.pojo.Core;
 import chooeat.admin.core.util.CommonUtil;
-import chooeat.admin.web.restaurant.pojo.RestaurantVO;
+import chooeat.admin.web.restaurant.pojo.AdminRestaurantPOJO;
 import chooeat.admin.web.restaurant.service.RestaurantService;
 
 @WebServlet("/admin/searchRestaurant")
@@ -41,7 +41,7 @@ public class AdminSearchRestaurant extends HttpServlet{
 		String searchType = req.getParameter("searchType");
 		String search = req.getParameter("search");
 		
-		List<RestaurantVO> resList = new ArrayList<>();
+		List<AdminRestaurantPOJO> resList = new ArrayList<>();
 		
 		if("0".equals(searchType) && "".equals(search)) {
 			resList = SERVICE.findAll();
