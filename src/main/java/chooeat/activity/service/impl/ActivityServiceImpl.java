@@ -30,7 +30,6 @@ public class ActivityServiceImpl implements ActivityService {
 				String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
 				list.get(i).setActivityPhotoBase64(base64String);
 			}
-
 		}
 		return list;
 	}
