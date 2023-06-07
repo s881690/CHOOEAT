@@ -17,6 +17,9 @@ public class EmailInfoRowMapper implements RowMapper<EmailInfo>{
 		emailInfo.setReservationNumber(rs.getInt("reservation_number"));
 		emailInfo.setReservationTime(rs.getTimestamp("reservation_date_starttime").toString());
 		emailInfo.setRestaurantAddress(rs.getString("res_add"));
+		emailInfo.setRestaurantPhone(rs.getString("res_tel"));
+		emailInfo.setIsNotify(rs.getInt("isNotify"));
+		emailInfo.setRestaurantName(rs.getString("res_name"));
 		
 		return emailInfo;
 	}
