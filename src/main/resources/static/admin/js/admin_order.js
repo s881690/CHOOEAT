@@ -160,4 +160,10 @@
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
     });
+
+    $(document).on("click", ".editBtn", function(){
+        let orderId = $(this).closest("tr").find(".orderId").text();
+        sessionStorage.setItem("orderId", orderId);
+        location = "admin_orderSearchResult.html";
+    });
 })();

@@ -146,17 +146,7 @@
     
     $(document).on("click", ".editBtn", function(){
         let accId = $(this).closest("tr").find(".accId").text();
-
-        fetch("adminAccSearchResult", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                accId: accId
-            })
-        })
-            .then(res => res.json())
-            .then(body => {
-            
-            });
+        sessionStorage.setItem("accId", accId);
+        location = "admin_accSearchResult.html";
     });
 })();

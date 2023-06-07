@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import chooeat.admin.web.order.pojo.AdminOrderDetailVO;
 import chooeat.admin.web.order.pojo.AdminOrderVO;
 import chooeat.admin.web.order.service.OrderService;
 
@@ -35,6 +36,16 @@ public class AdminSearchOrder {
 		} else {
 			return Collections.emptyList();
 		}
+	}
+	
+	@GetMapping("/findOrder")
+	public AdminOrderVO findOrder(Integer orderId) {
+		return SERVICE.findById(orderId);
+	}
+	
+	@GetMapping("/findOrderDetail")
+	public List<AdminOrderDetailVO> findOrderDetail(Integer orderId) {
+		return SERVICE.searchByOrderId(orderId);
 	}
 
 }

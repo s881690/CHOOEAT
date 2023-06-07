@@ -8,6 +8,8 @@ public interface AccService {
 
 	AdminAccountVO edit();
 	
+	AdminAccountVO findAcc(Integer accId);
+	
 	List<AdminAccountVO> findAll();
 	
 	List<AdminAccountVO> searchBySomething(String searchType, String searchCondition);

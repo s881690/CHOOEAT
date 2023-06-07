@@ -10,6 +10,8 @@ import chooeat.admin.web.order.pojo.AdminOrderVO;
 
 public interface OrderRepository extends JpaRepository<AdminOrderVO, Integer>{
 
+	AdminOrderVO findByOrderId (Integer orderId);
+	
 	@Query(value = "SELECT * FROM `order` o WHERE o.order_id LIKE :orderId", nativeQuery = true)
 	List<AdminOrderVO> findByOrderIdLike(@Param(value = "orderId") String orderId);
 	
