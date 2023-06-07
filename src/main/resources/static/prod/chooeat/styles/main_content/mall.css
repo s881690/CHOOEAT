@@ -45,16 +45,7 @@ aside.aside, main.main {
     }
   }
 
-100
-%
-{
-transform
-:
-rotate(
-360deg
-);
-}
-}
+
 
 /* ===================== Top ===================== */
 div.breadcrumbandSearch span {
