@@ -1,5 +1,6 @@
 package chooeat.admin.web.admin.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,22 @@ public class AdminSearchOrder {
 	private OrderService SERVICE;
 	
 	@GetMapping("/selectAll")
-	public List<AdminOrderVO> findAll(){
-		return SERVICE.selectAll();
+	public List<AdminOrderVO> findAll(Integer searchType, String search){
+		
+		if(searchType == 0) {
+			return SERVICE.selectAll();			
+		} else if (searchType == 1 || searchType == 2) {
+			try {
+				int id = Integer.parseInt(search);
+				return SERVICE.searchBySomethingId(searchType, id);
+			} catch (NumberFormatException e) {
+				return Collections.emptyList();
+			}
+		} else if (searchType == 3 || searchType == 4) {
+			return SERVICE.searchByAcc(searchType, search);
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 }

@@ -33,7 +33,6 @@
                         <li><a class="dropdown-item" href="admin_restaurant.html">餐廳查詢</a></li>
                         <li><a class="dropdown-item" href="admin_prod.html">餐券查詢</a></li>
                         <li><a class="dropdown-item" href="admin_resComment.html">餐廳評論查詢</a></li>
-                        <li><a class="dropdown-item" href="admin_coupon.html">折價券查詢</a></li>
                         <li><a class="dropdown-item" href="admin_ad.html">廣告查詢</a></li>
                         <li><a class="dropdown-item" href="admin_restype.html">餐廳類別查詢</a></li>
                     </ul>
@@ -50,6 +49,9 @@
         </div>
     </div>
     `;
+
+    //折價券暫時拿掉了，要補回去
+    // <li><a class="dropdown-item" href="admin_coupon.html">折價券查詢</a></li>
 
     const body = document.querySelector('body');
     body.insertBefore(nav, body.firstChild);

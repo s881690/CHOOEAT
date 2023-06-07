@@ -8,32 +8,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import chooeat.admin.web.reservation.service.ReservationService;
-import chooeat.admin.web.reservation.pojo.AdminReservationVO;
+import chooeat.admin.web.activity.pojo.AdminActivityVO;
+import chooeat.admin.web.activity.service.AdminActivityService;
 
 @RestController
-@RequestMapping("/adminSearchReservation")
-public class AdminSearchReservation {
-	
+@RequestMapping("/adminSearchActivity")
+public class AdminSearchActivity {
+
 	@Autowired
-	private ReservationService SERVICE;
+	private AdminActivityService SERVICE;
 	
 	@GetMapping("/selectAll")
-	public List<AdminReservationVO> findAll(Integer searchType, String search){
+	public List<AdminActivityVO> findAll(Integer searchType, String search){
+		
 		if(searchType == 0) {
 			return SERVICE.selectAll();			
-		} else if (searchType == 1 || searchType == 3) {
-			return SERVICE.searchByResNameOrAccName(searchType, search);
-		} else if (searchType == 2 || searchType == 4) {
+		} else if (searchType == 2 || searchType == 5 || searchType == 7) {
 			try {
 				int id = Integer.parseInt(search);
 				return SERVICE.searchBySomethingId(searchType, id);
 			} catch (NumberFormatException e) {
 				return Collections.emptyList();
 			}
+		} else if (searchType == 1 || searchType == 3 || searchType == 4 || searchType == 6) {
+			return SERVICE.searchByNameOrAcc(searchType, search);
 		} else {
 			return Collections.emptyList();
 		}
 	}
-
 }

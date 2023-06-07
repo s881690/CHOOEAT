@@ -1,5 +1,6 @@
 package chooeat.admin.web.reservation.service.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,6 +31,60 @@ public class AdminReservationServiceImpl implements ReservationService {
 		}
 		return reservationList;
 	}
-	
+
+	@Override
+	public AdminReservationVO findByReservationId(Integer reservationId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AdminReservationVO> searchBySomethingId(Integer searchType, Integer id) {
+		
+		String stringId = "%" + String.valueOf(id) + "%";
+		List<AdminReservationVO> reservationList = new ArrayList<AdminReservationVO>();
+		
+		if(searchType == 2) {
+			reservationList = adminReservationRepository.findByResId(stringId);
+		} else if(searchType == 4) {
+			reservationList = adminReservationRepository.findByAccId(stringId);
+		} else {
+			return null;
+		}
+		
+		Iterator<AdminReservationVO> iterator = reservationList.iterator();
+
+		while (iterator.hasNext()) {
+		    AdminReservationVO i = iterator.next();
+		    if (i.getRestaurantCommentDatetime() == null) {
+		        iterator.remove();
+		    }
+		}
+		return reservationList;
+	}
+
+	@Override
+	public List<AdminReservationVO> searchByResNameOrAccName(Integer searchType, String search) {
+		
+		List<AdminReservationVO> reservationList = new ArrayList<AdminReservationVO>();
+		
+		if(searchType == 1) {
+			reservationList = adminReservationRepository.findByResNameLike(search);
+		} else if (searchType == 3) {
+			reservationList = adminReservationRepository.findByAccName(search);
+		} else {
+			return null;
+		}
+		
+		Iterator<AdminReservationVO> iterator = reservationList.iterator();
+
+		while (iterator.hasNext()) {
+		    AdminReservationVO i = iterator.next();
+		    if (i.getRestaurantCommentDatetime() == null) {
+		        iterator.remove();
+		    }
+		}
+		return reservationList;
+	}	
 	
 }
