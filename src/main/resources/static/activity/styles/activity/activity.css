@@ -7,7 +7,6 @@ body header {
   /* 設定固定寬，在進行RWD設計之前不可移除，同樣設定會出現在內容區塊的DIV標籤及FOOTER */
   margin: 0 auto;
   border-bottom: 1px solid black;
-  position: sticky;
   top: 0px;
   /* 圖層為最上層 */
   z-index: 100;
@@ -329,6 +328,7 @@ body div.main_content div.activity_main_organizer div.container form.participant
 body div.footer_container {
   background-color: blanchedalmond;
   height: 23vh;
+  margin-top: 6vh;
 }
 body div.footer_container footer ul li.nav-item a {
   color: black !important;
