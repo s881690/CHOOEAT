@@ -35,26 +35,26 @@ public class ProdServiceImpl implements ProdService {
 
 
 	public List<Prod> getSortedProducts(List<Prod> prod, String sortParam) {
-		// 依 sortParam 執行相應的商品排序邏輯
-		// 依評分排序
-		if ("star".equals(sortParam)) {
-			sortProductsByName(prod);
-		}
-		// 依價格從高到低排序
-		else if ("pricefromhigh".equals(sortParam)) {
-			sortProductsByPrice(prod, true);
-		}
-		// 依價格從低到高排序
-		else if ("pricefromlow".equals(sortParam)) {
-			sortProductsByPrice(prod, false);
-		}
-		return prod;
+	    // 依 sortParam 執行相應的商品排序邏輯
+	    // 依評分排序
+	    if ("star".equals(sortParam)) {
+	        sortProductsByStar(prod);
+	    }
+	    // 依價格從高到低排序
+	    else if ("pricefromhigh".equals(sortParam)) {
+	        sortProductsByPrice(prod, true);
+	    }
+	    // 依價格從低到高排序
+	    else if ("pricefromlow".equals(sortParam)) {
+	        sortProductsByPrice(prod, false);
+	    }
+	    return prod;
+	}
+	public void sortProductsByStar(List<Prod> prod) {
+	    // 依星星排序
+	    Collections.sort(prod, Comparator.comparing(Prod::getProdCommentScore).reversed());
 	}
 
-	public void sortProductsByName(List<Prod> prod) {
-		// 依評分排序
-		Collections.sort(prod, Comparator.comparing(Prod::getProdCommentScore));
-	}
 
 	public void sortProductsByPrice(List<Prod> prod, boolean sortByHighToLow) {
 		// 依價格排序
