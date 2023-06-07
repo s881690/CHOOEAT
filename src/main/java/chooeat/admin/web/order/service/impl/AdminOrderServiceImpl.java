@@ -27,6 +27,30 @@ public class AdminOrderServiceImpl implements OrderService{
 		return null;
 	}
 
-	
+	@Override
+	public List<AdminOrderVO> searchBySomethingId(Integer searchType, Integer id) {
+		
+		String stringId = "%" + String.valueOf(id) + "%";
+		
+		if(searchType == 1) {
+			return orderRepository.findByOrderIdLike(stringId);
+		} else if (searchType == 2) {
+			return orderRepository.findByAccIdLike(stringId);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<AdminOrderVO> searchByAcc(Integer searchType, String search) {
+		
+		if(searchType == 3) {
+			return orderRepository.findByAccAccLike(search);
+		} else if (searchType == 4) {
+			return orderRepository.findByAccNameLike(search);
+		} else {
+			return null;
+		}
+	}
 	
 }

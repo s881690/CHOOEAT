@@ -43,8 +43,10 @@ function showDetail() {
   let title = document.querySelector("h1.activity_title");
   // 活動內容區塊
   let activity_info = document.querySelector("div.activity_info");
-  // 活動報名與舉辦人區塊
-  let signup = document.querySelector("div.signup");
+  // 報名區塊
+  let outter_signup = document.querySelector("div.outter_signup");
+  // 活動舉辦人區塊
+  let activity_host = document.querySelector("div.activity_host");
   let url = `detail/${activityId}`;
   fetch(url)
     .then((res) => {
@@ -88,7 +90,7 @@ function showDetail() {
       </div>
       `;
 
-      signup.innerHTML = `
+      activity_host.innerHTML = `
       <!-- 認識主辦人 -->
       <div class="activity_host row align-items-center">
         <div class="col">
@@ -102,15 +104,8 @@ function showDetail() {
           />
         </div>
       </div>
-      <div
-        class="btn btn-outline-info col me-3 outter_signup signup_and_edit mt-5"
-        data-bs-toggle="modal"
-        data-bs-target="#signup"
-      >
-        報名
-      </div> 
       `;
-      googleMap(address);
+      signup.innerHTML = googleMap(address);
       isactivityHost(result.accId);
     });
 }
@@ -179,6 +174,18 @@ function innerSignup() {
               console.log(result);
             }
           });
+      });
+
+    // 確認尚未報名，將活動成員+1
+    fetch(`addActivityMember`, {
+      body: JSON.stringify({ activityId: activityId }),
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result);
       });
   });
 }
