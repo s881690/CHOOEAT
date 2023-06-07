@@ -959,6 +959,7 @@
                 <table id="myTable3" class="display" style="width: 100%">
                   <thead>
                     <tr>
+                      <th>餐卷ID</th>
                       <th>餐卷名稱</th>
                       <th>餐卷描述</th>
                       <th>餐卷使用規則</th>
@@ -970,6 +971,87 @@
                   </thead>
                   <tbody></tbody>
                 </table>
+                <div id="update" class="container" hidden>
+                  <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                      <h1 style="text-align: center">
+                        <i class="fas fa-upload"></i>編輯餐卷
+                      </h1>
+                      <div style="margin-bottom: 5px" hidden>
+                        <div h>餐卷ID</div>
+                        <input
+                          name="updateprodid"
+                          class="form-control"
+                          type="text"
+                        />
+                      </div>
+
+                      <div style="margin-bottom: 5px">
+                        <div>餐卷名稱</div>
+                        <input
+                          name="updateprodname"
+                          class="form-control"
+                          type="text"
+                        />
+                      </div>
+
+                      <div style="margin-bottom: 5px">
+                        <div>餐卷價錢</div>
+                        <input
+                          name="updateprodprice"
+                          class="form-control"
+                          type="number"
+                        />
+                      </div>
+
+                      <div style="margin-bottom: 5px">
+                        <div>餐卷數量</div>
+                        <input
+                          name="updateprodnumber"
+                          class="form-control"
+                          type="number"
+                        />
+                      </div>
+
+                      <div style="margin-bottom: 5px">
+                        <div>餐卷使用規則</div>
+                        <textarea
+                          name="updateprodruler"
+                          class="form-control"
+                          type="text"
+                        ></textarea>
+                      </div>
+
+                      <div style="margin-bottom: 5px">
+                        <div>餐卷描述</div>
+                        <textarea
+                          name="updateproddiscribe"
+                          class="form-control"
+                          type="text"
+                        ></textarea>
+                      </div>
+                      <div hidden>
+                        <div>
+                          <i class="fa fa-table"></i>
+                        </div>
+                        <select name="updateprodstatus" class="form-control">
+                          <option value="1">申請中</option>
+                        </select>
+                      </div>
+                      <div style="margin-bottom: 5px">
+                        <button
+                          id="restaurantupdateprod"
+                          class="btn"
+                          style="width: 100%"
+                        >
+                          送出
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-2"></div>
+                  </div>
+                </div>
               </div>
 
               <div
@@ -983,7 +1065,6 @@
                     <tr>
                       <th>預約ID</th>
                       <th>預約人數</th>
-                      <th>預約日期</th>
                       <th>用餐開始時間</th>
                       <th>用餐結束時間</th>
                       <th>備註事項</th>

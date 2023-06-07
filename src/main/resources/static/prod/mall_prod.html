@@ -63,86 +63,47 @@
                               和 "justify-content-center" 屬性來垂直和水平居中其內部的子元素。 
                               "align-items-center" 類用於垂直居中，"justify-content-center" 類
                               用於水平居中。 -->
-              <!-- 以下3個a標籤，包的是聊天視窗、購物車、會員登入的小icon -->
-              <!-- 						<a href="#" -->
-              <!-- 							class="d-flex align-items-center justify-content-center mr-1 icon"> -->
-              <!-- 							<img src="./chooeat/images/header/chat_icon.png" /> -->
-              <!-- 						</a>  -->
-              <a
-                href="mall_shopping_cart.html"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
-              >
-                <img
-                  style="width: 40px; height: 40px; margin-right: 5px"
-                  src="./chooeat/images/header/carts.png"
-                />
-              </a>
-              <a
-                href="../account/login.html"
-                class="accountIcon"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
-              >
-                <img
-                  style="width: 40px; height: 40px; margin-right: 5px"
-                  src="./chooeat/images/header/profile.png"
-                />
-              </a>
-              <span
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  vertical-align: middle;
-                  margin-left: 10px;
-                "
-                id="sname"
-              ></span>
-            </p>
-          </div>
-          <!-- 這個button是漢堡選單的menu按鈕 -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#ftco-nav"
-            aria-controls="ftco-nav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="fa fa-bars"></span> Menu
-          </button>
-          <!-- 以下為header各分區的標題連結 -->
-          <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul
-              class="navbar-nav d-flex align-items-center justify-content-center"
-              style="gap: 1rem"
-            >
-              <li class="nav-item">
-                <a
-                  href="../restaurant/Homepage.html"
-                  class="nav-link"
-                  style="margin-left: 100px"
-                  >首頁</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="../restaurant/Homepage.html" class="nav-link"
-                  >找餐廳</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="mall.html" class="nav-link">找餐券</a>
-              </li>
-              <li class="nav-item">
-                <a href="../activity/activity.html" class="nav-link">揪團</a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">關於我們</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+						<!-- 以下3個a標籤，包的是聊天視窗、購物車、會員登入的小icon -->
+						<!-- 						<a href="#" -->
+						<!-- 							class="d-flex align-items-center justify-content-center mr-1 icon"> -->
+						<!-- 							<img src="./chooeat/images/header/chat_icon.png" /> -->
+						<!-- 						</a>  -->
+						<a href="mall_shopping_cart.html"
+							class="d-flex align-items-center justify-content-center mr-1 icon">
+							<img style="width: 40px; height: 40px; margin-right: 5px;"
+							src="./chooeat/images/header/carts.png" />
+						</a> <a href="../account/login.html" class="accountIcon"
+							class="d-flex align-items-center justify-content-center mr-1 icon">
+							<img style="width: 40px; height: 40px; margin-right: 5px;" src="./chooeat/images/header/profile.png" />
+						</a> <span
+							style="display: inline-flex; align-items: center; vertical-align: middle; margin-left: 10px;"
+							id="sname"></span>
+					</p>
+				</div>
+				<!-- 這個button是漢堡選單的menu按鈕 -->
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#ftco-nav" aria-controls="ftco-nav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="fa fa-bars"></span> Menu
+				</button>
+				<!-- 以下為header各分區的標題連結 -->
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul
+						class="navbar-nav d-flex align-items-center justify-content-center"
+						style="gap: 1rem">
+						<li class="nav-item"><a href="../restaurant/Homepage.html"
+							class="nav-link"style=" margin-left: 100px;" >首頁</a></li>
+						<li class="nav-item"><a href="../restaurant/Homepage.html"
+							class="nav-link">找餐廳</a></li>
+						<li class="nav-item"><a href="mall.html" class="nav-link">找餐券</a></li>
+						<li class="nav-item"><a href="../activity/activity.html"
+							class="nav-link">揪團</a></li>
+						<li class="nav-item"><a href="aboutUs.html" class="nav-link">關於我們</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
 
     <!-- 以下為內容區域，主要對這裡做修改 -->
     <div id="product-details" class="main_content">
@@ -293,6 +254,49 @@
         </div>
       </div>
     </div>
+	</div>
+	
+	
+	<div class="confirmation-overlay">
+		<div class="confirmation-box">
+			<h5>檢舉評論</h5>
+			<div>檢舉這則評論的原因？</div>
+			<div></div>
+			<textarea placeholder="請輸入檢舉原因..."></textarea>
+			<div>
+				<button class="confirm-btn">完成</button>
+				<button class="cancel-btn">取消</button>
+			</div>
+		</div>
+	</div>
+	<!-- class="navbar-fixed-bottom"讓footer置底 -->
+		<div class="container-fluid footer_container">
+		<footer>
+			<ul
+				class="nav justify-content-center border-bottom pb-3 mb-3 py-2 my-2">
+				<li class="nav-item"><a href="../restaurant/Homepage.html"
+					class="nav-link px-4 text-muted">首頁</a></li>
+				<li class="nav-item"><a href="../restaurant/Homepage.html"
+					class="nav-link px-4 text-muted">找餐廳</a></li>
+				<li class="nav-item"><a href="mall.html"
+					class="nav-link px-4 text-muted">找餐券</a></li>
+				<li class="nav-item"><a href="../activity/activity.html"
+					class="nav-link px-4 text-muted">揪團</a></li>
+				<li class="nav-item"><a href="../activity/activity.html"
+					class="nav-link px-4 text-muted">商家申請</a></li>
+				<li class="nav-item"><a href="aboutUs.html"
+					class="nav-link px-4 text-muted">關於我們</a></li>
+			</ul>
+			<p class="text-center text-muted mb-0 py-2 my-3">CopyRight &copy;
+				THA101 G4</p>
+		</footer>
+		</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+	<script src="./chooeat/vendors/jquery-3.6.4.min.js"></script>
+	<script src="./chooeat/js/mall_js/mall_prod.js"></script>
+	<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMQXNM3OAmGz9Xj5y1Q7qbEPeg-h4m9Hs&callback=initMap">
+	</script>
+<!-- 	<script src="./chooeat/js/mall_js/mall2.js"></script> -->
 
     <div class="confirmation-overlay">
       <div class="confirmation-box">

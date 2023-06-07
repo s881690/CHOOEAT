@@ -94,7 +94,7 @@ function showDetail() {
       <!-- 認識主辦人 -->
       <div class="activity_host row align-items-center">
         <div class="col">
-          <h3 class="fw-bolder">認識主辦人</h3>
+          <h4 class="fw-bolder">認識主辦人</h4>
         </div>
         <div class="col">
           <img
