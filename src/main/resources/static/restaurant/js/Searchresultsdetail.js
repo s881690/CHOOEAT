@@ -10,7 +10,8 @@ var resEndTime = result["myself"][0].resEndTime;
 var resTotalScore = result["myself"][0].resTotalScore;
 var resIntro = result["myself"][0].resIntro;
 
-// 将字节数组转换为 Base64 编码的字符串
+
+// 圖片轉B64編碼字串
 function arrayBufferToBase64(buffer) {
 	var binary = '';
 	var bytes = new Uint8Array(buffer);
@@ -20,11 +21,11 @@ function arrayBufferToBase64(buffer) {
 	}
 	return window.btoa(binary);
 }
-console.log(result["myself"][0].resphoto)
-const photoBase64 = arrayBufferToBase64(result["myself"][0].resPhoto);
-const imageSrc = `data:image/jpeg;base64,${photoBase64}`;
+
 
 //餐廳圖片
+const photoBase64 = arrayBufferToBase64(result["myself"][0].resPhoto);
+const imageSrc = `data:image/jpeg;base64,${photoBase64}`;
 var ddd = document.getElementById("ddd");
 console.log(imageSrc)
 var newDiv = document.createElement("div");
@@ -66,6 +67,9 @@ parentElement.appendChild(newDiv);
 //廣告
 for (let i = 0; i < result["comment"].length; i++) {
 
+  const photoBase64acc = arrayBufferToBase64(result["account"][i].accPic);
+  const imageSrcacc = `data:image/jpeg;base64,${photoBase64acc}`;
+ 
   result["account"][i].accName;
   result["comment"][i].restaurantCommentDatetime;
   result["comment"][i].restaurantCommentReplyDatetime;
@@ -77,7 +81,7 @@ for (let i = 0; i < result["comment"].length; i++) {
   ccc.innerHTML = `   
    <div class="row">
   <div class="col-sm-2">
-  <img decoding="async" src="./images/餐廳圖片測試.jpg" height="50px"/>
+  <img decoding="async" src="${imageSrcacc}" height="50px"/>
   </div>
   <div class="col-sm-10">
   <p>用戶 : ${result["account"][i].accName}</p>
@@ -109,6 +113,7 @@ for (let i = 0; i < result.prod.length; i++) {
   var tt = document.getElementById("zzz");
   tt.appendChild(ccc);
 }
+
 
 // GOOGLE 地圖 API 相關功能
 function initMap() {

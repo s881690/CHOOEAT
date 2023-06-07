@@ -1,4 +1,8 @@
 /*版面配置*/
+a{
+  text-decoration:none;
+  color: black;
+}
 div>a {
   color: #060606; 
     display: inline-block;
