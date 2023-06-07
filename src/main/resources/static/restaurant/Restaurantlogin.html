@@ -42,8 +42,8 @@
     <!-- 以下引入我們自己寫的css -->
     <link rel="stylesheet" href="./css/resall.css" />
     <link rel="stylesheet" href="./css/resbody.css" />
-    <link rel="stylesheet" href="./css/resfooter.css" />
-    <link rel="stylesheet" href="./css/resheader.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+    <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="./css/Restaurantlogin.css" />
   </head>
 
@@ -57,7 +57,10 @@
               這裡放的是chooeat文字logo
                       這裡的連結之後要改，跳轉到首頁
                   內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
-          <a class="navbar-brand"> <img src="./images/logo.png" /> </a>
+          <a class="navbar-brand" href="#">
+            <img src="./images/logo2.png" class="logo2" />
+            <h4>C H O O E A T ！</h4>
+          </a>
           <!-- order-lg-last在bootstrap框架中是設定在父元素的排列順序，last的意思是會在最後面
                       function_icons只代表這個class的名稱 -->
           <div class="function_icons order-lg-last">
@@ -70,24 +73,38 @@
                               "align-items-center" 類用於垂直居中，"justify-content-center" 類
                               用於水平居中。 -->
               <!-- 以下3個a標籤，包的是聊天視窗、購物車、會員登入的小icon -->
+              <!-- 						<a href="#" -->
+              <!-- 							class="d-flex align-items-center justify-content-center mr-1 icon"> -->
+              <!-- 							<img src="./chooeat/images/header/chat_icon.png" /> -->
+              <!-- 						</a>  -->
               <a
-                href="#"
+                href="../prod/mall_shopping_cart.html"
                 class="d-flex align-items-center justify-content-center mr-1 icon"
               >
-                <img src="./images/chat_icon.png" />
+                <img
+                  style="width: 40px; height: 40px; margin-right: 5px"
+                  src="./images/carts.png"
+                />
               </a>
               <a
-                href="#"
+                href="../account/login.html"
+                class="accountIcon"
                 class="d-flex align-items-center justify-content-center mr-1 icon"
               >
-                <img src="./images/shopping_cart_Icon.png" />
+                <img
+                  style="width: 40px; height: 40px; margin-right: 5px"
+                  src="./images/profile.png"
+                />
               </a>
-              <a
-                href="#"
-                class="d-flex align-items-center justify-content-center mr-1 icon"
-              >
-                <img src="./images/member_icon.png" />
-              </a>
+              <span
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  vertical-align: middle;
+                  margin-left: 10px;
+                "
+                id="sname"
+              ></span>
             </p>
           </div>
           <!-- 這個button是漢堡選單的menu按鈕 -->
@@ -109,19 +126,26 @@
               style="gap: 1rem"
             >
               <li class="nav-item">
-                <a href="#" class="nav-link">我的餐廳</a>
+                <a
+                  href="../restaurant/Homepage.html"
+                  class="nav-link"
+                  style="margin-left: 100px"
+                  >首頁</a
+                >
               </li>
-
               <li class="nav-item">
-                <a href="#" class="nav-link">我的餐劵</a>
+                <a href="../restaurant/Homepage.html" class="nav-link"
+                  >找餐廳</a
+                >
               </li>
-
               <li class="nav-item">
-                <a href="#" class="nav-link">美食排行榜</a>
+                <a href="../prod/mall.html" class="nav-link">找餐券</a>
               </li>
-
               <li class="nav-item">
-                <a href="#" class="nav-link">關於 CHOOEAT!</a>
+                <a href="../activity/activity.html" class="nav-link">揪團</a>
+              </li>
+              <li class="nav-item">
+                <a href="../prod/aboutUs.html" class="nav-link">關於我們</a>
               </li>
             </ul>
           </div>
@@ -254,18 +278,51 @@
     </div>
 
     <!-- class="navbar-fixed-bottom"讓footer置底 -->
-    <footer class="navbar-fixed-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-2 col-md-3 col-sm-4">
-            <img src="./images/logo.png" style="width: 130px" class="logo2" />
-          </div>
-          <div class="row col-lg-2 col-md-3 col-sm-3"></div>
-          <div class="col-lg-3 col-md-3 col-sm-2"></div>
-          <div class="col-lg-3 col-md-3 col-sm-3"></div>
-        </div>
-      </div>
-    </footer>
+    <div class="container-fluid footer_container">
+      <footer>
+        <ul
+          class="nav justify-content-center border-bottom pb-3 mb-3 py-2 my-2"
+        >
+          <li class="nav-item">
+            <a
+              href="../restaurant/Homepage.html"
+              class="nav-link px-4 text-muted"
+              >首頁</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="../restaurant/Homepage.html"
+              class="nav-link px-4 text-muted"
+              >找餐廳</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="../prod/mall.html" class="nav-link px-4 text-muted"
+              >找餐券</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="../activity/activity.html" class="nav-link px-4 text-muted"
+              >揪團</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="../activity/activity.html" class="nav-link px-4 text-muted"
+              >商家申請</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="../prod/aboutUs.html" class="nav-link px-4 text-muted"
+              >關於我們</a
+            >
+          </li>
+        </ul>
+        <p class="text-center text-muted mb-0 py-2 my-3">
+          CopyRight &copy; THA101 G4
+        </p>
+      </footer>
+    </div>
   </body>
   <script src="./js/Restaurantlogin.js"></script>
 </html>
