@@ -1,3 +1,19 @@
+// 日期格式化 YYYY-MM-DD
+function YYYYMMDD(dateTime) {
+  let date = new Date(dateTime);
+  // 獲取各個時間元素
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2); // 月份需要補零
+  let day = ("0" + date.getDate()).slice(-2); // 日期需要補零
+  let hours = ("0" + date.getHours()).slice(-2); // 小時需要補零
+  let minutes = ("0" + date.getMinutes()).slice(-2); // 分鐘需要補零
+  let seconds = ("0" + date.getSeconds()).slice(-2); // 秒數需要補零
+
+  // 拼接成 YYYY-MM-DDTHH:MM:SS 格式
+  let formattedDateTime = `${year}-${month}-${day}`;
+  return formattedDateTime;
+}
+
 // 接收list資訊
 function fetch3ActivityList() {
   const card_list_3 = document.querySelector(".card_list_3");
@@ -46,6 +62,12 @@ function fetch3ActivityList() {
             <p class="card-text address">地址：
               ${reser.activityrestaurantVO.resAdd}
             </p>
+            <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
+              reser.regesterationStartingTime
+            )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
+          reser.regesterationEndingTime
+        )}</span> 23:59 止
+            </p>
             <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
           reser.activityStartingTime.slice(9) +
           " " +
@@ -79,10 +101,12 @@ function fetch3ActivityList() {
 
       // 塞進摺疊區塊內
       for (let reser of resListCollapse) {
-        let activityDate = reser.activityDate.split("-");
-        let month = activityDate[1];
-        let date = activityDate[2];
-        let year = activityDate[0];
+        // console.log(reser);
+        let activityDate = reser.activityDate.split(" ");
+        // console.log(activityDate);
+        let month = activityDate[0];
+        let date = activityDate[1].split(",")[0];
+        let year = activityDate[2];
         let base64Photo = reser.activityPhotoBase64;
         let image = new Image();
         image.src = `data:image/jpeg;base64,${base64Photo}`;
@@ -101,6 +125,12 @@ function fetch3ActivityList() {
                 }</p>
                 <p class="card-text address">地址：
                   ${reser.activityrestaurantVO.resAdd}
+                </p>
+                <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
+                  reser.regesterationStartingTime
+                )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
+          reser.regesterationEndingTime
+        )}</span> 23:59 止
                 </p>
                 <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
           reser.activityStartingTime.slice(9) +
@@ -174,6 +204,11 @@ function like() {
   let likebtn = $("svg.like");
 
   likebtn.click(function (e) {
+    // 判斷會員登入
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入!");
+      return;
+    }
     // 解析會員資訊
     let account = JSON.parse(sessionStorage.getItem("loginReq"));
     let accId = account.acc_id;
@@ -226,8 +261,8 @@ function like() {
 // 取得收藏活動
 function getlikes() {
   // 判斷會員是否已登入
-  if (JSON.parse(sessionStorage.getItem("loginReq")) == null) {
-    // console.log("請先會員登入");
+  if (sessionStorage.getItem("loginReq") == null) {
+    console.log("請先登入");
     return;
   }
 
@@ -273,6 +308,16 @@ function signup() {
   let signup_btn = $("a.signup");
   signup_btn.click((e) => {
     e.preventDefault();
+
+    // 判斷報名時間，如果大於今天就不給報名
+    let today = new Date();
+    console.log(today);
+    console.log($(this).closest("p"));
+    if (signup_btn.closest("span.regesteration_starting_time").val() > today) {
+      alert("報名時間還沒到喔!");
+      return;
+    }
+    // if(signup_btn.closest())
     let activityid = $(e.target)
       .closest("div.card-body")
       .attr("data-activityid");
@@ -280,7 +325,7 @@ function signup() {
     // 將值存在session中，傳給下個頁面
     sessionStorage.setItem("activityId", activityid);
     //進行重導向
-    document.location.href = "activity_detail.html";
+    // document.location.href = "activity_detail.html";
   });
 }
 

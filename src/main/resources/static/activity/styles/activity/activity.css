@@ -1,33 +1,3 @@
-@charset "UTF-8";
-body {
-  height: 79vh;
-}
-body header {
-  background-color: white;
-  /* 設定固定寬，在進行RWD設計之前不可移除，同樣設定會出現在內容區塊的DIV標籤及FOOTER */
-  margin: 0 auto;
-  border-bottom: 1px solid black;
-  top: 0px;
-  /* 圖層為最上層 */
-  z-index: 100;
-}
-body header a.navbar-brand img {
-  height: 10vh;
-  width: auto;
-}
-body header nav.navbar div.container div.collapse {
-  /* border: 1px solid green; */
-  margin: 20px;
-}
-body header nav.navbar div.container a {
-  font-size: 1rem;
-  color: black;
-  /* border: 1px solid red; */
-}
-body header nav.navbar div.container a:hover {
-  color: orange;
-  font-weight: 800;
-}
 body a.icon {
   /* border: 1px solid purple; */
   margin-right: 10px !important;
@@ -324,26 +294,4 @@ body div.main_content div.activity_main_organizer div.container form.participant
 body div.main_content div.activity_main_organizer div.container form.participant_search button img {
   width: 100%;
   height: 100%;
-}
-body div.footer_container {
-  background-color: blanchedalmond;
-  height: 23vh;
-  width: 100%;
-  pad: 0;
-  margin-top: 6vh;
-}
-body div.footer_container footer ul li.nav-item a {
-  color: black !important;
-  font-size: small;
-}
-body div.footer_container footer ul li.nav-item a:hover {
-  font-weight: bolder;
-  color: orange !important;
-}
-body div.footer_container footer p {
-  color: black !important;
-  font-size: small;
-}
-body div.footer_container footer p:hover {
-  font-weight: bolder;
 }/*# sourceMappingURL=activity.css.map */
