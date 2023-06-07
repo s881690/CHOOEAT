@@ -61,21 +61,33 @@ function formDefault() {
   document.querySelector("input#regesteration_starting_time").min = date;
 }
 
-// 申請結束日期不能比開始日期大
-function minRegesterationEndingTime() {
+// 申請結束日期最小值為申請開始時間，最大值不能比活動開始日期大
+function minAndMaxRegesterationEndingTime() {
   let regesterationStartingTime = document.querySelector(
     "input#regesteration_starting_time"
   );
   let regesterationEndingTime = document.querySelector(
     "input#regesteration_ending_time"
   );
+  let activityDate = document.querySelector("input#activity_date");
+  let activityStartingTime = document.querySelector(
+    "input#activity_starting_time"
+  );
+  let activityEndingTime = document.querySelector("input#activity_ending_time");
+
   regesterationStartingTime.addEventListener("change", (e) => {
     regesterationEndingTime.value = "";
     let min_val = new Date(regesterationStartingTime.value)
       .toISOString()
       .split(".")[0]
       .slice(0, 16);
+    let max_val = new Date(
+      activityDate.value + activityStartingTime.value + activityEndingTime.value
+    );
+    console.log(max_val);
     regesterationEndingTime.min = min_val;
+    regesterationEndingTime.max = max_val;
+    console.log(activityDate.value);
   });
 }
 
@@ -100,7 +112,7 @@ function clickImg() {
   });
 }
 
-// 判斷表單內容是否已經填寫
+// 判斷表單內容相關
 function validateInput() {
   // 判斷活動名稱
   $("input#activity_name").blur(function (e) {
@@ -129,8 +141,12 @@ function validateInput() {
   });
 
   // 判斷活動日期
-  $("input#activity_date").blur(function (e) {
+  $("input#activity_date").on("blur input", function (e) {
+    // 將活動申請日期清空
+    $("input#regesteration_starting_time").val("");
+    $("input#regesteration_ending_time").val("");
     let activityDate = $("input#activity_date").val();
+
     let err_span = $("span#activity_date_error");
     if (activityDate == "") {
       err_span.show();
@@ -196,11 +212,13 @@ function validateInput() {
   });
 
   // 判斷最少參加人數
-  $("input#min_number").blur(function (e) {
+  $("input#min_number").on("blur input", function (e) {
     let minNumber = $("input#min_number").val();
     let err_span = $("span#min_number_error");
     if (minNumber == "") {
       err_span.show();
+      $("button.submit").attr("disabled", true);
+    } else if (minNumber <= 0) {
       $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
@@ -209,17 +227,14 @@ function validateInput() {
   });
 
   // 判斷最多參加人數
-  $("input#max_number").blur(function (e) {
+  $("input#max_number").on("blur input", function (e) {
     let maxNumber = $("input#max_number").val();
     let err_span = $("span#max_number_error");
 
     if (maxNumber == "") {
-      err_span.innerHTML = "*請填入最多人數";
       err_span.show();
       $("button.submit").attr("disabled", true);
-    } else if (Number(maxNumber) < Number($("input#min_number").val())) {
-      console.log("安安安");
-      err_span.innerHTML = "*人數須大於最小參加人數";
+    } else if (maxNumber < $("input#min_number").val()) {
       err_span.show();
     } else {
       err_span.hide();
@@ -261,6 +276,7 @@ function form2JSON() {
     // 轉換日期格式，使其符合後端資料
     let activityDate = $("input#activity_date").val();
     let activityDateObj = new Date(activityDate);
+    console.log(activityDateObj);
     let activityStartingTime = $("input#activity_starting_time").val();
     let activityEndingTime = $("input#activity_ending_time").val();
     let regesterationStartingTime = `${$("input#regesteration_starting_time")
@@ -314,28 +330,28 @@ function form2JSON() {
       };
       console.log(jsonObject);
 
-      fetch("establish", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        body: JSON.stringify(jsonObject), // 欲傳送的資料
-      })
-        .then((res) => {
-          console.log(res);
-          return res.json();
-        })
-        .then((json) => {
-          console.log(json);
-          // 建立成功後直接導向該活動詳細頁
-          let activityId = json.activityId;
-          console.log(activityId);
-          sessionStorage.setItem("activityId", activityId);
-          document.location.href = `activity_detail.html`;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      // fetch("establish", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json;charset=UTF-8",
+      //   },
+      //   body: JSON.stringify(jsonObject), // 欲傳送的資料
+      // })
+      //   .then((res) => {
+      //     console.log(res);
+      //     return res.json();
+      //   })
+      //   .then((json) => {
+      //     console.log(json);
+      //     // 建立成功後直接導向該活動詳細頁
+      //     let activityId = json.activityId;
+      //     console.log(activityId);
+      //     sessionStorage.setItem("activityId", activityId);
+      //     document.location.href = `activity_detail.html`;
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   });
     });
   });
 }
@@ -369,7 +385,7 @@ $(function () {
   //form表單相關設定
   validateInput();
   formDefault();
-  minRegesterationEndingTime();
+  minAndMaxRegesterationEndingTime();
   minactivityEndingTime();
 
   // //將表單數據轉為JSON，並且提交給後端

@@ -1,40 +1,40 @@
 body {
-  height: 79vh;
+  // height: 79vh;
   // header CSS
-  header {
-    background-color: white;
-    /* 設定固定寬，在進行RWD設計之前不可移除，同樣設定會出現在內容區塊的DIV標籤及FOOTER */
-    // width: 1200px;
-    margin: 0 auto;
-    border-bottom: 1px solid black;
-    // position: sticky;
-    top: 0px;
-    /* 圖層為最上層 */
-    z-index: 100;
+  // header {
+  //   background-color: white;
+  //   /* 設定固定寬，在進行RWD設計之前不可移除，同樣設定會出現在內容區塊的DIV標籤及FOOTER */
+  //   // width: 1200px;
+  //   margin: 0 auto;
+  //   border-bottom: 1px solid black;
+  //   // position: sticky;
+  //   top: 0px;
+  //   /* 圖層為最上層 */
+  //   z-index: 100;
 
-    a.navbar-brand {
-      img {
-        height: 10vh;
-        width: auto;
-      }
-    }
-  }
+  //   a.navbar-brand {
+  //     img {
+  //       height: 10vh;
+  //       width: auto;
+  //     }
+  //   }
+  // }
 
-  header nav.navbar div.container div.collapse {
-    /* border: 1px solid green; */
-    margin: 20px;
-  }
+  // header nav.navbar div.container div.collapse {
+  //   /* border: 1px solid green; */
+  //   margin: 20px;
+  // }
 
-  header nav.navbar div.container a {
-    font-size: 1rem;
-    color: black;
-    /* border: 1px solid red; */
-  }
+  // header nav.navbar div.container a {
+  //   font-size: 1rem;
+  //   color: black;
+  //   /* border: 1px solid red; */
+  // }
 
-  header nav.navbar div.container a:hover {
-    color: orange;
-    font-weight: 800;
-  }
+  // header nav.navbar div.container a:hover {
+  //   color: orange;
+  //   font-weight: 800;
+  // }
 
   a.icon {
     /* border: 1px solid purple; */
@@ -442,34 +442,34 @@ body {
   }
 
   // ========== footer CSS ==========
-  div.footer_container {
-    background-color: blanchedalmond;
-    height: 23vh;
-    width: 100%;
-    pad: 0;
-    margin-top: 6vh;
-    footer {
-      ul {
-        li.nav-item {
-          a {
-            color: black !important;
-            font-size: small;
-          }
-          a:hover {
-            font-weight: bolder;
-            color: orange !important;
-          }
-        }
-      }
-      p {
-        color: black !important;
-        font-size: small;
-      }
-      p:hover {
-        font-weight: bolder;
-      }
-    }
-  }
+  // div.footer_container {
+  //   background-color: blanchedalmond;
+  //   height: 23vh;
+  //   width: 100%;
+  //   pad: 0;
+  //   margin-top: 6vh;
+  //   footer {
+  //     ul {
+  //       li.nav-item {
+  //         a {
+  //           color: black !important;
+  //           font-size: small;
+  //         }
+  //         a:hover {
+  //           font-weight: bolder;
+  //           color: orange !important;
+  //         }
+  //       }
+  //     }
+  //     p {
+  //       color: black !important;
+  //       font-size: small;
+  //     }
+  //     p:hover {
+  //       font-weight: bolder;
+  //     }
+  //   }
+  // }
 
   // div.main_content {
   //   height: 3000px;

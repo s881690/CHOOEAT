@@ -33,9 +33,12 @@ function googleMap(address) {
 
 // 接收活動id，顯示該活動
 function showDetail() {
-  // 解析會員資訊
-  let account = JSON.parse(sessionStorage.getItem("loginReq"));
-  let accId = account.acc_id;
+  // 若存在會員資訊，就解析
+  if (sessionStorage.getItem("loginReq") != null) {
+    let account = JSON.parse(sessionStorage.getItem("loginReq"));
+    let accId = account.acc_id;
+  }
+
   let activityId = sessionStorage.getItem("activityId");
   //活動圖片區塊
   let img = document.querySelector("div.activity_img");
@@ -170,28 +173,29 @@ function innerSignup() {
           .then((result) => {
             if (result == true) {
               alert("報名成功");
+
+              // 報名後，再將活動成員+1
+              fetch(`addActivityMember?activityId=${activityId}`)
+                .then((res) => {
+                  return res.json();
+                })
+                .then((result) => {
+                  console.log(result);
+                });
             } else {
               console.log(result);
             }
           });
-      });
-
-    // 確認尚未報名，將活動成員+1
-    fetch(`addActivityMember`, {
-      body: JSON.stringify({ activityId: activityId }),
-    })
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
       });
   });
 }
 
 // 判斷是否為活動建立者，是的話報名按鈕就要變成編輯鈕，並多一個審核頁按鈕
 function isactivityHost(result_accId) {
+  // 判斷是否有會員資訊
+  if (sessionStorage.getItem("loginReq") == null) {
+    return;
+  }
   let accId = JSON.parse(sessionStorage.getItem("loginReq")).acc_id;
 
   if (accId == result_accId) {
