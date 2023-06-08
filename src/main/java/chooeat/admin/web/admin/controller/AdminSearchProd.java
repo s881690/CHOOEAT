@@ -36,4 +36,9 @@ public class AdminSearchProd {
 			return Collections.emptyList();
 		}
 	}
+	
+	@GetMapping("/findProd")
+	public ProdVO findProd(Integer prodId) {
+		return SERVICE.findByProdId(prodId);
+	}
 }

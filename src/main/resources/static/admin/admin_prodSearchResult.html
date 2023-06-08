@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <form class="row g-3 mb-4 justify-content-center" action="#" style="margin-left: 60px">
+            <!-- <form class="row g-3 mb-4 justify-content-center" action="#" style="margin-left: 60px">
                 <div class="col-12 col-md-2">
                     <select class="form-select">
                         <option selected value="0">請選擇查詢方式</option>
@@ -60,7 +60,7 @@
                 <div class="col-3 col-md-2 ">
                     <button type="submit" class="btn btn-outline-dark searchBtn">送出查詢</button>
                 </div>
-            </form>
+            </form> -->
 
         </div>
 
@@ -72,30 +72,32 @@
                             <div class="row mb-3 mt-2">
                                 <label class="col-3 col-md-3 col-form-label">餐券名稱</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="樂活蔬食餐廳">
+                                    <input type="text" readonly class="form-control-plaintext" id="prodName">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-3 col-md-3 col-form-label">餐券編號</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="00001">
+                                    <input type="text" readonly class="form-control-plaintext" id="prodId">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-3 col-md-3 col-form-label">餐廳名稱</label>
                                 <div class="col-9 col-md-3">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="健康餐">
-                                </div>
-                                <label class="col-3 col-md-3 col-form-label">餐廳編號</label>
-                                <div class="col-9 col-md-3">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="00001">
+                                    <input type="text" readonly class="form-control-plaintext" id="resName">
                                 </div>
                             </div>
                             <div class="row mb-3">
+                                <label class="col-3 col-md-3 col-form-label">餐廳編號</label>
+                                <div class="col-9 col-md-3">
+                                    <input type="text" readonly class="form-control-plaintext" id="resId">
+                                </div>
+                            </div>
+                            <!-- <div class="row mb-3">
                                 <label class="col-3 col-md-3 col-form-label">審核狀態</label>
                                 <div class="col-6 col-md-8">
-                                    <select class="form-select">
-                                        <option selected value="0">尚未審核</option>
+                                    <select class="form-select" id="prodState">
+                                        <option value="0">尚未審核</option>
                                         <option value="1">審核通過</option>
                                         <option value="2">未通過審核</option>
                                     </select>
@@ -106,7 +108,7 @@
                                 <div class="col-9 col-md-7">
                                     <input type="text" readonly class="form-control-plaintext" placeholder="管理員一">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-6">
                             <div class="row">
@@ -114,14 +116,15 @@
                                     <label class="col-form-label">餐券介紹</label>
                                 </div>
                                 <div class="col-9 pt-2 mt-2 pe-5">
-                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis voluptates
+                                    <p id="prodText">
+                                        <!-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis voluptates
                                         dolores fugiat quis ratione incidunt explicabo esse quam impedit veritatis nam,
                                         debitis velit nesciunt in corrupti laboriosam quia ea voluptas error a
                                         reprehenderit ipsum! Eum esse in nisi voluptates et temporibus delectus officiis
                                         voluptatum sequi, ratione officia! Voluptates ut nobis blanditiis veritatis
                                         tempora, corrupti est placeat molestias nulla non fuga magni commodi quidem, ex,
                                         reiciendis doloribus. Commodi in soluta, ipsam eveniet magni ab. Veniam omnis,
-                                        autem eos nesciunt modi similique!
+                                        autem eos nesciunt modi similique! -->
                                     </p>
                                 </div>
                             </div>
@@ -141,6 +144,8 @@
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
+
+    <script type="text/javascript" src="js/admin_prodSearchResult.js"></script>
 </body>
 
 </html>

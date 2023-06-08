@@ -32,8 +32,6 @@
             $("#accMail").append(`${accMail}`);
         })
 
-
-
     const urlForRes = `/restaurantSearch/searchResult?restaurantId=${selectedRestaurantId}`
 
     fetch(urlForRes)
