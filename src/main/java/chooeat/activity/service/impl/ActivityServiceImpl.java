@@ -67,7 +67,7 @@ public class ActivityServiceImpl implements ActivityService {
 	@Transactional
 	public Object establish(Map<String, String> map) {
 		ActivityVO activityVO = new ActivityVO();
-		if(!map.get("activityId").isEmpty()) {
+		if(map.get("activityId")!= null) {
 			activityVO.setActivityId(Integer.parseInt(map.get("activityId")));
 		}
 		activityVO.setActivityName(map.get("activityName"));
