@@ -145,6 +145,16 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 				restaurant.setResTotalScore(rs.getInt("res_total_score"));
 				restaurant.setResTotalNumber(rs.getInt("res_total_number"));
 				restaurant.setResMaxNum(rs.getInt("res_max_num"));
+				byte[] photoBytes = rs.getBytes("res_photo");
+				  if (photoBytes != null && photoBytes.length > 0) {
+		                Byte[] photoWrapper = new Byte[photoBytes.length];
+		                for (int i = 0; i < photoBytes.length; i++) {
+		                    photoWrapper[i] = photoBytes[i];
+		                }
+		                restaurant.setResPhoto(photoWrapper);
+		            } else {
+		            	restaurant.setResPhoto(null);
+		            }			
 				restaurantList.add(restaurant);
 			}
 			rs.close();

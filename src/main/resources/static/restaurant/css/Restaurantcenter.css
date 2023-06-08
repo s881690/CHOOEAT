@@ -4,6 +4,28 @@
     margin-top: 10px;
     margin-bottom: 20px;  
     }
+
+    #collapseOne{     
+        border: 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+        box-shadow: 0 0 15px rgba(81, 81, 81, 0.2);}
+
+    #collapseTwo{     
+        border: 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+        box-shadow: 0 0 15px rgba(81, 81, 81, 0.2);}
+     #collapseThree{     
+        border: 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+        box-shadow: 0 0 15px rgba(81, 81, 81, 0.2);}
+
+
     /*版面相關*/
     .nav-pills .nav-link {
     color: #555;
