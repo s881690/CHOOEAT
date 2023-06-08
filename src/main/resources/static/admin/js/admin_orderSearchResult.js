@@ -77,4 +77,24 @@
     $("#goBack").on("click", () => {
         window.history.back();
     })
+
+
+    $("#confirmDelete").on("click", () => {
+        const url = `/adminSearchOrder/deleteOrder?orderId=${selectedOrderId}`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(body => {
+                const { successful, message, } = body;
+                if(successful){
+                    alert(message);
+                    $("#deleteOrderArea").modal("hide");
+                    location = "admin_order.html";
+                } else {
+                    msgBox.removeAttr("hidden");
+                    msg.text(message);
+                }
+            });
+    });
+
 })();
