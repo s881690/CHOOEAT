@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,9 +49,12 @@ public class ReservationController {
 	ReservationDao reservationDao;
 	@Autowired
 	RestaurantRepository restaurantRepository;
-
-	int count = 1;
-	String index = "res:" + count;
+	
+	 private AtomicInteger c = new AtomicInteger(1);
+	 
+	 int count = 1;
+	 String index = "res:" + count;
+	 
 
 	// 選擇日期時下判斷的controller
 	@GetMapping("/getBusinessDay")
@@ -89,7 +93,6 @@ public class ReservationController {
 	@PostMapping("/reservationRedis")
 	@Transactional
 	public Result reservationRedis(@RequestBody Map<String, Object> map) {
-		
 		//設定回傳物件
 	    Result result = new Result();
 	    //設定要放進redis的map
@@ -107,7 +110,10 @@ public class ReservationController {
 	    Jedis jedis = new Jedis();
 	    jedis.del("reservationLock");
 	    try {
+<<<<<<< Updated upstream
 	    	
+=======
+>>>>>>> Stashed changes
 	    	//設定暫存的剩餘座位數變數（已經存進資料庫的剩餘座位數 - 還沒結帳的預約人數）
 	    	Integer remainSeat = null;
 	    	
@@ -166,7 +172,9 @@ public class ReservationController {
 
 	                if (list.size() == 0) {
 	                	//用餐廳id去抓座位數量，去扣預約人數，剩下的存進redis
-	                    remainSeat = restaurantRepository.findById(new Integer(restaurantId.intValue())).get().getResMaxNum() - reservationNumber;
+	                	int rest = new Integer(restaurantId.intValue());
+	                	
+	                    remainSeat = restaurantRepository.findById(rest).get().getResMaxNum() - reservationNumber;
 	                    data.put(key, remainSeat.toString());
 	                } else {
 	                    for (HourlySeat hourlySeat : list) {
@@ -194,10 +202,17 @@ public class ReservationController {
 	                    data.put("reservationNote", "");
 	                }
 
+<<<<<<< Updated upstream
 	                jedis.hmset(index, data);
 
+=======
+	                String index2 = "res:" + c.getAndIncrement();
+	                jedis.hmset(index2, data);
+	               
+>>>>>>> Stashed changes
 	                result.setStatus("success");
-	                System.out.println("存儲至 Redis 中的 key: " + index);
+	                result.setIndex(index2);
+	                System.out.println("存儲至 Redis 中的 key: " + index2);
 	            } catch (Exception e) {
 	                System.out.println("error: " + e.getMessage());
 	                result.setStatus("error");
@@ -216,8 +231,11 @@ public class ReservationController {
 	// 結帳確認後發出請求，如果成功，先將資料insert進資料庫，後刪除redis內數據
 	@GetMapping("/reservation")
 	@Transactional
-	public Result reserve() {
+	public Result reserve(@RequestParam("index") String index) {
 		Result result = new Result();
+		
+		System.out.println(index);
+		
 		// 從redis抓出暫存的預約資料，設定給vo
 		Jedis jedis = new Jedis();
 		jedis.select(2);

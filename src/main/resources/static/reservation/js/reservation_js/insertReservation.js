@@ -112,6 +112,7 @@ btn.onclick = () => {
     .then((data) => {
       if (data.status === "success") {
         window.location.href = "reservationCheckout.html";
+        sessionStorage.setItem("index", data.index);
         console.log("success");
       } else {
         alert("訂位失敗，請重新選擇");
