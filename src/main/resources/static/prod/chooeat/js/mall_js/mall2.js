@@ -11,6 +11,12 @@ if (sessionStorage.getItem("loginReq") != null) {
 	document.getElementById("sname").innerHTML = account.acc_name;
 
 }
+function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' 
+      });
+    }
 //=================================================================
 // 拿到會員icon
 let accountIcon = $("a.accountIcon");
