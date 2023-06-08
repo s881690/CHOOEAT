@@ -24,6 +24,13 @@ public class AdminRestaurantDAOImpl implements RestaurantDAO{
 	
 	@Autowired
 	private DataSource dataSource;
+	
+
+	@Override
+	public AdminRestaurantVO findByResId(String resId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public int register(List<String> values) {

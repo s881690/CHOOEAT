@@ -62,7 +62,15 @@ public class AdminOrderServiceImpl implements OrderService{
 		String stringId = String.valueOf(id);
 		return orderDetailRepository.findByOrderId(stringId);
 	}
-	
-	
+
+	@Override
+	public boolean deleteById(Integer id) {
+		orderRepository.deleteById(id);
+		if(orderRepository.findByOrderId(id) == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 }

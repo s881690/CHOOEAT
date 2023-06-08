@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import chooeat.admin.core.pojo.Core;
 import chooeat.admin.web.order.pojo.AdminOrderDetailVO;
 import chooeat.admin.web.order.pojo.AdminOrderVO;
 import chooeat.admin.web.order.service.OrderService;
@@ -48,4 +49,20 @@ public class AdminSearchOrder {
 		return SERVICE.searchByOrderId(orderId);
 	}
 
+	@GetMapping("/deleteOrder")
+	public Core deleteOrder(Integer orderId) {
+		boolean isDelete = SERVICE.deleteById(orderId);
+		Core core = new Core();
+		
+		if(isDelete) {
+			core.setMessage("刪除成功!");
+			core.setSuccessful(true);
+			return core;
+		} else {
+			core.setMessage("刪除失敗");
+			core.setSuccessful(false);
+			return core;
+		}
+		
+	}
 }

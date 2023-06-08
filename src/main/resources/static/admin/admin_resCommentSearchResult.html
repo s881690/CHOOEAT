@@ -41,19 +41,19 @@
 
         <div class="rounded shadow-sm plate">
             <div class="container">
-                <form action="#">
+                <div>
                     <div class="row">
                         <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-10">
                                     <h4>評論資訊</h4>
                                 </div>
-                                <div class="col-2">
-                                    <button class="btn btn-outline-danger" style="margin-left: 39px;">
+                                <!-- <div class="col-2">
+                                    <button class="btn btn-outline-danger" style="margin-left: 39px;" id="hiddenComment">
                                         <i class="fa-regular fa-circle-xmark"></i>
                                         隱藏評論
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                             <hr>
                             <div class="row align-items-center mb-1">
@@ -63,7 +63,7 @@
                                             評論編號：
                                         </div>
                                         <div class="col-9" id="resCommentId">
-                                            091273869
+                                           
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -81,19 +81,15 @@
                                             評論時間：
                                         </div>
                                         <div class="col-9" id="resCommentTimestamp">
-                                            2023-04-26 13:54
+                                         
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-3" id="resCommentScore">
+                                        <div class="col-3">
                                             評論分數：
                                         </div>
-                                        <div class="col-9" id="orderState">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
+                                        <div class="col-9" id="resCommentScore">
+                                        
                                         </div>
                                     </div>
                                 </div>
@@ -127,7 +123,7 @@
                                             會員編號： 
                                         </div>
                                         <div class="col-9" id="accId">
-                                            1
+                                          
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -135,7 +131,7 @@
                                             會員帳號： 
                                         </div>
                                         <div class="col-9" id="accAcc">
-                                            user1
+                                         
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -143,7 +139,7 @@
                                             會員名稱： 
                                         </div>
                                         <div class="col-9" id="accName">
-                                            王佳瑜
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -153,15 +149,15 @@
                                             會員暱稱： 
                                         </div>
                                         <div class="col-9" id="accNickname">
-                                            水晶
+                                          
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-3">
                                             會員電話： 
                                         </div>
-                                        <div class="col-9" id="addPhone">
-                                            0912765432
+                                        <div class="col-9" id="accPhone">
+                                            
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -169,7 +165,7 @@
                                             會員信箱： 
                                         </div>
                                         <div class="col-9" id="accMail">
-                                            lvuqe@outlook.com
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +184,7 @@
                                             餐廳編號：
                                         </div>
                                         <div class="col-8" id="resId">
-                                            2
+                                          
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -196,7 +192,7 @@
                                             餐廳名稱：
                                         </div>
                                         <div class="col-8" id="resName">
-                                            藍藍海鮮餐廳
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -205,8 +201,8 @@
                                         <div class="col-4">
                                             餐廳回覆時間： 
                                         </div>
-                                        <div class="col-8" id="orderTimestamp">
-                                            2023-04-26 13:54
+                                        <div class="col-8" id="resReplyTimestamp">
+                                           
                                         </div>
                                     </div>
                                     <div class="row mt-3" style="visibility: hidden;">
@@ -232,12 +228,14 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
+    
+    <script type="text/javascript" src="js/admin_resCommentSearchResult.js"></script>
 </body>
 
 </html>
