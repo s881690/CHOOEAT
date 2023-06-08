@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -185,8 +186,8 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 
 	@Override
 	public List<ReservationVO> restaurantfindreservation(String resAcc) {
-		String sql = "SELECT reservation_id, reservation_number, reservation_date, reservation_starttime, " +
-                "reservation_endtime, COALESCE(reservation_note, '') AS reservation_note, reservation_state " +
+		String sql = "SELECT reservation_id, reservation_number, reservation_date_starttime, " +
+                "reservation_date_endtime, COALESCE(reservation_note, '') AS reservation_note, reservation_state " +
                 "FROM restaurant " +
                 "JOIN reservation ON restaurant.restaurant_id = reservation.restaurant_id " +
                 "JOIN account ON reservation.acc_id = account.acc_id " +
@@ -200,10 +201,9 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 			while (rs.next()) {
 				ReservationVO reservation = new ReservationVO();
 				reservation.setReservationId(rs.getInt("reservation_id"));
-				reservation.setReservationNumber(rs.getInt("reservation_number"));
-				reservation.setReservationDate(rs.getDate("reservation_date"));
-				reservation.setReservationStartTime(rs.getTime("reservation_starttime"));
-				reservation.setReservationEndTime(rs.getTime("reservation_endtime"));
+				reservation.setReservationNumber(rs.getInt("reservation_number"));				
+				reservation.setReservationStartTime(rs.getTimestamp("reservation_date_starttime"));
+				reservation.setReservationEndTime(rs.getTimestamp("reservation_date_endtime"));
 				reservation.setReservationNote(rs.getString("reservation_note"));
 				reservation.setReservationState(rs.getInt("reservation_state"));
 				resultList.add(reservation);
@@ -300,7 +300,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 
 	@Override
 	public List<Object> findmyself(String resAcc) {
-		String sql = "SELECT DISTINCT restaurant_id,res_acc,res_name, res_add, res_start_time, res_end_time, \r\n"
+		String sql = "SELECT DISTINCT restaurant_id,res_photo,res_acc,res_name, res_add, res_start_time, res_end_time, \r\n"
 				+ "res_total_score, res_intro FROM restaurant \r\n" + "			WHERE res_acc = ?";
 		List<Object> findmyselfList = new ArrayList<>();
 		try {
@@ -317,7 +317,21 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 				restaurantVO.setResStartTime(rs.getTime("res_start_time"));
 				restaurantVO.setResEndTime(rs.getTime("res_end_time"));
 				restaurantVO.setResTotalScore(rs.getInt("res_total_score"));
-				restaurantVO.setResIntro(rs.getString("res_intro"));				
+				byte[] photoBytes = rs.getBytes("res_photo");
+//				Byte[] photoWrapper = new Byte[photoBytes.length];
+//				for (int i = 0; i < photoBytes.length; i++) {
+//				    photoWrapper[i] = photoBytes[i];
+//				}
+//				restaurant.setResPhoto(photoWrapper);
+				  if (photoBytes != null && photoBytes.length > 0) {
+		                Byte[] photoWrapper = new Byte[photoBytes.length];
+		                for (int i = 0; i < photoBytes.length; i++) {
+		                    photoWrapper[i] = photoBytes[i];
+		                }
+		                restaurantVO.setResPhoto(photoWrapper);
+		            } else {
+		            	restaurantVO.setResPhoto(null);
+		            }					
 				findmyselfList.add(restaurantVO);
 			}
 			rs.close();
@@ -331,7 +345,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 
 	@Override
 	public List<ProdVO> findpprod(String resAcc) {
-		String sql = "SELECT DISTINCT prod_name,prod_text,prod_userguide,prod_price,prod_qty,prod_state from restaurant\r\n"
+		String sql = "SELECT DISTINCT prod_id,prod_name,prod_text,prod_userguide,prod_price,prod_qty,prod_state from restaurant\r\n"
 				+ "JOIN prod ON restaurant.restaurant_id = prod.restaurant_id WHERE res_acc = ?";
 		List<ProdVO> prodList = new ArrayList<>();
 		try {
@@ -341,6 +355,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ProdVO prodVO = new ProdVO();
+				prodVO.setProdId(rs.getInt("prod_id"));
 				prodVO.setProdName(rs.getString("prod_name"));
 				prodVO.setProdText(rs.getString("prod_text"));
 				prodVO.setProdUserGuide(rs.getString("prod_userguide"));
@@ -831,5 +846,92 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 		}			
 		return 1;
 	}
+	@Override
+	public int restaurantupdatecomment(String accName, String restaurantId, String commentInput) {
+		String sql = "UPDATE reservation\r\n"
+				+ "JOIN account ON reservation.acc_id = account.acc_id\r\n"
+				+ "SET reservation.restaurant_comment_reply_datetime = CURRENT_TIMESTAMP,\r\n"
+				+ "    reservation.restaurant_comment_reply_text = ?\r\n"
+				+ "WHERE reservation.restaurant_id = ? AND account.acc_name = ?;\r\n"
+				+ "";	
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);			
+			pstmt.setString(1, commentInput);	
+			pstmt.setString(2, restaurantId);	
+			pstmt.setString(3, accName);				
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();	
+			return 2;
+		}			
+		return 1;
+	}
 
+	@Override
+	public int restaurantupdateprod(String restaurantId, String prodName, String prodPrice, String prodQty,
+			String prodUserGuide, String prodText, String prodState,String prodId) {
+		String sql = "UPDATE prod\r\n"
+				+ "set prod_name= ?, prod_text=?,prod_userguide=?,prod_price=?,prod_qty=?\r\n"
+				+ "WHERE restaurant_id = ?and prod_id=?";
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);			
+			pstmt.setString(1, prodName);	
+			pstmt.setString(2, prodText);	
+			pstmt.setString(3, prodUserGuide);	
+			pstmt.setString(4, prodPrice);	
+			pstmt.setString(5, prodQty);	
+			pstmt.setString(6, restaurantId);	
+			pstmt.setString(7, prodId);				
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();	
+			return 2;
+		}			
+		return 1;
+	}
+
+	@Override
+	public 	List<RestaurantVO>  getcarousel(int var1, int var2, int var3, int var4, int var5) {
+		String sql = "SELECT restaurant_id,res_photo,res_acc FROM restaurant WHERE \r\n"
+				+ "restaurant_id = ? or restaurant_id = ? or restaurant_id = ? or restaurant_id = ? or restaurant_id = ?";
+		List<RestaurantVO> restaurantlList = new ArrayList<>();
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, var1);
+			pstmt.setLong(2, var2);
+			pstmt.setLong(3, var3);
+			pstmt.setLong(4, var4);
+			pstmt.setLong(5, var5);			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				RestaurantVO restaurantVO = new RestaurantVO();
+				restaurantVO.setRestaurantId(rs.getInt("restaurant_id"));
+				restaurantVO.setResAcc(rs.getString("res_acc"));
+				byte[] photoBytes = rs.getBytes("res_photo");
+				  if (photoBytes != null && photoBytes.length > 0) {
+		                Byte[] photoWrapper = new Byte[photoBytes.length];
+		                for (int i = 0; i < photoBytes.length; i++) {
+		                    photoWrapper[i] = photoBytes[i];
+		                }
+		                restaurantVO.setResPhoto(photoWrapper);
+		            } else {
+		            	restaurantVO.setResPhoto(null);
+		            }					
+				  restaurantlList.add(restaurantVO);
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return restaurantlList;
+	}
 }

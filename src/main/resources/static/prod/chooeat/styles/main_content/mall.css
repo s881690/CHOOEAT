@@ -14,6 +14,39 @@ aside.aside, main.main {
 	vertical-align: top;
 }
 
+ .loading {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .loading .spinner {
+    width: 50px;
+    height: 50px;
+    animation: spin 1s infinite linear;
+    border: 3px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+
+
 /* ===================== Top ===================== */
 div.breadcrumbandSearch span {
 	/* vertical-align: buttom; */
@@ -46,7 +79,7 @@ div.search_area {
 	float: right;
 	width: 200px;
 	height: 30px;
-	margin: 5px 10px; 
+	margin: 5px 10px;
 	border-radius: 12px;
 }
 
@@ -57,7 +90,7 @@ input.search_text {
 	float: right;
 	width: 200px;
 	height: 30px;
-	padding:0 0 0 8px;
+	padding: 0 0 0 8px;
 	margin: 0px;
 }
 
@@ -68,7 +101,7 @@ input.search_button {
 	margin: 5px 10px;
 	right: 0;
 	padding: 0;
-    background-color:transparent;
+	background-color: transparent;
 	background-size: 20px 20px;
 	border: none;
 }
@@ -93,7 +126,7 @@ button.hotCategory {
 }
 
 button.hotCategory:hover {
-	background-color:#F5F5F5;
+	background-color: #F5F5F5;
 }
 /* ======== sort ======== */
 div.sort {
@@ -113,7 +146,7 @@ div.sortBy {
 
 select.sorting {
 	/* float: right; */
-	width: 120px;
+	width: 150px;
 	border-radius: 6px;
 	margin-right: 12px;
 }
@@ -156,7 +189,7 @@ ul.dropdown-menu {
 
 .btn-check:focus+.btn-secondary, .btn-secondary:focus {
 	color: #565e64;
-	background-color:#F5F5F5;
+	background-color: #F5F5F5;
 	border-color: #565e64;
 	box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, .5);
 }
@@ -175,7 +208,7 @@ ul.dropdown-menu {
 
 button.categoryDetail:hover {
 	color: black;
-	background-color:#F5F5F5;
+	background-color: #F5F5F5;
 }
 
 img.triangle {
@@ -190,7 +223,7 @@ img.triangle {
 
 /* ===================== main ===================== */
 main.main {
-/* 	border:1px solid green; */
+	/* 	border:1px solid green; */
 	font-size: 16px;
 	width: calc(100% - 200px - 20px);
 }
@@ -201,7 +234,6 @@ div.prod {
 	/*     height: auto;  */
 	padding: 15px;
 	margin: 0 0 10px 0;
-	
 }
 
 span.prodTitle {
@@ -214,12 +246,12 @@ span.star_block {
 	margin: 0px 10px;
 }
 
-div.type{
-/* 	border:1px solid white; */
-/* 	background-color: #FFDEB9; */
+div.type {
+	/* 	border:1px solid white; */
+	/* 	background-color: #FFDEB9; */
 	border-radius: 10px;
-	width:fit-content;
-/* 	padding: 0 10px; */
+	width: fit-content;
+	/* 	padding: 0 10px; */
 }
 
 div.prod img {
@@ -233,8 +265,7 @@ div.prod img {
 a.prodLink {
 	color: black;
 	text-decoration: none;
-	margin:0;
-	
+	margin: 0;
 }
 
 div.prod:hover {
@@ -256,13 +287,15 @@ span.star_block>span.star.-on {
 }
 
 /* ===== 分頁 ===== */
-ul.pagination justify-content-end{
+ul.pagination justify-content-end {
 	color: orange;
 }
-li.page-item.active .page-link{
+
+li.page-item.active .page-link {
 	background-color: orange;
 	border-color: orange;
 }
+
 .page-link {
 	color: #d78b00;
 }

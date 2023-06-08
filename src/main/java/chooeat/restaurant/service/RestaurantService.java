@@ -3,6 +3,7 @@ package chooeat.restaurant.service;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import chooeat.restaurant.model.vo.AdVO;
 import chooeat.restaurant.model.vo.ProdVO;
@@ -34,4 +35,7 @@ public interface RestaurantService {
 	int restaurantuploadad(String restaurantId, String adplan, String adprice, String adstarttime, String adendtime, String strTimestamp, String adcheck);
 	List<AdVO> restaurantfindad(String restaurantId);
 	int restaurantdeletead(String adId, String restaurantId);
+	int restaurantupdatecomment(String accName, String restaurantId, String commentInput);
+	int restaurantupdateprod(String restaurantId, String prodName, String prodPrice, String prodQty, String prodUserGuide, String prodText, String prodState, String prodId);
+	List<RestaurantVO> getcarousel(Set<Integer> randomNumbers);
 }

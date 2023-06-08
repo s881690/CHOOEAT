@@ -36,83 +36,64 @@
                     <h2>會員查詢</h2>
                 </div>
             </div>
-
-            <form class="row g-3 mb-4 justify-content-center" action="#" style="margin-left: 50px">
-                <div class="col-12 col-md-2">
-                    <select class="form-select">
-                        <option selected value="0">請選擇查詢方式</option>
-                        <option value="1">會員編號</option>
-                        <option value="2">會員帳號</option>
-                        <option value="3">會員名稱</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-3">
-                    <input type="text" class="form-control" placeholder="請輸入">
-                </div>
-                <div class="col-3 col-md-2 ">
-                    <button type="submit" class="btn btn-outline-dark searchBtn">送出查詢</button>
-                </div>
-            </form>
         </div>
 
-        <div class="rounded shadow-sm" style="background-color: white; margin: 0 100px 0 100px; padding-bottom: 20px;">
+        <div class="rounded shadow-sm" style="background-color: white; margin: 20px 100px 0 100px; padding-bottom: 20px;">
             <div class="container">
-                <div class="row justify-content-center">
+                <!-- <div class="row justify-content-center">
                     <div class="col-3 mt-4 mb-3" id="accPic">
                         <img  class="w-75" src="/images/header/logo2.png" alt="">
                     </div>
-                </div>
-
-
-                <form action="#">
+                </div> -->
+                <form>
                     <div class="row ms-5">
                         <div class="col-6">
                             <div class="row align-items-center mt-4">
                                 <label class="col-3 col-md-4 col-form-label">會員編號</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="1">
+                                    <input type="text" readonly class="form-control-plaintext" id="accId">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員名稱</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="王佳瑜">
+                                    <input type="text" readonly class="form-control-plaintext" id="accName">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員暱稱</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="水晶">
+                                    <input type="text" readonly class="form-control-plaintext" id="accNickname">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員帳號</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="user1">
+                                    <input type="text" readonly class="form-control-plaintext" id="accAcc">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員生日</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="1996-07-06">
+                                    <input type="text" readonly class="form-control-plaintext" id="accBirth">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員電話</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="0912765432">
+                                    <input type="text" readonly class="form-control-plaintext" id="accPhone">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員信箱</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="lvuqe@outlook.com">
+                                    <input type="text" readonly class="form-control-plaintext" id="accMail">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <label class="col-3 col-md-4 col-form-label">會員地址</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="新北市三峽區光明路112號">
+                                    <input type="text" readonly class="form-control-plaintext" id="accAdd">
                                 </div>
                             </div>
                         </div>
@@ -120,13 +101,13 @@
                             <div class="row align-items-center mt-4">
                                 <label class="col-3 col-md-4 col-form-label">註冊時間</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="2023-05-05 11:36:48">
+                                    <input type="text" readonly class="form-control-plaintext" id="accTimestamp">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-3">
                                 <label class="col-3 col-md-4 col-form-label">帳號狀態</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="啟用">
+                                    <input type="text" readonly class="form-control-plaintext" id="accState">
                                 </div>
                             </div>
                             <div class="row justify-content-center align-items-center">
@@ -149,6 +130,8 @@
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
+    
+    <script type="text/javascript" src="js/admin_accSearchResult.js"></script>
 </body>
 
 </html>

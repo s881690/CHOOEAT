@@ -48,7 +48,6 @@ public class AddToCartContronller extends HttpServlet {
 		// 設置返回格式
 		res.setContentType("application/json; charset=utf-8");
 		// 判斷請求中的操作類型
-		String cartKey = "cart:user1"; // 先假設使用者ID為user1，實際要再多增加使用者這個參數
 		String operation = req.getParameter("operation");
 		System.out.println(operation);
 		String productId = req.getParameter("productId");
@@ -59,7 +58,9 @@ public class AddToCartContronller extends HttpServlet {
 		System.out.println(price);
 		int qty = Integer.parseInt(req.getParameter("qty"));
 		System.out.println(qty);
-
+		int accId = Integer.parseInt(req.getParameter("accId"));
+		System.out.println(accId);
+		String cartKey = "cart:user"+accId; // 先假設使用者ID為user1，實際要再多增加使用者這個參數
 		switch (operation) {
 		case "deleteSelected":
 			// 刪除
@@ -97,9 +98,8 @@ public class AddToCartContronller extends HttpServlet {
 	    res.setHeader("Access-Control-Allow-Credentials", "true"); // 是否允許帶有憑證的請求
 	    // 設置返回格式
 	    res.setContentType("application/json; charset=utf-8");
-
-	    String userId = "user1";
-	    String cartKey = "cart:" + userId;
+	    int accId = Integer.parseInt(req.getParameter("accId"));
+	    String cartKey = "cart:user"+accId;
 
 	    jedis.select(1);
 	    Map<String, String> cartData = jedis.hgetAll(cartKey);

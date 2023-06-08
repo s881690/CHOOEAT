@@ -69,45 +69,36 @@ public class AccountDaoImpl implements AccountDao {
 	// --------------------------------------------登入---------------------------------------------------------------------
 	@Override
 	public AccountVo login(String acc, String pass) {
-		String sql = "SELECT * FROM account WHERE acc_acc=? && acc_pass=?";
+		String sql = "SELECT * FROM account WHERE acc_acc = ? and acc_pass = ?";
 
-		try {
+		try (
 			Connection conn = dataSource.getConnection();
-
 			PreparedStatement stmt = conn.prepareStatement(sql);
-//				System.out.println(acc);
-//				System.out.println(pass);
+		) {
 			stmt.setString(1, acc);
 			stmt.setString(2, pass);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				AccountVo accountVO = new AccountVo();
-				accountVO.setAcc_id(rs.getInt("acc_id"));
-				accountVO.setAcc_acc(rs.getString("acc_acc"));
-				accountVO.setAcc_pass(rs.getString("acc_pass"));
-				accountVO.setAcc_name(rs.getString("acc_name"));
-				accountVO.setAcc_nickname(rs.getString("acc_nickname"));
-				accountVO.setAcc_phone(rs.getString("acc_phone"));
-				accountVO.setAcc_mail(rs.getString("acc_mail"));
-				accountVO.setAcc_add1(rs.getString("acc_add1"));
-				accountVO.setAcc_add2(rs.getString("acc_add2"));
-				accountVO.setAcc_add3(rs.getString("acc_add3"));
-				accountVO.setAcc_birth(rs.getDate("acc_birth"));
-				accountVO.setAcc_gender(rs.getInt("acc_gender"));
-				accountVO.setAcc_pic(rs.getBytes("acc_pic"));
-				accountVO.setAcc_text(rs.getString("acc_text"));
-				accountVO.setAcc_timestamp(rs.getTimestamp("acc_timestamp"));
-				accountVO.setAcc_state(rs.getInt("acc_state"));
-				accountVO.setOnline_status(rs.getInt("online_status"));
-				return accountVO;
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					AccountVo accountVO = new AccountVo();
+					accountVO.setAcc_id(rs.getInt("acc_id"));
+					accountVO.setAcc_acc(rs.getString("acc_acc"));
+					accountVO.setAcc_pass(rs.getString("acc_pass"));
+					accountVO.setAcc_name(rs.getString("acc_name"));
+					accountVO.setAcc_nickname(rs.getString("acc_nickname"));
+					accountVO.setAcc_phone(rs.getString("acc_phone"));
+					accountVO.setAcc_mail(rs.getString("acc_mail"));
+					accountVO.setAcc_add1(rs.getString("acc_add1"));
+					accountVO.setAcc_birth(rs.getDate("acc_birth"));
+					accountVO.setAcc_gender(rs.getInt("acc_gender"));
+					accountVO.setAcc_pic(rs.getBytes("acc_pic"));
+					accountVO.setAcc_text(rs.getString("acc_text"));
+					return accountVO;
+				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
 		return null;
-
 	}
 
 	// ------------------------------------------註冊-----------------------------------------------------------------------
@@ -154,6 +145,9 @@ public class AccountDaoImpl implements AccountDao {
 
 				return result;
 			}
+		
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -191,6 +185,9 @@ public class AccountDaoImpl implements AccountDao {
 					result.add(account); // 將更新成功的帳戶加入結果列表
 				}
 			}
+			
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -284,6 +281,9 @@ public class AccountDaoImpl implements AccountDao {
 				result = 1;
 				
 			};
+		
+			stmt.close();
+			conn.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -309,7 +309,9 @@ public class AccountDaoImpl implements AccountDao {
 				result = 1;
 				
 			};
-
+			
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

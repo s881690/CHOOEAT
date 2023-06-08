@@ -1,24 +1,48 @@
+let accId;
+//===========
+let account = JSON.parse(sessionStorage.getItem("loginReq"));
+if (sessionStorage.getItem("loginReq") != null) {
+	document.getElementById("sname").innerHTML = account.acc_name;
+	accId = account.acc_id;
+} else {
+	accId = '0';
+}
+
+//=================================================================
+// 拿到會員icon
+let accountIcon = $("a.accountIcon");
+// console.log(accountIcon);
+// 會員中心的判斷
+if (account != null) {
+	accountIcon.attr("href", "../account/usercenter.html");
+} else {
+	accountIcon.attr("href", "../account/login.html");
+}
 // ================================== 後端 ===================================
 // 獲取購物車內容並顯示在畫面上
 function displayCart() {
 	var cartContainer = document.getElementById("cart_container");
 	cartContainer.innerHTML = "";
-	const url = "get-cart";
+	const url = "get-cart?accId=" + accId;
 	fetch(url)
 		.then(function(response) { return response.json(); })
 		.then(data => {
-//			console.log(data);
+			// console.log(data);
 			const productsMap = data;
-			for (let [productId, value] of Object.entries(productsMap)) {
-				const key = productId;
-				const productName = value.productName;
-				const productPrice = value.price.toLocaleString();
-				const productqty = value.qty;
-				const uint8Array = new Uint8Array(value.prodPic);
-				let blob = new Blob([uint8Array], { type: "image/*" });
-				let imageUrl = URL.createObjectURL(blob);
-				cartContainer.innerHTML += `
-					<div data-product-id="${key}" class="prod">
+			if (Object.keys(productsMap).length === 0) {
+				// 資料為空，顯示提示訊息
+				cartContainer.innerHTML =`<a href="mall.html"><h2 style="margin-top:30px; text-align: center;">購物車尚未有任何商品，快前往選購吧！</h2></a>`;
+			} else {
+				for (let [productId, value] of Object.entries(productsMap)) {
+					const key = productId;
+					const productName = value.productName;
+					const productPrice = value.price.toLocaleString();
+					const productqty = value.qty;
+					const uint8Array = new Uint8Array(value.prodPic);
+					let blob = new Blob([uint8Array], { type: "image/*" });
+					let imageUrl = URL.createObjectURL(blob);
+					cartContainer.innerHTML += `
+				<div data-product-id="${key}" class="prod">
 						<table>
 							<tr>
 								<td><input type="checkbox" class="prod_checkbox" /></td>
@@ -51,10 +75,11 @@ function displayCart() {
 							</tr>
 						</table>
 					</div>
-						`;
+				`;
+				}
 
-			};
-			bindEventsToElements();
+				bindEventsToElements();
+			}
 		})
 		.catch(function(error) {
 			console.log(error);
@@ -93,7 +118,7 @@ function bindEventsToElements() {
 			const productName = prod.querySelector('[data-product-name]').dataset.productName.toLowerCase();
 			const price = parseInt(prod.querySelector('[data-product-price]').dataset.productPrice.toString().replace(/,/g, ""));
 			const productqty = qty;
-			const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + productqty;
+			const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + productqty + "&accId=" + accId;
 			fetch(url, {
 				method: "POST",
 			})
@@ -137,7 +162,7 @@ function bindEventsToElements() {
 				const productName = prod.querySelector('[data-product-name]').dataset.productName.toLowerCase();
 				const price = parseInt(prod.querySelector('[data-product-price]').dataset.productPrice.toString().replace(/,/g, ""));
 				const productqty = qty;
-				const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + productqty;
+				const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + productqty + "&accId=" + accId;
 				fetch(url, {
 					method: "POST",
 				})
@@ -172,7 +197,7 @@ function bindEventsToElements() {
 			const productName = prod.querySelector('[data-product-name]').dataset.productName.toLowerCase();
 			const price = parseInt(prod.querySelector('[data-product-price]').dataset.productPrice.toString().replace(/,/g, ""));
 			const productqty = qty;
-			const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + productqty;
+			const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + productqty + "&accId=" + accId;
 			fetch(url, {
 				method: "POST",
 			})
@@ -247,7 +272,7 @@ function bindEventsToElements() {
 				const priceMatch = priceText.match(/[\d,]+/);
 				const price = parseInt(priceMatch[0].replace(/,/g, ""));
 				totalQty += qty;
-				totalPrice += price;
+				totalPrice += price * qty;
 			}
 		});
 
@@ -280,17 +305,15 @@ function bindEventsToElements() {
 			const confirmBtn = document.querySelector(".confirm-btn");
 			const cancelBtn = document.querySelector(".cancel-btn");
 			confirmBtn.addEventListener("click", function() {
-				prod.remove();
-				overlay.style.display = "none";
-				updateSidebar();
-
+				const checkbox = prod.querySelector(".prod_checkbox");
+				checkbox.checked = false;
 				// === fetch ===
 				const productId = prod.dataset.productId;
 				const operation = "deleteSelected";
 				const productName = prod.querySelector('[data-product-name]').dataset.productName.toLowerCase();
 				const price = parseInt(prod.querySelector('[data-product-price]').dataset.productPrice.toString().replace(/,/g, ""));
 				const qty = prod.querySelector('[data-product-qty]').dataset.productQty.toLowerCase();
-				const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty;;
+				const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty + "&accId=" + accId;
 				fetch(url, {
 					method: "POST",
 				})
@@ -301,7 +324,9 @@ function bindEventsToElements() {
 					.catch((error) => {
 						console.error("刪除商品時發生錯誤:", error);
 					});
-
+				prod.remove();
+				overlay.style.display = "none";
+				updateSidebar();
 			});
 			cancelBtn.addEventListener("click", function() {
 				overlay.style.display = "none";
@@ -323,13 +348,14 @@ function bindEventsToElements() {
 		const cancelBtn = document.querySelector(".cancel-btn");
 		confirmBtn.addEventListener("click", function() {
 			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = false;
 				const prod = checkbox.closest(".prod");
 				const productId = prod.dataset.productId;
 				const operation = "deleteSelected";
 				const productName = prod.querySelector('[data-product-name]').dataset.productName.toLowerCase();
 				const price = parseInt(prod.querySelector('[data-product-price]').dataset.productPrice.toString().replace(/,/g, ""));
 				const qty = prod.querySelector('[data-product-qty]').dataset.productQty.toLowerCase();
-				const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty;
+				const url = "get-cart?operation=" + operation + "&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty + "&accId=" + accId;
 				fetch(url, {
 					method: "POST",
 				})
@@ -345,13 +371,16 @@ function bindEventsToElements() {
 			});
 			overlay.style.display = "none";
 			updateSidebar();
+			totalQty -= qty;
+			totalPrice -= price * qty;
+			totalPriceElement.textContent = "NT $" + totalPrice.toLocaleString();
 		});
 		const confirmationBox = document.querySelector(".confirmation-box");
-	overlay.addEventListener("click", function(event) {
-		if (event.target === overlay) {
-			overlay.style.display = "none";
-		}
-	});
+		overlay.addEventListener("click", function(event) {
+			if (event.target === overlay) {
+				overlay.style.display = "none";
+			}
+		});
 		cancelBtn.addEventListener("click", function() {
 			overlay.style.display = "none";
 		});
@@ -393,28 +422,37 @@ function bindEventsToElements() {
 				selectedProducts.push(productId);
 			}
 		});
-//		console.log(selectedProducts);
+		//		console.log(selectedProducts);
 		jsonselectedProducts = JSON.stringify(selectedProducts);
-//		console.log(jsonselectedProducts);
-	} 
+		//		console.log(jsonselectedProducts);
+	}
 	var btn_pay_el = document.getElementById("pay");
+
 	btn_pay_el.addEventListener("click", function() {
-		console.log("T");
-		console.log(jsonselectedProducts);
-		fetch('checkout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
-		})
-			.then(data => {
-				console.log("d");
-				window.location.href = 'mall_checkout.html';
+		// 判斷是否已登入
+		let account = JSON.parse(sessionStorage.getItem("loginReq"));
+		console.log(account);
+		if (sessionStorage.getItem("loginReq") == null) {
+			alert("請先進行登入");
+			return;
+		} else {
+			console.log("T");
+			console.log(jsonselectedProducts);
+			fetch('checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ selectedProducts: selectedProducts, isDirectBuy: isDirectBuy })
 			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(data => {
+					console.log("d");
+					window.location.href = 'mall_checkout.html';
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
 	});
 }
 

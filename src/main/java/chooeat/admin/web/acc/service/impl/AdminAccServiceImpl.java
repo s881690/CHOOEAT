@@ -16,6 +16,11 @@ public class AdminAccServiceImpl implements AccService{
 	private AccountDAO dao;
 
 	@Override
+	public AdminAccountVO findAcc(Integer accId) {
+		return dao.selectById(accId);
+	}
+
+	@Override
 	public AdminAccountVO edit() {
 		return null;
 	}

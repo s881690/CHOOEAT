@@ -59,6 +59,7 @@ public class ProdController extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			out.print(jsonStr);
 			out.flush();
+			session.removeAttribute("search_text");
 		} else if ("getCategory".equals(action)) {
 			System.out.println("我有被執行到");
 			List<Prod> list = null;
@@ -75,20 +76,14 @@ public class ProdController extends HttpServlet {
 			session.removeAttribute("category");
 		} else if ("sortBy".equals(action)) {
 			String sortParam = req.getParameter("sort");
-			HttpSession session = req.getSession();
-			String search_text = (String) session.getAttribute("search_text");
 			List<Prod> list = null;
 			list = prodDaoImpl.selectAll();
-			if (search_text != null && !search_text.isEmpty()) {
-				list = prodDaoImpl.getByCompositeQuery(search_text);
-			}
 			List<Prod> sortedProducts = prodService.getSortedProducts(list, sortParam);
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(sortedProducts);
 			PrintWriter out = res.getWriter();
 			out.print(jsonStr);
 			out.flush();
-			session.removeAttribute("search_text");
 		} else {
 			// 回傳全部餐券
 			List<Prod> list = null;

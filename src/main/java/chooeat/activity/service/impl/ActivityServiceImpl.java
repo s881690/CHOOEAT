@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
+import chooeat.activity.dao.ActivityMemberRepository;
 import chooeat.activity.dao.ActivityRepository;
 import chooeat.activity.service.ActivityService;
 import chooeat.activity.vo.ActivityVO;
@@ -17,6 +18,9 @@ import chooeat.activity.vo.ActivityVO;
 public class ActivityServiceImpl implements ActivityService {
 	@Autowired
 	ActivityRepository activityRepository;
+	
+	@Autowired
+	ActivityMemberRepository activityMemberRepository;
 
 	// 顯示所有資料
 	@Transactional
@@ -24,13 +28,17 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityVO> sellectAll() {
 		List<ActivityVO> list = activityRepository.findAll();
 		for (int i = 0; i < list.size(); i++) {
-			// 將byte[]圖片轉為base64 String
-			String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
-			list.get(i).setActivityPhotoBase64(base64String);
+			// 若activityPhoto欄位不為空，才進來轉
+			if(list.get(i).getActivityPhoto() != null) {
+				// 將byte[]圖片轉為base64 String
+				String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
+				list.get(i).setActivityPhotoBase64(base64String);
+			}
 		}
 		return list;
 	}
 
+	
 	// 活動名稱查詢
 	@Transactional
 	@Override
@@ -124,6 +132,16 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public ActivityVO findEdit(Integer activityId) {
 		return activityRepository.findByActivityId(activityId);
+	}
+
+	@Override
+	public Integer addActivityMember(Integer activityId) {
+		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
+		System.out.println(activityNumber);
+		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+		activityVO.setActivityNumber(activityNumber); 
+		System.out.println(activityVO.getActivityNumber());
+		return activityVO.getActivityNumber();
 	}
 
 

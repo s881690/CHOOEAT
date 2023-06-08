@@ -253,11 +253,10 @@ div.sortBy {
 
 select.sorting {
 	/* float: right; */
-	width: 120px;
+	width: 150px;
 	border-radius: 6px;
 	margin-right: 12px;
 }
-
 div.comment {
 	margin: 10px 0px;
 	/* border: 1px solid gray; */
