@@ -136,12 +136,14 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public Integer addActivityMember(Integer activityId) {
-		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
-		System.out.println(activityNumber);
-		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
-		activityVO.setActivityNumber(activityNumber); 
-		System.out.println(activityVO.getActivityNumber());
-		return activityVO.getActivityNumber();
+//		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
+//		System.out.println(activityNumber);
+//		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+//		activityVO.setActivityNumber(activityNumber); 
+//		System.out.println(activityVO.getActivityNumber());
+//		return activityVO.getActivityNumber();
+		return null;
+		
 	}
 
 
