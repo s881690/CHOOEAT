@@ -103,8 +103,29 @@ public class ReservationController {
 	    System.out.println("acc_id + " + acc_id);
 	    System.out.println("restaurantId + " + restaurantId);
 	    System.out.println(dateTime);
-	    //建立jedis連線
+	    
+	    //條件判斷，不符合條件的return出去
+	    Jedis jedis2 = new Jedis();
+	    jedis2.select(3);
+	    boolean exists = jedis2.exists(index);
+	    if (exists) {
+        	int checkingPeople = Integer.valueOf(jedis2.get(index));
+            if (checkingPeople <= 0) {
+                result.setStatus("error");
+                return result;
+            }else {
+            	 int rms = Integer.valueOf(jedis2.get(index)) - reservationNumber;
+            	 if(rms < 0) {
+            		 result.setStatus("error");
+                     return result;
+            	 }
+            }
+	    } 
+	    jedis2.close();
+	    
 	    Jedis jedis = new Jedis();
+	    jedis.select(2);
+	    
 //	    jedis.del("reservationLock");
 	    try {
 	    	
@@ -120,39 +141,7 @@ public class ReservationController {
 	            result.setStatus("error");
 	            System.out.println("這時間有人在結帳");
 	            return result;
-	        }
-	        //選擇2號資料庫
-	        jedis.select(2);
-	        //if判斷這邊，好像可以不用~"~?
-	        //因為redis結帳完就砍了，鎖定別人也進不來，但沒關係先留著
-	        boolean exists = jedis.exists(index);
-	        if (exists) {
-	        	int checkingPeople = Integer.valueOf(jedis.get(key));
-	            if (checkingPeople <= 0) {
-	                result.setStatus("error");
-	                return result;
-	            } else {
-	                int rms = Integer.valueOf(jedis.get(key)) - reservationNumber;
-	                if (rms >= 0) {
-	                    data.put(key, remainSeat.toString());
-	                    data.put("accId", new Integer(acc_id.intValue()).toString());
-	                    data.put("restaurantId", new Integer(restaurantId.intValue()).toString());
-	                    data.put("reservationNumber", (String) map.get("ppl"));
-	                    data.put("reservationDateStartTime", (String) map.get("date_time"));
-	                    if (!text.isEmpty()) {
-	                        data.put("reservationNote", text);
-	                    } else {
-	                        data.put("reservationNote", "");
-	                    }
-
-	                    jedis.hmset(index, data);
-
-	                    result.setStatus("success");
-	                }
-	            }
-	        } 
-	        
-	        else {
+	        } else {
 	            try {
 	            	//先把前端傳進來的預約日期字串轉換日期時間格式
 	                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -164,7 +153,6 @@ public class ReservationController {
 	                int hour = utildate.getHours();
 	                System.out.println("當前小時是" + hour);
 
-	            
 
 	                if (list.size() == 0) {
 	                	//用餐廳id去抓座位數量，去扣預約人數，剩下的存進redis
@@ -197,6 +185,7 @@ public class ReservationController {
 	                }
 
 	                jedis.hmset(index, data);
+	                count++;
 
 	                result.setStatus("success");
 	                System.out.println("存儲至 Redis 中的 key: " + index);
