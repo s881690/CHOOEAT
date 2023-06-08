@@ -108,8 +108,8 @@ public class ReservationController {
 	    jedis.del("reservationLock");
 	    try {
 	    	
-	    	//設定暫存的剩餘座位數變數（已經存進資料庫的剩餘座位數 - 還沒結帳的預約人數）
-	    	Integer remainSeat = null;
+	    	//設定暫存的剩餘座位數變數，預設式餐廳的最大可預約數（已經存進資料庫的剩餘座位數 - 還沒結帳的預約人數）
+	    	 Integer remainSeat = restaurantRepository.findById(restaurantId.intValue()).get().getResMaxNum();
 	    	
 	    	//redis上鎖，拿到鎖才可以進入下面判斷
 	        String lockKey = "reservationLock";
