@@ -214,12 +214,6 @@ function like() {
     let accId = account.acc_id;
     let activityId = $(e.target).closest(".card-body").attr("data-activityId");
 
-    // 判斷是否已登入
-    if (sessionStorage.getItem("loginReq") == null) {
-      alert("請先進行登入");
-      return;
-    }
-
     if ($(e.target).attr("data-like") == "false") {
       // 將收藏的資訊發送給後端
       let likeURL = "like";
