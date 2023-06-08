@@ -3,9 +3,11 @@ package chooeat.restaurant.serviceimpl;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -312,5 +314,29 @@ public class RestaurantServiceImpl<K> implements RestaurantService {
 			String prodUserGuide, String prodText, String prodState,String prodId) {
 		return dao.restaurantupdateprod(restaurantId,prodName,prodPrice,prodQty,prodUserGuide,prodText,prodState,prodId);
 	}
+
+	@Override
+	public List<RestaurantVO> getcarousel(Set<Integer> randomNumbers) {
+		
+        Iterator<Integer> iterator = randomNumbers.iterator();
+        int[] variables = new int[5];
+        int index = 0;
+        while (iterator.hasNext() && index < 5) {
+            int randomNumber = iterator.next();
+            variables[index] = randomNumber;
+            index++;
+        }
+        int var1 = variables[0];
+        int var2 = variables[1];
+        int var3 = variables[2];
+        int var4 = variables[3];
+        int var5 = variables[4];
+    	
+   	
+
+		return dao.getcarousel(var1,var2,var3,var4,var5);
+	}
+
+	
 
 }

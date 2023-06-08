@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-
 <head>
 <title>Chooeatcenter</title>
 <meta charset="utf-8" />
-<link href="./images/header/logo2.png" rel="shortcut icon">
+<link href="./images/header/logo2.png" rel="shortcut icon" />
 <!-- 響應式網站 -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -27,8 +26,7 @@
 <!-- google fonts -->
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-
+	rel="stylesheet" />
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -38,7 +36,6 @@
 <link rel="stylesheet" href="./styles/all/all.css" />
 <link rel="stylesheet" href="./css/sidebar.css" />
 <link rel="stylesheet" href="./css/usercenter.css" />
-
 
 </head>
 
@@ -70,13 +67,15 @@
 						<!-- 以下3個a標籤，包的是聊天視窗、購物車、會員登入的小icon -->
 						<a href="../prod/mall_shopping_cart.html"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
-							<img style="width: 40px; height: 40px; margin-right: 5px;"
+							<img style="width: 40px; height: 40px; margin-right: 5px"
 							src="./images/header/carts.png" />
-						</a> <a href="../account/login.html" class="accountIcon"
+						</a> <a href="#" class="accountIcon"
 							class="d-flex align-items-center justify-content-center mr-1 icon">
-							<img style="width: 40px; height: 40px; margin-right: 5px;"
+							<img style="width: 40px; height: 40px; margin-right: 5px"
 							src="./images/header/profile.png" />
-						</a> <span class="sname"></span>
+						</a> <span
+							style="display: inline-flex; align-items: center; vertical-align: middle; margin-left: 10px;"
+							class="sname"></span>
 					</p>
 				</div>
 				<!-- 這個button是漢堡選單的menu按鈕 -->
@@ -89,7 +88,7 @@
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul
 						class="navbar-nav d-flex align-items-center justify-content-center"
-						style="gap: 1rem">
+						style="gap: 1rem ;padding-bottom: 0px;line-height: 1;margin-left:100px ">
 						<li class="nav-item"><a href="../restaurant/Homepage.html"
 							class="nav-link">首頁</a></li>
 						<li class="nav-item"><a href="../restaurant/Homepage.html"
@@ -107,26 +106,26 @@
 		</nav>
 	</header>
 
-
 	<!-- 以下為內容區域，主要對這裡做修改 -->
 	<form action="#" method="POST">
 		<div class="container">
-
 			<div class="row">
 				<div class="col-sm-3">
 					<aside class="aside">
 						<div class="list-group">
 							<a href="./usercenter.html"
-								class="list-group-item list-group-item-action">會員中心</a> <a
-								href="#" class="list-group-item list-group-item-action">預約紀錄</a>
+								class="list-group-item list-group-item-action">會員中心</a>
+							<a href="../reservation/reservationRecord.html"
+								class="list-group-item list-group-item-action">預約紀錄</a>
 							<a href="#" class="list-group-item list-group-item-action">訂閱餐廳</a>
 							<a href="./friend.html"
-								class="list-group-item list-group-item-action">好友中心</a> <a
-								href="#" class="list-group-item list-group-item-action">餐券紀錄</a>
+								class="list-group-item list-group-item-action">好友中心</a>
+							<a href="#" class="list-group-item list-group-item-action">餐券紀錄</a>
 							<a href="#" class="list-group-item list-group-item-action">查看優惠卷</a>
 							<a href="#" class="list-group-item list-group-item-action">揪團歷史</a>
 							<button id="btnre" href="#"
-								class="list-group-item list-group-item-action">登出</button>
+								class="list-group-item list-group-item-action">
+								登出</button>
 						</div>
 					</aside>
 				</div>
@@ -135,11 +134,11 @@
 					<div class="">
 						<div class="profile">
 							<!--                             <form action="#" data-toggle="validator"> -->
-							<h1 style="text-align: center;">會員資訊</h1>
+							<h1 style="text-align: center">會員資訊</h1>
 
 							<!--                                 <a href="" class="a_user  btn ">編輯會員資料</a> -->
-							<a href="./changpassword.html" class="a_user  btn  ">修改密碼</a>
-							<hr>
+							<a href="./changpassword.html" class="a_user btn">修改密碼</a>
+							<hr />
 							<!-- pattern="^[A-Za-z0-9 @]+$" id="exampleInputEmail" aria-describedby="emailHelp"
                                 data-pattern-error="帳號只接受英文字母數字" -->
 							<!-- 第一列 -->
@@ -149,59 +148,53 @@
 
 									<div id="preview">
 										<span class="text">上傳頭像</span> <img id="userview"
-											src="./images/header/logo2.png" style="width: 200px;">
+											src="./images/header/logo2.png" style="width: 200px" />
 									</div>
-									<input type="file" name="photo" id="p_file">
-
+									<input type="file" name="photo" id="p_file" />
 								</div>
 							</div>
 
-
 							<div class="row" id="aaa">
-
 								<div class="col-sm-12">
 									<label>信箱</label> <input id="userinputmail" name="inputmail"
 										type="email" placeholder="帳號" class="form-control"
-										autocomplete="#" required>
+										autocomplete="#" required />
 									<div class="help-block with-errors"></div>
 								</div>
 							</div>
-							<br>
+							<br />
 							<!--                                 第二列 -->
 							<div class="row">
 								<div class="col-sm-12">
-
 									<label>姓名</label> <input id="userinputname" type="text"
-										placeholder="姓名" class="form-control" required>
+										placeholder="姓名" class="form-control" required />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-
 									<label>暱稱</label> <input id="userinputnick" type="text"
-										placeholder="姓名" class="form-control" required>
+										placeholder="姓名" class="form-control" required />
 								</div>
 							</div>
-							<br>
+							<br />
 							<!--                                  第三列 -->
 							<div class="row">
 								<div class="col-sm-12">
 									<label>地址</label> <input id="userinputadd" type="text"
-										placeholder="輸入地址" class="form-control" required>
-
+										placeholder="輸入地址" class="form-control" required />
 								</div>
 							</div>
 
-							<br>
+							<br />
 							<!--                                 第四列 -->
 							<div class="row">
 								<div class="col-sm-12">
 									<label>生日</label> <input id="userinputbirth" type="date"
-										placeholder="生日" class="form-control" required>
+										placeholder="生日" class="form-control" required />
 								</div>
-								<br>
+								<br />
 							</div>
-							<br>
+							<br />
 							<div class="row">
 								<div class="col-sm-12">
 									<label>性別</label> <select id="userinputgender"
@@ -213,48 +206,39 @@
 									</select>
 								</div>
 							</div>
-							<br>
+							<br />
 							<!--                                 第五列 -->
 							<div class="row">
 								<div class="col-sm-12">
 									<label>手機號碼</label> <input id="userinputphone" type="number"
 										placeholder="手機號碼" class="form-control"
-										pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" required>
+										pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" required />
 								</div>
 							</div>
-							<br>
+							<br />
 							<!--                                 第六列 -->
 							<!--                                  id="h" 為了讓高度縮小 -->
 							<div class="row" id="h">
-
-								<label>自我簡介</label><br>
+								<label>自我簡介</label><br />
 								<div class="col-10">
 									<textarea id="usertextarea" name="mytext" rows="6" cols="40"
 										required></textarea>
 								</div>
-
 							</div>
 							<div class="row">
 								<button id="savbtn" type="button" value="儲存"
 									class="btn btn-outline-warning"
-									style="background-color: #FFDEB9; color: white; border: 1px solid #FFDEB9; width: 100px; margin-left: 650px;">儲存</button>
-
+									style="background-color: #ffdeb9; color: white; border: 1px solid #ffdeb9; width: 100px; margin-left: 650px;">
+									儲存</button>
 							</div>
-
-
-
-
 
 							<!--                             </form> -->
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</form>
-
-
 
 	<!-- class="navbar-fixed-bottom"讓footer置底 -->
 	<!--footer-->
@@ -283,5 +267,4 @@
 	<script src="./js/header_js/profileimg.js"></script>
 	<script src="./js/header_js/remove.js"></script>
 </body>
-
 </html>

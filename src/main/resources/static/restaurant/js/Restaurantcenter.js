@@ -6,6 +6,19 @@
  const restaurantId = obj.restaurantId;
 
 
+// 圖片轉B64編碼字串
+function arrayBufferToBase64(buffer) {
+	var binary = '';
+	var bytes = new Uint8Array(buffer);
+	var len = bytes.byteLength;
+	for (var i = 0; i < len; i++) {
+	  binary += String.fromCharCode(bytes[i]);
+	}
+	return window.btoa(binary);
+}
+
+
+
  //餐廳首頁相關
  $(document).ready(function() {
   $.ajax({
@@ -16,12 +29,33 @@
    } ,
     success: function (response) {
 
-         
-      var resAcc =response.restauranthomepagemyselfList[0]["resAcc"]
+
+      var photoBase64m = arrayBufferToBase64(response.restauranthomepagemyselfList[0]["resPhoto"]);
+      var imageSrcm = `data:image/jpeg;base64,${photoBase64m}`;
+
+      var ddd = document.getElementById("vvv");        
+      var rrr = document.createElement("div");
+      rrr.classList.add("col-12");
+
+      if (photoBase64m) {
+        rrr.innerHTML = `
+          <img
+            src="${imageSrcm}"          
+            style="width: 100%; height: 200px"
+          />
+        `;
+      } else {
+        rrr.innerHTML = `
+          <span>這裡是圖片顯示頁面喔!!目前沒圖片喔!!</span>
+        `;
+      }
+      ddd.appendChild(rrr);
+
+
       
-    
-      var ccccc = document.createElement("div");
-   
+      var resAcc =response.restauranthomepagemyselfList[0]["resAcc"]    
+         
+      var ccccc = document.createElement("div");   
    ccccc.innerHTML = ` 
    <div>
    <br>
@@ -249,6 +283,7 @@ $(document).ready(function() {
         success: function(response) {
           alert("你上傳了" + response + "張圖片");
           $(".uuu").attr("hidden", true);
+          window.location.replace(location.href)          
         },
         error: function(xhr, status, error) {
           

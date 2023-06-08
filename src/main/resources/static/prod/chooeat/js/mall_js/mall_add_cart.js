@@ -1,6 +1,6 @@
 var form_data = JSON.parse(sessionStorage.getItem("form_data"));
 var productId = form_data.productId;
-var AccId = form_data.AccId;
+var accId = form_data.accId;
 var productName = form_data.productName;
 var price = removeThousandsSeparator(form_data.price);
 var qty = form_data.qty;
@@ -37,7 +37,7 @@ window.addEventListener("load", function() {
 		let imageUrl = URL.createObjectURL(blob);
 
 		product_name_el.innerHTML = productName;
-		product_price_el.innerHTML = "總價：NT $" + price.toLocaleString();
+		product_price_el.innerHTML = "總價：NT $" + form_data.price;
 		product_qty_el.innerHTML = qty;
 		product_img_el.src = imageUrl;
 	};
@@ -47,7 +47,7 @@ window.addEventListener("load", function() {
 // === 傳進redis ===
 function addToCart() {
 	// 構建請求URL
-	const url = "get-cart?operation=addcart&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty;
+	const url = "get-cart?operation=addcart&productId=" + productId + "&productName=" + productName + "&price=" + price + "&qty=" + qty + "&accId=" + accId;
 	// 發送POST請求到後端
 	fetch(url, {
 		method: "POST",
