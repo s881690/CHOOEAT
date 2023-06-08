@@ -269,17 +269,21 @@ function validateInput() {
   // 判斷最多參加人數
   $("input#max_number").on("blur input", function (e) {
     let maxNumber = $("input#max_number").val();
+    console.log(maxNumber);
     let err_span = $("span#max_number_error");
 
     if (maxNumber == "") {
       err_span.show();
       // $("button.submit").attr("disabled", true);
-    } else if (maxNumber < $("input#min_number").val()) {
-      err_span.show();
     } else {
       err_span.hide();
       // $("button.submit").attr("disabled", false);
     }
+
+    // else if (maxNumber < $("input#min_number").val()) {
+    //   console.log($("input#min_number").val());
+    //   err_span.show();
+    // }
   });
 
   // 判斷圖片

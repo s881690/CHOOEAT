@@ -248,7 +248,8 @@ function bindEventsToElements() {
 	// === more_btn ===
 	const confirmationBox = $(".confirmation-box");
 	const overlay = $(".confirmation-overlay");
-	$(".more").on("click", function() {
+	
+	$(document).on("click", ".more", function(){
 		const moreBtn = $(this);
 		const orderDetailId = moreBtn.attr("data-order-detail-id");
 		console.log(orderDetailId);
@@ -320,7 +321,84 @@ function bindEventsToElements() {
 
 	$(".confirmationBox").on("click", function(event) {
 		event.stopPropagation();
-	});
+	
+	})
+	
+	
+	
+//	$(".more").on("click", function() {
+//		const moreBtn = $(this);
+//		const orderDetailId = moreBtn.attr("data-order-detail-id");
+//		console.log(orderDetailId);
+//		if (moreBtn.hasClass("reported")) {
+//			overlay.css("display", "flex");
+//			confirmationBox.css({
+//				width: "300px",
+//				height: "180px"
+//			});
+//			confirmationBox.html("<h4 class='centered-text'>您已檢舉過這則評論。</h4>");
+//			return;
+//		}
+//		console.log("檢舉按鈕");
+//		confirmationBox.css({
+//			height: "350px",
+//			width: "350px"
+//		});
+//
+//		confirmationBox.html(
+//			`<h5 style="font-weight: bold;">檢舉評論</h5>
+//				<div style="margin:5px;">檢舉這則評論的原因？</div>
+//				<textarea placeholder="請輸入檢舉原因..."></textarea>
+//				<div>
+//					<button class="confirm-btn">完成</button>
+//					<button class="cancel-btn">取消</button>
+//				</div>
+//				`);
+//		overlay.css("display", "flex");
+//
+//		const confirmBtn = confirmationBox.find(".confirm-btn");
+//		confirmBtn.on("click", function() {
+//			const reason = confirmationBox.find("textarea").val();
+//			if (reason.trim() === "") {
+//				alert("請輸入檢舉原因");
+//				return;
+//			}
+//			console.log(reason);
+//			confirmationBox.css({
+//				width: "300px",
+//				height: "180px"
+//			});
+//			confirmationBox.html("<h4 class='centered-text'>檢舉成功！</h4>");
+//			moreBtn.addClass("reported");
+//			const url = "prod/details";
+//			fetch(url, {
+//				method: "POST",
+//				body: JSON.stringify({ reason: reason, orderDetailId: orderDetailId })
+//			})
+//				.then(function(response) { return response.json(); })
+//				.then((data) => {
+//					console.log(data);
+//				})
+//				.catch((error) => {
+//					console.log("哀哀哀：" + error);
+//				});
+//
+//		})
+//		const cancelBtn = confirmationBox.find(".cancel-btn");
+//		cancelBtn.on("click", function() {
+//			overlay.css("display", "none");
+//		});
+//	});
+//
+//	$(".confirmation-overlay").on("click", function(event) {
+//		if ($(event.target).is(".confirmation-overlay")) {
+//			$(this).css("display", "none");
+//		}
+//	});
+//
+//	$(".confirmationBox").on("click", function(event) {
+//		event.stopPropagation();
+//	});
 	//=====================搜尋欄位可以按enter=========================
 	$("#search_text").on("keyup", function(e) {
 		if (e.which == 13) {
