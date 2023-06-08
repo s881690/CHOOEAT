@@ -2,16 +2,17 @@ package chooeat.reservation.controller;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import chooeat.reservation.dao.ReservationDao;
+import chooeat.reservation.dao.RestaurantRepository;
 import chooeat.reservation.model.EmailDetails;
 import chooeat.reservation.model.EmailInfo;
+import chooeat.reservation.model.HourlySeat;
 import chooeat.reservation.model.ReservationVO;
 import chooeat.reservation.model.RestaurantVO;
 import chooeat.reservation.model.Result;
@@ -40,6 +44,10 @@ public class ReservationController {
 	EmailDetails details;
 	@Autowired
 	RestaurantVO restaurantVO;
+	@Autowired
+	ReservationDao reservationDao;
+	@Autowired
+	RestaurantRepository restaurantRepository;
 
 	int count = 1;
 	String index = "res:" + count;
@@ -81,49 +89,126 @@ public class ReservationController {
 	@PostMapping("/reservationRedis")
 	@Transactional
 	public Result reservationRedis(@RequestBody Map<String, Object> map) {
-		
-		synchronized (this) {
-			Result result = new Result();
+		//設定回傳物件
+	    Result result = new Result();
+	    //設定要放進redis的map
+	    HashMap<String, String> data = new HashMap<>();
+	    //接前端參數
+	    String dateTime = (String) map.get("date_time");
+	    Integer reservationNumber = Integer.valueOf((String) map.get("ppl"));
+	    String text = (String) map.get("text");
+	    Double acc_id = (Double) map.get("acc_id");
+	    Double restaurantId = (Double) map.get("restaurantId");
+	    System.out.println("acc_id + " + acc_id);
+	    System.out.println("restaurantId + " + restaurantId);
+	    System.out.println(dateTime);
+	    //建立jedis連線
+	    Jedis jedis = new Jedis();
+	    try {
+	    	//設定暫存的剩餘座位數變數（已經存進資料庫的剩餘座位數 - 還沒結帳的預約人數）
+	    	Integer remainSeat = null;
+	    	
+	    	//redis上鎖，拿到鎖才可以進入下面判斷
+	        String lockKey = "reservationLock";
+	        String lockValue = UUID.randomUUID().toString();
+	        String key = "checkout";
+	        boolean isLocked = jedis.setnx(lockKey, lockValue) == 1;
+	        if (!isLocked) {
+	            result.setStatus("error");
+	            System.out.println("這時間有人在結帳");
+	            return result;
+	        }
+	        //選擇2號資料庫
+	        jedis.select(2);
+	        //if判斷這邊，好像可以不用~"~?
+	        //因為redis結帳完就砍了，鎖定別人也進不來，但沒關係先留著
+	        boolean exists = jedis.exists(index);
+	        if (exists) {
+	        	int checkingPeople = Integer.valueOf(jedis.get(key));
+	            if (checkingPeople <= 0) {
+	                result.setStatus("error");
+	                return result;
+	            } else {
+	                int rms = Integer.valueOf(jedis.get(key)) - reservationNumber;
+	                if (rms >= 0) {
+	                    data.put(key, remainSeat.toString());
+	                    data.put("accId", new Integer(acc_id.intValue()).toString());
+	                    data.put("restaurantId", new Integer(restaurantId.intValue()).toString());
+	                    data.put("reservationNumber", (String) map.get("ppl"));
+	                    data.put("reservationDateStartTime", (String) map.get("date_time"));
+	                    if (!text.isEmpty()) {
+	                        data.put("reservationNote", text);
+	                    } else {
+	                        data.put("reservationNote", "");
+	                    }
 
-			// redis連線
-			Jedis jedis = new Jedis();
-			jedis.select(2);
+	                    jedis.hmset(index, data);
 
-			// 接前端的參數
-			String dateTime = (String) map.get("date_time");
-			Integer reservationNumber = Integer.valueOf((String) map.get("ppl"));
-			String text = (String) map.get("text");
-			Double acc_id = (Double) map.get("acc_id");
-			Double restaurantId = (Double) map.get("restaurantId");
-			System.out.println("acc_id + " + acc_id);
-			System.out.println("restaurantId + " + restaurantId);
-			System.out.println(dateTime);
+	                    result.setStatus("success");
+	                }
+	            }
+	        } else {
+	            try {
+	            	//先把前端傳進來的預約日期字串轉換日期時間格式
+	                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	                java.util.Date utildate = dateFormat.parse(dateTime);
+	                //抓出選擇的日期
+	                Date sqlDate = new Date(utildate.getTime());
+	                List<HourlySeat> list = reservationDao.selectall(new Integer(restaurantId.intValue()), sqlDate);
+	                //用前端資料抓出選擇的小時
+	                int hour = utildate.getHours();
+	                System.out.println("當前小時是" + hour);
 
-			try {
-				// 以下存入redis
-				HashMap<String, String> data = new HashMap<>();
-				data.put("accId", new Integer(acc_id.intValue()).toString());
-				data.put("restaurantId", new Integer(restaurantId.intValue()).toString());
-				data.put("reservationNumber", (String) map.get("ppl"));
-				data.put("reservationDateStartTime", (String) map.get("date_time"));
-				if (!text.isEmpty()) {
-					data.put("reservationNote", text);
-				} else {
-					data.put("reservationNote", "");
-				}
+	            
 
-				jedis.hmset(index, data);
+	                if (list.size() == 0) {
+	                	//用餐廳id去抓座位數量，去扣預約人數，剩下的存進redis
+	                    remainSeat = restaurantRepository.findById(new Integer(restaurantId.intValue())).get().getResMaxNum() - reservationNumber;
+	                    data.put(key, remainSeat.toString());
+	                } else {
+	                    for (HourlySeat hourlySeat : list) {
+	                        if (hourlySeat.getHour() == hour) {
+	                            remainSeat = hourlySeat.getRemainSeat();
+	                            System.out.println("當前時段有" + hourlySeat.getRemainSeat() + "個座位");
+	                            break;
+	                        }
+	                    }
+	                    System.out.println("剩餘座位111" + remainSeat);
+	                    System.out.println("預約數量111" + reservationNumber);
+	                    
+	                    remainSeat = remainSeat - reservationNumber;
+	                    System.out.println("更新後的數量是" + remainSeat);
+	                    data.put(key, remainSeat.toString());
+	                }
 
-				result.setStatus("success");
-				jedis.close();
-			} catch (Exception e) {
-				result.setStatus("error");
-			}
+	                data.put("accId", new Integer(acc_id.intValue()).toString());
+	                data.put("restaurantId", new Integer(restaurantId.intValue()).toString());
+	                data.put("reservationNumber", (String) map.get("ppl"));
+	                data.put("reservationDateStartTime", (String) map.get("date_time"));
+	                if (!text.isEmpty()) {
+	                    data.put("reservationNote", text);
+	                } else {
+	                    data.put("reservationNote", "");
+	                }
 
-			return result;
+	                jedis.hmset(index, data);
 
-		}
+	                result.setStatus("success");
+	                System.out.println("存儲至 Redis 中的 key: " + index);
+	            } catch (Exception e) {
+	                System.out.println("error: " + e.getMessage());
+	                result.setStatus("error");
+	            }
+	        }
+	    } finally {
+	        jedis.del("reservationLock");
+	        jedis.close();
+	    }
+
+	    return result;
 	}
+
+
 
 	// 結帳確認後發出請求，如果成功，先將資料insert進資料庫，後刪除redis內數據
 	@GetMapping("/reservation")
@@ -145,6 +230,10 @@ public class ReservationController {
 
 		reservationVO.setReservationDateStartTime(timestamp);
 		reservationVO.setReservationNote(retrievedData.get("reservationNote"));
+		
+		System.out.println(reservationVO.toString());
+		
+		
 
 		// 預約成功，回傳訂單編號
 		int reservationId = reservationService.reservation(reservationVO);

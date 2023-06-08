@@ -1,7 +1,10 @@
 package chooeat.reservation.service.impl;
 
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -98,7 +101,39 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Integer reservation(ReservationVO reservationVO) {
 
+		//抓出日期，尋找當天的剩餘座位數的list
+		Date sqlDate = new Date(reservationVO.getReservationDateStartTime().getTime());
+		List<HourlySeat> list = reservationDao.selectall(reservationVO.getRestaurantId(), sqlDate);
+        
+		//list長度=0，表示當天沒有人預約，直接insert
+		 if (list.size() == 0) {
 		return reservationDao.insertReservation(reservationVO);
+	}
+		 //長度不等於0，尋找是否有預約紀錄
+		 //抓出要存進去的當前時段
+		 int hour = reservationVO.getReservationDateStartTime().getHours();
+		//用餐廳id去找餐廳的座位數上限
+
+		 int remainSeat = restaurantRepository.findById(reservationVO.getRestaurantId()).get().getResMaxNum();
+		 //從HourlySeat裡面找出該時段的剩餘數量
+		 for (HourlySeat hourlySeat : list) {
+                if (hourlySeat.getHour() == hour) {
+                    remainSeat = hourlySeat.getRemainSeat();
+                    System.out.println("當前時段有" + hourlySeat.getRemainSeat() + "個座位");
+                    break;
+                }
+            }
+		    
+		    if((remainSeat - reservationVO.getReservationNumber()) >= 0) {
+		    	return reservationDao.insertReservation(reservationVO);
+		    }
+		    
+		    
+		 
+		 
+		 
+		 return 0;
+		 
 	}
 
 	@Override
