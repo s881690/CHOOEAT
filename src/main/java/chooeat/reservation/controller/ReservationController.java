@@ -105,7 +105,7 @@ public class ReservationController {
 	    System.out.println(dateTime);
 	    //建立jedis連線
 	    Jedis jedis = new Jedis();
-	    jedis.del("reservationLock");
+//	    jedis.del("reservationLock");
 	    try {
 	    	
 	    	//設定暫存的剩餘座位數變數，預設式餐廳的最大可預約數（已經存進資料庫的剩餘座位數 - 還沒結帳的預約人數）
@@ -150,7 +150,9 @@ public class ReservationController {
 	                    result.setStatus("success");
 	                }
 	            }
-	        } else {
+	        } 
+	        
+	        else {
 	            try {
 	            	//先把前端傳進來的預約日期字串轉換日期時間格式
 	                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -249,7 +251,7 @@ public class ReservationController {
 		} else {
 			result.setStatus("");
 		}
-
+		jedis.close();
 		return result;
 	}
 

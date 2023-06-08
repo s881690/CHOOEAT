@@ -48,8 +48,8 @@ button.addEventListener('click', function() {
         // 跳轉至下一個頁面
         window.location.href = 'reservationSucess.html';
       } else {
-        // 處理其他情況
-        // ...
+        alert("訂位失敗，請重新選擇");
+        window.location.href = "http://localhost:8080/reservation/reservation.html";
       }
     })
     .catch(error => {
