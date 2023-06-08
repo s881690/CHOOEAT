@@ -7,6 +7,21 @@ let form = document.querySelector("form.activity_establish_form");
 // 取得彈窗內的「送出」
 let check_submit = document.querySelector("button.check_submit");
 
+// 日期格式化 YYYY-MM-DDTHH:MM
+function YYYYMMDDTHHMM(dateTime) {
+  let date = new Date(dateTime);
+  // 獲取各個時間元素
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2); // 月份需要補零
+  let day = ("0" + date.getDate()).slice(-2); // 日期需要補零
+  let hours = ("0" + date.getHours()).slice(-2); // 小時需要補零
+  let minutes = ("0" + date.getMinutes()).slice(-2); // 分鐘需要補零
+
+  // 拼接成 YYYY-MM-DDTHH:MM 格式
+  let formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+  return formattedDateTime;
+}
+
 // 取得 餐廳名稱
 function getResName() {
   let restaurant_list = document.querySelector("select#activity_restaruant");
@@ -61,8 +76,15 @@ function formDefault() {
   document.querySelector("input#regesteration_starting_time").min = date;
 }
 
-// 申請結束日期最小值為申請開始時間，最大值不能比活動開始日期大
-function minAndMaxRegesterationEndingTime() {
+// 1.活動報名結束日期
+//    (1)最小值：活動報名開始日期
+//    (2)最大值：活動日期
+// 2. 活動報名開始日期
+//    (1)最小值：今天
+//    (2)最大值：活動日期
+// 3. 活動日期
+//    (1)最小值：今天
+function minAndMaxDate() {
   let regesterationStartingTime = document.querySelector(
     "input#regesteration_starting_time"
   );
@@ -75,19 +97,29 @@ function minAndMaxRegesterationEndingTime() {
   );
   let activityEndingTime = document.querySelector("input#activity_ending_time");
 
-  regesterationStartingTime.addEventListener("change", (e) => {
+  // 更改活動日期，設置活動報名開始時間、活動報名結束日期最大值
+  $("input#activity_date").on("change input", (e) => {
+    // 清空活動報名開始時間、活動報名結束日期中的值
+    regesterationStartingTime.value = "";
+    regesterationEndingTime.value = "";
+    let max_val = YYYYMMDDTHHMM(new Date(activityDate.value));
+
+    regesterationStartingTime.max = max_val;
+    regesterationEndingTime.max = max_val;
+  });
+
+  // 點擊活動報名開始日期，設置活動報名結束日期最大小值
+  $("input#regesteration_starting_time").on("change input", (e) => {
     regesterationEndingTime.value = "";
     let min_val = new Date(regesterationStartingTime.value)
       .toISOString()
       .split(".")[0]
       .slice(0, 16);
-    let max_val = new Date(
-      activityDate.value + activityStartingTime.value + activityEndingTime.value
-    );
-    console.log(max_val);
+    let max_val = YYYYMMDDTHHMM(new Date(activityDate.value));
+
+    // 設置活動報名結束日期最大值與最小值
     regesterationEndingTime.min = min_val;
     regesterationEndingTime.max = max_val;
-    console.log(activityDate.value);
   });
 }
 
@@ -97,9 +129,12 @@ function minactivityEndingTime() {
     "input#activity_starting_time"
   );
   let activityEndingTime = document.querySelector("input#activity_ending_time");
+  let min_val = activityStartingTime.value;
+
   activityStartingTime.addEventListener("change", (e) => {
     activityEndingTime.value = "";
-    let min_val = activityStartingTime.value;
+    min_val = activityStartingTime.value;
+
     activityEndingTime.min = min_val;
   });
 }
@@ -114,16 +149,20 @@ function clickImg() {
 
 // 判斷表單內容相關
 function validateInput() {
+  // 創建 formdata物件，接收表單的值
+  let formData = new FormData();
+
   // 判斷活動名稱
   $("input#activity_name").blur(function (e) {
     let activityName = $("input#activity_name").val();
     let err_span = $("span#activity_name_error");
     if (activityName == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      formData.append("activityName", activityName);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -133,10 +172,10 @@ function validateInput() {
     let err_span = $("span#activity_restaruant_error");
     if (restaurantName == "recommand_restaurant") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -150,10 +189,10 @@ function validateInput() {
     let err_span = $("span#activity_date_error");
     if (activityDate == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -165,10 +204,10 @@ function validateInput() {
     let err_span = $("span#regesteration_starting_time_error");
     if (regesterationStartingTime == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -178,10 +217,10 @@ function validateInput() {
     let err_span = $("span#regesteration_ending_time_error");
     if (regesterationEndingTime == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -191,10 +230,10 @@ function validateInput() {
     let err_span = $("span#activity_starting_time_error");
     if (activityStartingTime == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -204,10 +243,10 @@ function validateInput() {
     let err_span = $("span#activity_ending_time_error");
     if (activityEndingTime == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -217,12 +256,13 @@ function validateInput() {
     let err_span = $("span#min_number_error");
     if (minNumber == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else if (minNumber <= 0) {
-      $("button.submit").attr("disabled", true);
+      err_span.show();
+      // $("button.submit").attr("disabled", true);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -233,12 +273,12 @@ function validateInput() {
 
     if (maxNumber == "") {
       err_span.show();
-      $("button.submit").attr("disabled", true);
+      // $("button.submit").attr("disabled", true);
     } else if (maxNumber < $("input#min_number").val()) {
       err_span.show();
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
   });
 
@@ -256,11 +296,34 @@ function validateInput() {
     ) {
       err_span.html("*僅能上傳png、jpeg、jpg圖檔");
       err_span.show();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     } else {
       err_span.hide();
-      $("button.submit").attr("disabled", false);
+      // $("button.submit").attr("disabled", false);
     }
+  });
+}
+
+// 若有欄位為空，則禁用送出按鈕
+function disabledBtn() {
+  let form = document.querySelector("form.activity_establish_form");
+  let submit_btn = document.querySelector("button.form_submit");
+
+  //監聽form輸入事件
+  form.addEventListener("input", function () {
+    // 檢查每個input中有required屬性的值
+    let fields = form.querySelectorAll("input[required]");
+    let isAnyFieldEmpty = false;
+
+    for (let i = 0; i < fields.length; i++) {
+      if (fields[i].value.trim() === "") {
+        isAnyFieldEmpty = true;
+        break;
+      }
+    }
+
+    // 禁用或啟用提交按鈕
+    submit_btn.disabled = isAnyFieldEmpty;
   });
 }
 
@@ -330,28 +393,28 @@ function form2JSON() {
       };
       console.log(jsonObject);
 
-      // fetch("establish", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json;charset=UTF-8",
-      //   },
-      //   body: JSON.stringify(jsonObject), // 欲傳送的資料
-      // })
-      //   .then((res) => {
-      //     console.log(res);
-      //     return res.json();
-      //   })
-      //   .then((json) => {
-      //     console.log(json);
-      //     // 建立成功後直接導向該活動詳細頁
-      //     let activityId = json.activityId;
-      //     console.log(activityId);
-      //     sessionStorage.setItem("activityId", activityId);
-      //     document.location.href = `activity_detail.html`;
-      //   })
-      //   .catch((e) => {
-      //     console.log(e);
-      //   });
+      fetch("establish", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(jsonObject), // 欲傳送的資料
+      })
+        .then((res) => {
+          console.log(res);
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          // 建立成功後直接導向該活動詳細頁
+          let activityId = json.activityId;
+          console.log(activityId);
+          sessionStorage.setItem("activityId", activityId);
+          document.location.href = `activity_detail.html`;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     });
   });
 }
@@ -385,8 +448,9 @@ $(function () {
   //form表單相關設定
   validateInput();
   formDefault();
-  minAndMaxRegesterationEndingTime();
+  minAndMaxDate();
   minactivityEndingTime();
+  disabledBtn();
 
   // //將表單數據轉為JSON，並且提交給後端
   form2JSON();

@@ -206,7 +206,7 @@ function like() {
   likebtn.click(function (e) {
     // 判斷會員登入
     if (sessionStorage.getItem("loginReq") == null) {
-      alert("請先登入!");
+      alert("請先登入");
       return;
     }
     // 解析會員資訊
@@ -262,7 +262,7 @@ function like() {
 function getlikes() {
   // 判斷會員是否已登入
   if (sessionStorage.getItem("loginReq") == null) {
-    console.log("請先登入");
+    // console.log("請先登入");
     return;
   }
 
@@ -304,19 +304,24 @@ function getlikes() {
 
 // 點擊「立刻報名」按鈕
 function signup() {
-  //點擊報名按鈕，會將活動id存入session，然後傳給activity/detail畫面
   let signup_btn = $("a.signup");
+  //點擊報名按鈕，會將活動id存入session，然後傳給activity/detail畫面
   signup_btn.click((e) => {
     e.preventDefault();
-
-    // 判斷報名時間，如果大於今天就不給報名
-    let today = new Date();
-    console.log(today);
-    console.log($(this).closest("p"));
-    if (signup_btn.closest("span.regesteration_starting_time").val() > today) {
-      alert("報名時間還沒到喔!");
+    // 判斷是否登入，未登入就不給報名
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入");
       return;
     }
+
+    // 判斷報名時間，如果大於今天就不給報名
+    // let today = new Date();
+    // console.log(today);
+    // console.log($(this).closest("p.regesteration"));
+    // if (signup_btn.closest("span.regesteration_starting_time").val() > today) {
+    //   alert("報名時間還沒到喔!");
+    //   return;
+    // }
     // if(signup_btn.closest())
     let activityid = $(e.target)
       .closest("div.card-body")
@@ -325,7 +330,7 @@ function signup() {
     // 將值存在session中，傳給下個頁面
     sessionStorage.setItem("activityId", activityid);
     //進行重導向
-    // document.location.href = "activity_detail.html";
+    document.location.href = "activity_detail.html";
   });
 }
 
@@ -335,7 +340,7 @@ function establish() {
     e.preventDefault();
     // 判斷是否登入
     if (sessionStorage.getItem("loginReq") == null) {
-      alert("請先登入!");
+      alert("請先登入");
       return;
     }
 

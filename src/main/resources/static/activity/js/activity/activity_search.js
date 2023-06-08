@@ -144,6 +144,11 @@ function like() {
   let likebtn = $("svg.like");
 
   likebtn.click(function (e) {
+    // 判斷會員登入
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入");
+      return;
+    }
     // 解析會員資訊
     let account = JSON.parse(sessionStorage.getItem("loginReq"));
     let accId = account.acc_id;
@@ -243,6 +248,12 @@ function signup() {
   let signup_btn = $("a.signup");
   signup_btn.click((e) => {
     e.preventDefault();
+    // 判斷是否登入，未登入就不給報名
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入");
+      return;
+    }
+
     let activityid = $(e.target)
       .closest("div.card-body")
       .attr("data-activityid");
