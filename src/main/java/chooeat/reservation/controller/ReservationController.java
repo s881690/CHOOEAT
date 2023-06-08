@@ -89,6 +89,7 @@ public class ReservationController {
 	@PostMapping("/reservationRedis")
 	@Transactional
 	public Result reservationRedis(@RequestBody Map<String, Object> map) {
+		
 		//設定回傳物件
 	    Result result = new Result();
 	    //設定要放進redis的map
@@ -104,7 +105,9 @@ public class ReservationController {
 	    System.out.println(dateTime);
 	    //建立jedis連線
 	    Jedis jedis = new Jedis();
+	    jedis.del("reservationLock");
 	    try {
+	    	
 	    	//設定暫存的剩餘座位數變數（已經存進資料庫的剩餘座位數 - 還沒結帳的預約人數）
 	    	Integer remainSeat = null;
 	    	
