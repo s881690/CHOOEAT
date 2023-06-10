@@ -65,7 +65,8 @@
     $("#logoutBtn").on("click", () => {
         // console.log("登出囉");
         sessionStorage.removeItem("adminName");
-        fetch("adminLogout");
+        fetch("/admin/logout");
+        alert("登出成功！");
         location = "admin_login.html";
     });
 

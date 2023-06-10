@@ -64,7 +64,7 @@
     function fetchAndUpdateData() {
         const searchTypeValue = searchType.val();
         const searchValue = search.val();
-        const url = `searchAdmin?searchType=${searchTypeValue}&search=${searchValue}`;
+        const url = `/admin/searchAdmin?searchType=${searchTypeValue}&search=${searchValue}`;
 
         if (searchTypeValue === "0" && searchValue !== "") {
             alert("請選擇查詢方式");
@@ -89,7 +89,7 @@
                     let htmlForModal = "";
                     const { successful, message } = body;
 
-                    if (successful == false) {
+                    if (body.length === 0) {
                         let html = `
                             <div class="row">
                                 <div class="col text-center mt-3">
@@ -203,7 +203,7 @@
         const permissionValue = $(this).closest(".modal-content").find(".permission").val();
         const targetModal = $(this).closest(".modal");
 
-        const url = `adminPermissionEdit?adminId=${adminId}&permissionValue=${permissionValue}`;
+        const url = `/admin/editPermission?adminId=${adminId}&permissionValue=${permissionValue}`;
 
         fetch(url)
             .then(res => res.json())
