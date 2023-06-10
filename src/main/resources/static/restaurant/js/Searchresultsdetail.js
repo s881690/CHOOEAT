@@ -48,8 +48,7 @@ newDiv.innerHTML = `
   <h1>
 	${resName}<span style="float: right"><i class="far fa-bookmark"></i></span>
   </h1>
-  餐廳評分 : ${resTotalScore}
-  <i class="fa fa-star" style="color: yellow"></i>
+  <p>餐廳評分 : ${resTotalScore}<i class="fa fa-star" style="color: yellow"></i></p> 
   <p>餐廳種類 : ${resTypeNames}</p>
   <p>餐廳地址 : ${resAdd}</p>
   <p>營業時間 : ${resStartTime}-${resEndTime}</p>

@@ -41,7 +41,7 @@ function arrayBufferToBase64(buffer) {
         rrr.innerHTML = `
           <img
             src="${imageSrcm}"          
-            style="width: 100%; height: 200px"
+            style="width: 100%; height: 200px ; margin-bottom: 10px;"
           />
         `;
       } else {

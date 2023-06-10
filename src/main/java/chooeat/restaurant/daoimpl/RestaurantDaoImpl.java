@@ -32,8 +32,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 	@Autowired
 	private DataSource dataSource;
 	@Override
-	public int restaurantregister(List<String> values) {
-		System.out.println("dadsa");
+	public int restaurantregister(List<String> values) {		
 
 		String sql = "INSERT INTO restaurant (res_acc, res_pass, res_state, res_name, res_add, res_tel, res_email, res_start_time, res_end_time, res_seat_number, single_meal, res_max_num) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -9,6 +9,15 @@ div.main_content{
 }
 
 /*版面配置*/
+
+#fff {         
+  padding: 0.5rem; /* 設定內邊距，使文字與邊框有一點距離 */  
+}
+
+img {         
+  border-radius: 20px;
+}
+
 a{
   text-decoration:none;
   color: black;
