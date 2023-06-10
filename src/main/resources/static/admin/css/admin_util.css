@@ -105,6 +105,15 @@ div#deleteMsg p {
     display: inline-block;
 }
 
+i.deleteBtn{
+    transition: transform 0.3s ease;
+    background-color: transparent;
+}
+i.deleteBtn:hover{
+    cursor: pointer;
+    transform: scale(1.5);
+}
+
 
 /********** footer **********/
 footer{

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import chooeat.admin.web.admin.dao.AdminDAO;
+import chooeat.admin.web.admin.dao.AdminRepository;
 import chooeat.admin.web.admin.pojo.AdminVO;
 import chooeat.admin.web.admin.service.AdminService;
 
@@ -14,6 +15,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminDAO dao;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@Override
 	public AdminVO register(AdminVO admin) {
@@ -123,15 +127,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public boolean remove(Integer adminId) {
-		// TODO Auto-generated method stub
-		return false;
+		adminRepository.deleteById(adminId);
+		return true;
 	}
-
-	@Override
-	public boolean save(AdminVO adminVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import chooeat.admin.core.pojo.Core;
 import chooeat.admin.web.admin.pojo.AdminVO;
 import chooeat.admin.web.admin.service.AdminService;
 
@@ -91,5 +92,30 @@ public class AdminContorller {
 
 		return adminList;
 
+	}
+	
+	@GetMapping("/deleteAdmin")
+	public Core deleteAdmin(String adminId) {
+		
+		Core core = new Core();
+		
+		if(adminId == null) {
+			core.setSuccessful(false);
+			core.setMessage("刪除失敗，請確認此管理員是否存在");
+			return core;
+		}
+		
+		int admin = Integer.parseInt(adminId);
+		
+		if(SERVICE.remove(admin) == false) {
+			core.setSuccessful(false);
+			core.setMessage("刪除失敗，請確認Repository運作是否正常");
+			return core;
+		} else {
+			core.setSuccessful(true);
+			core.setMessage("刪除成功");
+			return core;
+		}
+		
 	}
 }

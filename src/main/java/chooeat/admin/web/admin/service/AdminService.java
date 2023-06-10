@@ -17,7 +17,5 @@ public interface AdminService {
 	List<AdminVO> searchBySomething(String searchType, String searchCondition);
 	
 	boolean remove(Integer adminId);
-	
-	boolean save(AdminVO adminVO);
 
 }
