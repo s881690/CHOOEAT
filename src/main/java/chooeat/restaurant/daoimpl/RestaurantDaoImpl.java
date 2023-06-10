@@ -88,11 +88,6 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 				restaurant.setResTotalNumber(rs.getInt("res_total_number"));
 				restaurant.setResMaxNum(rs.getInt("res_max_num"));
 				byte[] photoBytes = rs.getBytes("res_photo");
-//				Byte[] photoWrapper = new Byte[photoBytes.length];
-//				for (int i = 0; i < photoBytes.length; i++) {
-//				    photoWrapper[i] = photoBytes[i];
-//				}
-//				restaurant.setResPhoto(photoWrapper);
 				  if (photoBytes != null && photoBytes.length > 0) {
 		                Byte[] photoWrapper = new Byte[photoBytes.length];
 		                for (int i = 0; i < photoBytes.length; i++) {
@@ -281,7 +276,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 	public List<Object> findcomment(String resAcc) {
 		String sql = "SELECT DISTINCT restaurant_comment_score,restaurant_comment_text,COALESCE(restaurant_comment_reply_text, '') AS restaurant_comment_reply_text, restaurant_comment_datetime, restaurant_comment_reply_datetime, acc_name FROM restaurant \r\n"
 				+ "JOIN reservation ON restaurant.restaurant_id = reservation.restaurant_id \r\n"
-				+ "JOIN account ON reservation.acc_id = account.acc_id WHERE res_acc = ?";
+				+ "JOIN account ON reservation.acc_id = account.acc_id WHERE res_acc = ? and restaurant_comment_text IS NOT NULL";
 		List<Object> commentList = new ArrayList<>();
 		try {
 			Connection conn = dataSource.getConnection();
@@ -296,7 +291,6 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 				reservationVO.setRestaurantCommentDatetime(rs.getTimestamp("restaurant_comment_datetime"));
 				Timestamp replyDatetime = rs.getTimestamp("restaurant_comment_reply_datetime");
 		        reservationVO.setRestaurantCommentReplyDatetime(replyDatetime != null ? replyDatetime : Timestamp.valueOf(LocalDateTime.now()));
-//				reservationVO.setRestaurantCommentReplyDatetime(rs.getTimestamp("restaurant_comment_reply_datetime"));
 				commentList.add(reservationVO);
 			}
 			rs.close();
@@ -323,16 +317,12 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 				restaurantVO.setRestaurantId(rs.getInt("restaurant_id"));
 				restaurantVO.setResAcc(rs.getString("res_acc"));
 				restaurantVO.setResName(rs.getString("res_name"));
-				restaurantVO.setResAdd(rs.getString("res_add"));
+				restaurantVO.setResAdd(rs.getString("res_add"));				
 				restaurantVO.setResStartTime(rs.getTime("res_start_time"));
 				restaurantVO.setResEndTime(rs.getTime("res_end_time"));
 				restaurantVO.setResTotalScore(rs.getInt("res_total_score"));
+				restaurantVO.setResIntro(rs.getString("res_intro"));
 				byte[] photoBytes = rs.getBytes("res_photo");
-//				Byte[] photoWrapper = new Byte[photoBytes.length];
-//				for (int i = 0; i < photoBytes.length; i++) {
-//				    photoWrapper[i] = photoBytes[i];
-//				}
-//				restaurant.setResPhoto(photoWrapper);
 				  if (photoBytes != null && photoBytes.length > 0) {
 		                Byte[] photoWrapper = new Byte[photoBytes.length];
 		                for (int i = 0; i < photoBytes.length; i++) {

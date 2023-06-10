@@ -48,11 +48,11 @@ newDiv.innerHTML = `
   <h1>
 	${resName}<span style="float: right"><i class="far fa-bookmark"></i></span>
   </h1>
-  ${resTotalScore}
+  餐廳評分 : ${resTotalScore}
   <i class="fa fa-star" style="color: yellow"></i>
-  <p>${resTypeNames}</p>
-  <p>${resAdd}</p>
-  <p>營業時間${resStartTime}-${resEndTime}</p>
+  <p>餐廳種類 : ${resTypeNames}</p>
+  <p>餐廳地址 : ${resAdd}</p>
+  <p>營業時間 : ${resStartTime}-${resEndTime}</p>
   <div>    
 	<h1>餐廳簡介</h1>
 	<p>
@@ -88,7 +88,7 @@ for (let i = 0; i < result["comment"].length; i++) {
   <p>評價 : ${result["comment"][i].restaurantCommentScore}<i class="fa fa-star"style="color: yellow"></i></p>
   <p>日期 : ${result["comment"][i].restaurantCommentDatetime}</p>
   <p>留言 : ${result["comment"][i].restaurantCommentText}</p>
-  <p style="text-align: right">餐廳回復日期 : ${result["comment"][i].restaurantCommentReplyDatetime}</p>
+  <p style="text-align: right">餐廳回復日期 : ${result["comment"][i].restaurantCommentReplyText ? result["comment"][i].restaurantCommentReplyDatetime : ''}</p>
   <p style="text-align: right">餐廳留言 : ${result["comment"][i].restaurantCommentReplyText}</p>
   <hr />
   </div>	

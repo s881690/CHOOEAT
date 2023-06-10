@@ -14,10 +14,10 @@
    const resTotalScore = obj.resTotalScore;
    const resTel = obj.resTel;
    const resPhoto=obj.resPhoto;
-    // 将 resPhoto 转换为 Base64 编码的字符串
+
+   // 圖片轉B64編碼字串
    const photoBase64 = arrayBufferToBase64(resPhoto);
    const imageSrc = `data:image/jpeg;base64,${photoBase64}`;
-
    var newDiv = document.createElement("div");
    newDiv.classList.add("card-body");
    newDiv.id = "aaa";
