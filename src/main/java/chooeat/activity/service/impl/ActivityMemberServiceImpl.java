@@ -8,18 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import chooeat.activity.dao.ActivityMemberRepository;
-import chooeat.activity.dao.ActivityRepository;
 import chooeat.activity.service.ActivityMemberService;
 import chooeat.activity.vo.ActivityMemberVO;
-import chooeat.activity.vo.ActivityVO;
 
 
 @Component
 public class ActivityMemberServiceImpl implements ActivityMemberService{
 	@Autowired
 	ActivityMemberRepository activityMemberRepository;
-	@Autowired
-	ActivityRepository activityRepository;
 	
 	@Override
 	// 檢核是否報名
@@ -33,19 +29,16 @@ public class ActivityMemberServiceImpl implements ActivityMemberService{
 		
 	}
 
-	// 報名活動，並同時讓該活動對應的activityVO中，activityNumber++
+	// 報名活動
 	@Override
-	public Integer SignUp(ActivityMemberVO activityMemberVO) {
-
+	public String SignUp(ActivityMemberVO activityMemberVO) {
+		try {
 			activityMemberRepository.save(activityMemberVO);
-			Integer activityId = activityMemberVO.getActivityId();
-			Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
-			activityNumber ++;
-			// 將更新後的activityNumber存回資料庫中
-			ActivityVO activityVO = activityRepository.findByActivityId(activityId);
-			activityVO.setActivityNumber(activityNumber);
-			activityRepository.save(activityVO);
-			return activityNumber;
+			return "true";
+		}catch( Exception e){
+			e.printStackTrace();
+			return "false";
+		}
 
 
 	}

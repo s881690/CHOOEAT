@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 import chooeat.admin.web.ad.pojo.AdminAdVO;
 
 public interface AdminAdRepository extends JpaRepository<AdminAdVO, Integer>{
-	
-	AdminAdVO findByAdId(Integer adId);
 
 	@Query(value = "SELECT * FROM ad WHERE ad.ad_id LIKE :adId", nativeQuery = true)
 	public List<AdminAdVO> findByAdId(@Param(value = "adId") String adId);

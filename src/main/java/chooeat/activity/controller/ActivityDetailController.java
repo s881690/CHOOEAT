@@ -35,7 +35,7 @@ public class ActivityDetailController {
 	}
 
 	@PostMapping("/signup")
-	public Integer signup(@RequestBody ActivityMemberVO activityMemberVO){
+	public String signup(@RequestBody ActivityMemberVO activityMemberVO){
 		return activityMemberService.SignUp(activityMemberVO);
 //		return new ObjectMapper().writeValueAsString(activityService.signup(activityMemberVO));
 	}

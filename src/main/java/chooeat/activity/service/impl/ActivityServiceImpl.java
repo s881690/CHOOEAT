@@ -67,7 +67,7 @@ public class ActivityServiceImpl implements ActivityService {
 	@Transactional
 	public Object establish(Map<String, String> map) {
 		ActivityVO activityVO = new ActivityVO();
-		if(map.get("activityId")!= null) {
+		if(!map.get("activityId").isEmpty()) {
 			activityVO.setActivityId(Integer.parseInt(map.get("activityId")));
 		}
 		activityVO.setActivityName(map.get("activityName"));
@@ -136,14 +136,12 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public Integer addActivityMember(Integer activityId) {
-//		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
-//		System.out.println(activityNumber);
-//		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
-//		activityVO.setActivityNumber(activityNumber); 
-//		System.out.println(activityVO.getActivityNumber());
-//		return activityVO.getActivityNumber();
-		return null;
-		
+		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
+		System.out.println(activityNumber);
+		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+		activityVO.setActivityNumber(activityNumber); 
+		System.out.println(activityVO.getActivityNumber());
+		return activityVO.getActivityNumber();
 	}
 
 

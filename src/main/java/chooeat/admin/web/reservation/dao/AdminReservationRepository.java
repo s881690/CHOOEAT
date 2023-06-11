@@ -10,8 +10,6 @@ import chooeat.admin.web.reservation.pojo.AdminReservationVO;
 
 public interface AdminReservationRepository extends JpaRepository<AdminReservationVO, Integer>{
 	
-	AdminReservationVO findByReservationId(Integer reservationId);
-	
 	@Query(value = "SELECT reser FROM AdminReservationVO reser JOIN AdminRestaurantVO res ON reser.restaurantId = res.restaurantId WHERE res.resName LIKE %:resName%")
 	public List<AdminReservationVO> findByResNameLike(@Param(value = "resName") String resName);
 	

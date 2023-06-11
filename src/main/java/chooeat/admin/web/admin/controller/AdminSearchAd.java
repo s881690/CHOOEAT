@@ -36,9 +36,4 @@ public class AdminSearchAd {
 			return Collections.emptyList();
 		}
 	}
-	
-	@GetMapping("/findAd")
-	public AdminAdVO findAd(Integer adId) {
-		return SERVICE.findByAdId(adId);
-	}
 }

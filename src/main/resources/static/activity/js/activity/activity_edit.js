@@ -8,7 +8,7 @@ let form = document.querySelector("form.activity_establish_form");
 let check_submit = document.querySelector("button.check_submit");
 
 // 日期格式化 YYYY-MM-DDTHH:MM:SS
-function YYYYMMDDTHHMM(dateTime) {
+function dateTime(dateTime) {
   let date = new Date(dateTime);
   // 獲取各個時間元素
   let year = date.getFullYear();
@@ -26,7 +26,7 @@ function YYYYMMDDTHHMM(dateTime) {
 // 編輯畫面，先帶入所有的資訊
 function activity_edit() {
   let activityId = sessionStorage.getItem("activityId");
-  // console.log(activityId);
+  console.log(activityId);
   fetch(`findEdit/${activityId}`)
     .then((res) => {
       return res.json();
@@ -36,17 +36,7 @@ function activity_edit() {
 
       // 將資訊塞入到欄位中
       $("input#activity_name").val(result.activityName); // 活動名稱
-
-      // 如果option標籤的餐廳名稱與result中的一樣，那就設置為selected(塞不進去)
-      let options = document.querySelectorAll("option");
-      // console.log(options);
-      for (let option of options) {
-        // console.log(option.innerText);
-        if (option.innerText == result.activityrestaurantVO.resName) {
-          option.selected == true;
-        }
-      }
-      console.log(result.activityrestaurantVO.resName);
+      $("select#activity_restaruant").val(result.activityrestaurantVO.resName); // 餐廳名稱(塞不進去)
       let am = result.activityDate.split(" ")[0].replace("月", "");
       let ad = result.activityDate.split(" ")[1].split(",")[0];
       if (am < 10) {
@@ -59,11 +49,12 @@ function activity_edit() {
       $("input#activity_date").val(activityDate); // 活動日期
       // 活動報名開始時間
       $("input#regesteration_starting_time").val(
-        YYYYMMDDTHHMM(result.regesterationStartingTime)
+        dateTime(result.regesterationStartingTime)
       );
       // 活動報名結束時間
+
       $("input#regesteration_ending_time").val(
-        YYYYMMDDTHHMM(result.regesterationEndingTime)
+        dateTime(result.regesterationEndingTime)
       );
       // 活動開始時間
       $("input#activity_starting_time").val(
@@ -107,190 +98,6 @@ function getResName() {
     });
 }
 
-// 判斷表單內容相關
-function validateInput() {
-  // 創建 formdata物件，接收表單的值
-  let formData = new FormData();
-
-  // 判斷活動名稱
-  $("input#activity_name").blur(function (e) {
-    let activityName = $("input#activity_name").val();
-    let err_span = $("span#activity_name_error");
-    if (activityName == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      formData.append("activityName", activityName);
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷活動餐廳
-  $("select#activity_restaruant").blur(function (e) {
-    let restaurantName = $("select#activity_restaruant").val();
-    let err_span = $("span#activity_restaruant_error");
-    if (restaurantName == "recommand_restaurant") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷活動日期
-  $("input#activity_date").on("blur input", function (e) {
-    // 將活動申請日期清空
-    $("input#regesteration_starting_time").val("");
-    $("input#regesteration_ending_time").val("");
-    let activityDate = $("input#activity_date").val();
-
-    let err_span = $("span#activity_date_error");
-    if (activityDate == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷活動報名開始時間
-  $("input#regesteration_starting_time").blur(function (e) {
-    let regesterationStartingTime = $(
-      "input#regesteration_starting_time"
-    ).val();
-    let err_span = $("span#regesteration_starting_time_error");
-    if (regesterationStartingTime == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷活動報名截止時間
-  $("input#regesteration_ending_time").blur(function (e) {
-    let regesterationEndingTime = $("input#regesteration_ending_time").val();
-    let err_span = $("span#regesteration_ending_time_error");
-    if (regesterationEndingTime == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷活動開始時間
-  $("input#activity_starting_time").blur(function (e) {
-    let activityStartingTime = $("input#activity_starting_time").val();
-    let err_span = $("span#activity_starting_time_error");
-    if (activityStartingTime == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷活動結束時間
-  $("input#activity_ending_time").blur(function (e) {
-    let activityEndingTime = $("input#activity_ending_time").val();
-    let err_span = $("span#activity_ending_time_error");
-    if (activityEndingTime == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷最少參加人數
-  $("input#min_number").on("blur input", function (e) {
-    let minNumber = $("input#min_number").val();
-    let err_span = $("span#min_number_error");
-    if (minNumber == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else if (minNumber <= 0) {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-
-  // 判斷最多參加人數
-  $("input#max_number").on("blur input", function (e) {
-    let maxNumber = $("input#max_number").val();
-    console.log(maxNumber);
-    let err_span = $("span#max_number_error");
-
-    if (maxNumber == "") {
-      err_span.show();
-      // $("button.submit").attr("disabled", true);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-
-    // else if (maxNumber < $("input#min_number").val()) {
-    //   console.log($("input#min_number").val());
-    //   err_span.show();
-    // }
-  });
-
-  // 判斷圖片
-  $("input#activity_photo").on("change input blur", function (e) {
-    let file = $("input#activity_photo")[0].files[0];
-    let err_span = $("span#activity_photo_error");
-    if (!file) {
-      err_span.show();
-      $("button.submit").attr("disabled", true);
-    } else if (
-      file.type != "image/png" &&
-      file.type != "image/jpg" &&
-      file.type != "image/jpeg"
-    ) {
-      err_span.html("*僅能上傳png、jpeg、jpg圖檔");
-      err_span.show();
-      // $("button.submit").attr("disabled", false);
-    } else {
-      err_span.hide();
-      // $("button.submit").attr("disabled", false);
-    }
-  });
-}
-
-// 若有欄位為空，則禁用送出按鈕
-function disabledBtn() {
-  let form = document.querySelector("form.activity_establish_form");
-  let submit_btn = document.querySelector("button.form_submit");
-
-  //監聽form輸入事件
-  form.addEventListener("input", function () {
-    // 檢查每個input中有required屬性的值
-    let fields = form.querySelectorAll("input[required]");
-    let isAnyFieldEmpty = false;
-
-    for (let i = 0; i < fields.length; i++) {
-      if (fields[i].value.trim() === "") {
-        isAnyFieldEmpty = true;
-        break;
-      }
-    }
-
-    // 禁用或啟用提交按鈕
-    submit_btn.disabled = isAnyFieldEmpty;
-  });
-}
-
 // 顯示圖片功能
 function showImg() {
   photo_btn.addEventListener("change", function () {
@@ -327,50 +134,21 @@ function formDefault() {
   document.querySelector("input#regesteration_starting_time").min = date;
 }
 
-// 1.活動報名結束日期
-//    (1)最小值：活動報名開始日期
-//    (2)最大值：活動日期
-// 2. 活動報名開始日期
-//    (1)最小值：今天
-//    (2)最大值：活動日期
-// 3. 活動日期
-//    (1)最小值：今天
-function minAndMaxDate() {
+// 申請結束日期不能比開始日期大
+function minRegesterationEndingTime() {
   let regesterationStartingTime = document.querySelector(
     "input#regesteration_starting_time"
   );
   let regesterationEndingTime = document.querySelector(
     "input#regesteration_ending_time"
   );
-  let activityDate = document.querySelector("input#activity_date");
-  let activityStartingTime = document.querySelector(
-    "input#activity_starting_time"
-  );
-  let activityEndingTime = document.querySelector("input#activity_ending_time");
-
-  // 更改活動日期，設置活動報名開始時間、活動報名結束日期最大值
-  $("input#activity_date").on("change input", (e) => {
-    // 清空活動報名開始時間、活動報名結束日期中的值
-    regesterationStartingTime.value = "";
-    regesterationEndingTime.value = "";
-    let max_val = YYYYMMDDTHHMM(new Date(activityDate.value));
-
-    regesterationStartingTime.max = max_val;
-    regesterationEndingTime.max = max_val;
-  });
-
-  // 點擊活動報名開始日期，設置活動報名結束日期最大小值
-  $("input#regesteration_starting_time").on("change input", (e) => {
+  regesterationStartingTime.addEventListener("change", (e) => {
     regesterationEndingTime.value = "";
     let min_val = new Date(regesterationStartingTime.value)
       .toISOString()
       .split(".")[0]
       .slice(0, 16);
-    let max_val = YYYYMMDDTHHMM(new Date(activityDate.value));
-
-    // 設置活動報名結束日期最大值與最小值
     regesterationEndingTime.min = min_val;
-    regesterationEndingTime.max = max_val;
   });
 }
 
@@ -399,18 +177,18 @@ function clickImg() {
 function validateInputAtFirst() {
   if ($("input").html() == "") {
     $("input").next().show();
-    // $("button.submit").attr("disabled", true);
+    $("button.submit").attr("disabled", true);
   } else {
     $("input").next().hide();
-    // $("button.submit").attr("disabled", false);
+    $("button.submit").attr("disabled", false);
   }
 
   if ($("select").selectedIndex() == -1 || $("select").val() == "") {
     $("select").next().show();
-    // $("button.submit").attr("disabled", true);
+    $("button.submit").attr("disabled", true);
   } else {
     $("select").next().hide();
-    // $("button.submit").attr("disabled", false);
+    $("button.submit").attr("disabled", false);
   }
 }
 
@@ -430,7 +208,7 @@ function validateInput() {
   });
 
   // 判斷活動餐廳
-  $("select#activity_restaruant").on("blur input", function (e) {
+  $("select#activity_restaruant").blur(function (e) {
     let restaurantName = $("select#activity_restaruant").val();
     let err_span = $("span#activity_restaruant_error");
     if (restaurantName == "recommand_restaurant") {
@@ -547,7 +325,7 @@ function validateInput() {
     let err_span = $("span#activity_photo_error");
     if (!file) {
       err_span.show();
-      // $("button.submit").attr("disabled", true);
+      $("button.submit").attr("disabled", true);
     } else if (
       file.type != "image/png" &&
       file.type != "image/jpg" &&
@@ -692,7 +470,7 @@ $(function () {
   //form表單相關設定
   validateInput();
   formDefault();
-  minAndMaxDate();
+  minRegesterationEndingTime();
   minactivityEndingTime();
   // validateInputAtFirst();
 

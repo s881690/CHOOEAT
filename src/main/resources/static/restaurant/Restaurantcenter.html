@@ -286,11 +286,22 @@
                 aria-labelledby="v-pills-font-tab"
               >
                 <div class="row">
-                  <div id="vvv"></div>
+                  <div
+                    class="col-12"
+                    style="width: 100%; height: 250px; border-radius: 100px"
+                    hidden
+                  >
+                    <img
+                      src="#"
+                      alt="我是餐廳圖片"
+                      style="width: 100%; height: 100%"
+                    />
+                  </div>
+
                   <div class="col-4">
                     <div class="panel-group" id="accordion">
                       <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" style="text-align: center">
                           <h4 class="panel-title">
                             <a
                               data-toggle="collapse"
@@ -368,7 +379,6 @@
                             <button id="sendButton" class="www btn" hidden>
                               送出
                             </button>
-                            <hr class="www" hidden />
                             <div id="zzz" class="iii" hidden>
                               <label>餐廳類別：</label>
                               <div
@@ -786,7 +796,7 @@
                             <button id="sendtypeButton" class="iii btn" hidden>
                               送出
                             </button>
-                            <hr class="iii" hidden />
+
                             <textarea
                               hidden
                               placeholder="請輸入餐廳自我介紹"
@@ -795,12 +805,10 @@
                               class="ppp"
                               cols="30"
                               rows="10"
-                              style="width: 100%"
                             ></textarea>
                             <button id="sendintroButton" class="ppp btn" hidden>
                               送出
                             </button>
-                            <hr class="ppp" hidden />
                             <div>
                               <input
                                 id="restaurantuploadimage"
@@ -808,7 +816,7 @@
                                 class="form-control uuu"
                                 type="file"
                                 accept="image/*"
-                                onchange="previewImagemyself(event)"
+                                onchange="previewImage(event)"
                                 hidden
                               />
                             </div>
@@ -832,7 +840,6 @@
                               >
                                 送出
                               </button>
-                              <hr class="uuu" hidden />
                             </div>
                           </div>
                         </div>
@@ -951,7 +958,7 @@
                     </div>
                     <div>
                       <img
-                        id="image-previewprod"
+                        id="image-preview"
                         src="#"
                         alt="預覽圖片"
                         style="max-width: auto; max-height: auto; display: none"

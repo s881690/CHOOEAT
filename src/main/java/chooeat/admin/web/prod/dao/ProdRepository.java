@@ -10,8 +10,6 @@ import chooeat.admin.web.prod.pojo.ProdVO;
 
 public interface ProdRepository extends JpaRepository<ProdVO, Integer>{
 	
-	ProdVO findByProdId(Integer prodId);
-	
 	@Query(value = "SELECT * FROM prod p WHERE p.prod_id LIKE :prodId", nativeQuery = true)
 	List<ProdVO> findByProdIdLike(@Param(value = "prodId") String prodId);
 	

@@ -125,10 +125,10 @@
                         let html = `
                                 <tr>
                                     <th scope="row">${rowIndex}</th>
-                                    <td class="reservationId">${resComment.reservationId}</td>
+                                    <td>${resComment.reservationId}</td>
                                     <td>${resComment.restaurantCommentDatetime}</td>
-                                    <td class="restaurantId">${resComment.restaurantId}</td>
-                                    <td class="accId">${resComment.accId}</td>
+                                    <td>${resComment.restaurantId}</td>
+                                    <td>${resComment.accId}</td>
                                     <td>${resComment.accountVO.accName}</td>
                                     <td>${resComment.restaurantCommentScore}</td>
                                     <td>${resReply}</td>
@@ -153,15 +153,5 @@
     $("#submitSearch").on("click", () => {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
-    });
-
-    $(document).on("click", ".editBtn", function(){
-        let reservationId = $(this).closest("tr").find(".reservationId").text();
-        let accId = $(this).closest("tr").find(".accId").text();
-        let restaurantId = $(this).closest("tr").find(".restaurantId").text();
-        sessionStorage.setItem("reservationId", reservationId);
-        sessionStorage.setItem("accId", accId);
-        sessionStorage.setItem("restaurantId", restaurantId);
-        location = "admin_resCommentSearchResult.html";
     });
 })();

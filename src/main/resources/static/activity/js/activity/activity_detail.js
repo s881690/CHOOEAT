@@ -171,9 +171,17 @@ function innerSignup() {
             return res.json();
           })
           .then((result) => {
-            if (result) {
-              console.log(result);
+            if (result == true) {
               alert("報名成功");
+
+              // 報名後，再將活動成員+1
+              fetch(`addActivityMember?activityId=${activityId}`)
+                .then((res) => {
+                  return res.json();
+                })
+                .then((result) => {
+                  console.log(result);
+                });
             } else {
               console.log(result);
             }

@@ -72,7 +72,9 @@
         url: "restaurantlogin",
         data: formData,
         success: function (response) {
-          var resultJson = JSON.stringify(response);        
+          var resultJson = JSON.stringify(response);
+
+          console.log(resultJson);
 
           if (response.length === 0) {
             alert("帳號密碼輸入錯誤");

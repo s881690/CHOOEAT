@@ -23,7 +23,8 @@ public class AdminAdServiceImpl implements AdminAdService{
 
 	@Override
 	public AdminAdVO findByAdId(Integer adId) {
-		return adRepository.findByAdId(adId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public interface ReservationService {
 	
 	List<AdminReservationVO> selectAll();
 
-	AdminReservationVO findById(Integer reservationId);
+	AdminReservationVO findByReservationId(Integer reservationId);
 	
 	List<AdminReservationVO> searchBySomethingId(Integer searchType, Integer id);
 	

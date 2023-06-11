@@ -36,7 +36,8 @@ public class ForwardSearchResultsDetail extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		// 取得請求參數
 		
-		String y = request.getParameter("abcde");	
+		String y = request.getParameter("abcde");
+		System.out.println(y);
 		Map<String, Object> d = RestaurantService.forwardresdetail(y);
 		Gson gson = new GsonBuilder().registerTypeAdapter(Time.class, new CustomTimeSerializer()).create();
 		String jsonStr = gson.toJson(d);		

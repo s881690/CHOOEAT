@@ -29,7 +29,8 @@ public class GetRegisterForm extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Credentials", "true"); // 是否允許帶有憑證的請求
 		request.setCharacterEncoding("utf-8");
 	    Resource resource = resourceLoader.getResource("classpath:static/restaurant/Restaurantregisterform.html");
-	    InputStream inputStream = resource.getInputStream();
+	    System.out.println(resource);
+        InputStream inputStream = resource.getInputStream();
         byte[] fileContent = inputStream.readAllBytes();
 
         response.setContentType("text/html;charset=UTF-8");

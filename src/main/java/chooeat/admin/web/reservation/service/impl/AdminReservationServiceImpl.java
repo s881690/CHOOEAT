@@ -33,8 +33,9 @@ public class AdminReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public AdminReservationVO findById(Integer reservationId) {
-		return adminReservationRepository.findByReservationId(reservationId);
+	public AdminReservationVO findByReservationId(Integer reservationId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

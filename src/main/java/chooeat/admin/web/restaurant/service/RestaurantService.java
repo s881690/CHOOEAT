@@ -7,8 +7,6 @@ import chooeat.admin.web.restaurant.pojo.AdminRestaurantVO;
 
 public interface RestaurantService {
 	
-	AdminRestaurantVO findByResId(Integer resId);
-	
 	AdminRestaurantVO edit(Integer resId);
 	
 	List<AdminRestaurantPOJO> findAll();

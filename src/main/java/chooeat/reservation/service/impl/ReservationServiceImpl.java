@@ -1,10 +1,10 @@
 package chooeat.reservation.service.impl;
 
 import java.sql.Date;
-import java.time.Instant;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +20,7 @@ import chooeat.reservation.dao.ReservationDao;
 import chooeat.reservation.dao.ReservationRepository;
 import chooeat.reservation.dao.RestaurantDayoffRepository;
 import chooeat.reservation.dao.RestaurantRepository;
+import chooeat.reservation.dao.impl.ReservationLock;
 import chooeat.reservation.model.AccountVo;
 import chooeat.reservation.model.EmailDetails;
 import chooeat.reservation.model.EmailInfo;
@@ -28,8 +29,6 @@ import chooeat.reservation.model.ReservationVO;
 import chooeat.reservation.model.RestaurantVO;
 import chooeat.reservation.model.Result;
 import chooeat.reservation.service.ReservationService;
-
-
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -51,6 +50,10 @@ public class ReservationServiceImpl implements ReservationService {
 	AccountRepository accountRepository;
 	@Autowired
 	AccountVo accountVo;
+	@Autowired
+	ReservationLock reservationLock;
+	@Autowired
+	RestaurantVO restaurantVO;
 
 	@Value("${spring.mail.username}")
 	private String sender;
@@ -101,39 +104,35 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Integer reservation(ReservationVO reservationVO) {
 
-		//抓出日期，尋找當天的剩餘座位數的list
+		// 抓出日期，尋找當天的剩餘座位數的list
 		Date sqlDate = new Date(reservationVO.getReservationDateStartTime().getTime());
 		List<HourlySeat> list = reservationDao.selectall(reservationVO.getRestaurantId(), sqlDate);
-        
-		//list長度=0，表示當天沒有人預約，直接insert
-		 if (list.size() == 0) {
-		return reservationDao.insertReservation(reservationVO);
-	}
-		 //長度不等於0，尋找是否有預約紀錄
-		 //抓出要存進去的當前時段
-		 int hour = reservationVO.getReservationDateStartTime().getHours();
-		//用餐廳id去找餐廳的座位數上限
 
-		 int remainSeat = restaurantRepository.findById(reservationVO.getRestaurantId()).get().getResMaxNum();
-		 //從HourlySeat裡面找出該時段的剩餘數量
-		 for (HourlySeat hourlySeat : list) {
-                if (hourlySeat.getHour() == hour) {
-                    remainSeat = hourlySeat.getRemainSeat();
-                    System.out.println("當前時段有" + hourlySeat.getRemainSeat() + "個座位");
-                    break;
-                }
-            }
-		    
-		    if((remainSeat - reservationVO.getReservationNumber()) >= 0) {
-		    	return reservationDao.insertReservation(reservationVO);
-		    }
-		    
-		    
-		 
-		 
-		 
-		 return 0;
-		 
+		// list長度=0，表示當天沒有人預約，直接insert
+		if (list.size() == 0) {
+			return reservationDao.insertReservation(reservationVO);
+		}
+		// 長度不等於0，尋找是否有預約紀錄
+		// 抓出要存進去的當前時段
+		int hour = reservationVO.getReservationDateStartTime().getHours();
+		// 用餐廳id去找餐廳的座位數上限
+
+		int remainSeat = restaurantRepository.findById(reservationVO.getRestaurantId()).get().getResMaxNum();
+		// 從HourlySeat裡面找出該時段的剩餘數量
+		for (HourlySeat hourlySeat : list) {
+			if (hourlySeat.getHour() == hour) {
+				remainSeat = hourlySeat.getRemainSeat();
+				System.out.println("當前時段有" + hourlySeat.getRemainSeat() + "個座位");
+				break;
+			}
+		}
+
+		if ((remainSeat - reservationVO.getReservationNumber()) >= 0) {
+			return reservationDao.insertReservation(reservationVO);
+		}
+
+		return 0;
+
 	}
 
 	@Override
@@ -143,8 +142,8 @@ public class ReservationServiceImpl implements ReservationService {
 		// 這裡輸入會員編號跟預約編號
 		emailInfo = reservationDao.getEmailInfos(memberId, reservationId).get(0);
 		// 收件人email
-		//為了方便demo，先寫自己的信箱
-    	details.setRecipient("s88169039@gmail.com");
+		// 為了方便demo，先寫自己的信箱
+		details.setRecipient("s88169039@gmail.com");
 //		details.setRecipient(emailInfo.getRecipient());
 		System.out.println(details.getRecipient().toString());
 
@@ -153,13 +152,10 @@ public class ReservationServiceImpl implements ReservationService {
 		System.out.println(details.getSubject().toString());
 
 		// 信件內容
-		details.setMsgBody("親愛的會員 " + emailInfo.getRecipientName() + "您好：\n" 
-						 + "我們很高興通知您，您的訂位已成功完成。以下是您的訂位詳細信息：\n " 
-						 + "時間：" + emailInfo.getReservationTime() + "\n" 
-						 + "餐廳名稱： " + emailInfo.getRestaurantName() + "\n"
-						 + "地點：" + emailInfo.getRestaurantAddress() + "\n" 
-						 + "電話： " + emailInfo.getRestaurantPhone() + "\n"
-						 + "預訂人數：" + emailInfo.getReservationNumber());
+		details.setMsgBody("親愛的會員 " + emailInfo.getRecipientName() + "您好：\n" + "我們很高興通知您，您的訂位已成功完成。以下是您的訂位詳細信息：\n "
+				+ "時間：" + emailInfo.getReservationTime() + "\n" + "餐廳名稱： " + emailInfo.getRestaurantName() + "\n"
+				+ "地點：" + emailInfo.getRestaurantAddress() + "\n" + "電話： " + emailInfo.getRestaurantPhone() + "\n"
+				+ "預訂人數：" + emailInfo.getReservationNumber());
 		try {
 
 			// Creating a simple mail message
@@ -185,12 +181,11 @@ public class ReservationServiceImpl implements ReservationService {
 			String status = "Error while Sending Mail";
 			System.out.println(status);
 		}
-		
-	
+
 	}
 
 	@Override
-	public Boolean reservationUpdate(ReservationVO reservationVO,int reservationId) {
+	public Boolean reservationUpdate(ReservationVO reservationVO, int reservationId) {
 		return reservationDao.updateReservation(reservationVO, reservationId);
 	}
 
@@ -200,53 +195,100 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationDao.deleteReservation(reservationId);
 	}
 
-
 	@Override
 	public List<Result> reservationInfo(int reservationId) {
-		
-		
 
 		return reservationDao.reservationData(reservationId);
 	}
 
 	@Override
 	public String memberName(int memberId) {
-		
+
 		return accountRepository.findById(memberId).get().getAccName();
 	}
 
 	@Override
 	public List<EmailInfo> getAllreservation(int memberId) {
-		
+
 		return reservationDao.selectAllReservationForMember(memberId);
 	}
 
 	@Override
 	public String getRestaurantNameByReservation(int reservationId) {
-		
+
 		return reservationDao.getRestaurantNameByReservation(reservationId).get(0);
 	}
 
-	
+	@Override
+	public String bookReservation(String dateTime, Integer reservationNumber, Integer restaurantId) {
+		 
+		  try {
+			  //判斷redis裡面有沒有當天該小時的資料，如果有，就是有人在結帳中
+	            if (reservationLock.haskey(dateTime)) {
+	            	//redisTemplate.delete(dateTime);
+	            	System.out.println("有其他人在結帳喔!!wait！");	
 
-	
-
-//	@Override
-//	public Boolean booking(ReservationVO reservationVO) {
-
-	// 判斷訂位人數是否大於0，少於1人擋下
-//		if(reservationVO.getReservationNumber() < 1) {
-//			return false;
-//		}
-
-	// 判斷訂位時間是否晚於當前時間，晚於當前時間擋下
-//		 LocalDateTime currentDateTime = LocalDateTime.now();
-//	     LocalDateTime reservationDateTime = reservationVO.getReservationDateStartTime().toLocalDateTime();
-//	     if (reservationDateTime.isAfter(currentDateTime)) {
-//	    	 return false;
-//	        }
-
-//	
-//	}
+	            	return "wait";
+	            } 
+	            //判斷redis裡面有沒有當天該小時的資料，以下是沒有的情況
+	            else {
+	            	System.out.println("只有我在結帳~");
+	            	
+	        		//先把前端傳進來的預約日期字串轉換日期時間格式
+	                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	                java.util.Date utildate = dateFormat.parse(dateTime);
+	                //抓出選擇的日期
+	                Date sqlDate = new Date(utildate.getTime());
+	                //用前端資料抓出選擇的小時
+	                int paraHour = utildate.getHours();
+	                System.out.println("當前小時是" + paraHour);
+	                
+	                //如果沒資料，剩餘座位數預設就是餐廳座位數
+	                Integer remainSeats = restaurantRepository.findById(restaurantId).get().getResMaxNum();
+	            	System.out.println("預設的餐廳座位數是" + restaurantRepository.findById(restaurantId).get().getResMaxNum());
+	            
+	            	
+	                //用剩餘座位數的方法去跑，如果有對應到的，就更新數字
+	                List<HourlySeat> list = reservationDao.selectall(restaurantId, sqlDate);
+	                for(HourlySeat hourlySeat : list) {
+	                	if(paraHour == hourlySeat.getHour()) {
+	                		remainSeats = hourlySeat.getRemainSeat();
+	                		System.out.println("更新之後是" + remainSeats);
+	                	}
+	                }
+	                
+	                //把剩餘座位數扣掉預約人數
+	                remainSeats = remainSeats - reservationNumber;
+	            	System.out.println("扣掉之後是" + remainSeats);
+	                //扣掉預約人數後>=0，表示有位置可以接這筆訂單，所以存進redis
+	                if(remainSeats >= 0) {
+	                	
+	                	if(reservationLock.acquireLock(dateTime,remainSeats)) {
+	                		return "success";
+	                	}else {
+	                		System.out.println("沒有成功存進去QAQ");
+	                		return "error";
+	                	}
+	  
+	            	
+	            	}else {
+	            		System.out.println("剩餘座位數<0，不接你的單~");
+	            		return "error";
+	            	}
+	  
+	            	
+	            }
+	        } catch (ParseException e) {
+				System.err.println("時間轉換出4惹~");
+				e.printStackTrace();
+			} finally {
+	            
+//	            reservationLock.releaseLock(dateTime);
+//	            System.out.println("解鎖！");
+	        }
+		  
+		  return "";
+		
+	}
 
 }

@@ -33,5 +33,7 @@ public interface ReservationService {
 	List<EmailInfo> getAllreservation(int memberId);
 	
 	String getRestaurantNameByReservation(int reservationId);
+	
+	  public String bookReservation(String dateTime, Integer reservationNumber,Integer restaurantId);
 
 }

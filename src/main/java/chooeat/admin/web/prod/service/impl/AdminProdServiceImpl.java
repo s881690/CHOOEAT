@@ -23,7 +23,8 @@ public class AdminProdServiceImpl implements ProdService {
 
 	@Override
 	public ProdVO findByProdId(Integer prodId) {
-		return prodRepository.findByProdId(prodId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
