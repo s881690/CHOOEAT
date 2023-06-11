@@ -10,8 +10,12 @@ div>a {
   h1{
   font-size: 36px;
   }
+  .far.fa-bookmark {
+    cursor: pointer;
+ }
 
 
+ 
 #ddd{
   margin-top: 5px;
   margin-bottom: 5px;
@@ -30,7 +34,7 @@ div>a {
 }
 
 img {         
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 

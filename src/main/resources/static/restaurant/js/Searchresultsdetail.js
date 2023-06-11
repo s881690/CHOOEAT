@@ -2,7 +2,7 @@ var result = JSON.parse(sessionStorage.getItem("searchResult")); // 將字串轉
 var resTypeNames = result.restype.map(function (item) {
   return item.resTypeName;
 });
-
+var restaurantId = result["myself"][0].restaurantId;
 var resName = result["myself"][0].resName;
 var resAdd = result["myself"][0].resAdd;
 var resStartTime = result["myself"][0].resStartTime;
@@ -27,7 +27,6 @@ function arrayBufferToBase64(buffer) {
 const photoBase64 = arrayBufferToBase64(result["myself"][0].resPhoto);
 const imageSrc = `data:image/jpeg;base64,${photoBase64}`;
 var ddd = document.getElementById("ddd");
-console.log(imageSrc)
 var newDiv = document.createElement("div");
 newDiv.innerHTML = ` 
 <div class="col-sm-12">
@@ -46,7 +45,7 @@ var newDiv = document.createElement("div");
 newDiv.innerHTML = `
   <div>
   <h1>
-	${resName}<span style="float: right"><i class="far fa-bookmark"></i></span>
+	${resName}<span style="float: right"><i  value="${restaurantId}" class="far fa-bookmark"></i></span>
   </h1>
   <p>餐廳評分 : ${resTotalScore}<i class="fa fa-star" style="color: yellow"></i></p> 
   <p>餐廳種類 : ${resTypeNames}</p>
@@ -141,3 +140,36 @@ function initMap() {
 	});
   }
 }
+
+$(document).ready(function() {  
+	$(document).on('click', 'i.far.fa-bookmark', function() {
+			var loginReq = sessionStorage.getItem("loginReq");	
+		if (loginReq) {			
+			var restaurantId = $(this).attr('value');	    
+			var accobj = JSON.parse(loginReq);
+			var acc_id=accobj.acc_id	
+			var clickedIcon = $(this); // 被點擊的<i>標籤  
+			$.ajax({
+			   url: "restaurantaddmylove",
+			   method: "post",
+			   data: {
+		  		restaurantId: restaurantId,
+				  accId: acc_id,
+			   },
+			   dataType: "json",
+			   success: function(response) {
+				clickedIcon.css("background-color", "#FFDEB9");
+				
+			   },
+			   error: function(error) {
+				  console.log(error);
+			   },
+			});
+		 } 
+		else {
+		alert("無法添加到我的最愛,請登入會員")
+		window.location.href = "../account/login.html";
+		}
+	});
+});
+  

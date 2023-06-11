@@ -323,6 +323,12 @@ public class RestaurantServiceImpl<K> implements RestaurantService {
 		return dao.getcarousel(var1,var2,var3,var4,var5);
 	}
 
+	@Override
+	public int restaurantaddmylove(String restaurantId, String accId) {
+		
+		return dao.restaurantaddmylove(restaurantId,accId);
+	}
+
 	
 
 }

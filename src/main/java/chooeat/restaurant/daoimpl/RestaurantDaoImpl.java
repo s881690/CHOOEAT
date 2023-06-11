@@ -164,7 +164,7 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 
 	@Override
 	public List<Object> findfollow(String resAcc) {
-		String sql = "select account.acc_id,acc_name from restaurant join \r\n" + "saved_res on \r\n"
+		String sql = "select DISTINCT account.acc_id,acc_name from restaurant join \r\n" + "saved_res on \r\n"
 				+ "restaurant.restaurant_id=saved_res.restaurant_id join account on\r\n"
 				+ "saved_res.acc_id=account.acc_id where res_acc=?";
 		List<Object> resultList = new ArrayList<>();
@@ -932,5 +932,31 @@ public class RestaurantDaoImpl implements RestaurantDAO {
 			e.printStackTrace();
 		}
 		return restaurantlList;
+	}
+
+	@Override
+	public int restaurantaddmylove(String restaurantId, String accId) {
+		
+		String sql = "INSERT INTO saved_res (restaurant_id, acc_id)\r\n"
+				+ "VALUES (?, ?);";
+		int result = 0;
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,restaurantId);
+			pstmt.setString(2,accId);				
+			int rowsAffected = pstmt.executeUpdate();
+
+			if (rowsAffected > 0) {
+				result = 1;
+			}			
+			pstmt.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 2;
+		}
+		return 1;
 	}
 }
