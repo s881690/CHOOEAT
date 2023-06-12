@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,30 +22,6 @@ public class AdminContorller {
 
 	@Autowired
 	private AdminService SERVICE;
-
-	@PostMapping("/login")
-	public AdminVO login(HttpServletRequest req, @RequestBody AdminVO admin) {
-
-		if (admin == null) {
-			admin = new AdminVO();
-			admin.setMessage("無管理員資訊");
-			admin.setSuccessful(false);
-			return admin;
-		}
-
-		admin = SERVICE.login(admin);
-
-		if (admin.isSuccessful()) {
-			if (req.getSession(false) != null) {
-				req.changeSessionId();
-			}
-			final HttpSession session = req.getSession();
-			session.setAttribute("loggedin", true);
-			session.setAttribute("admin", admin);
-		}
-
-		return admin;
-	}
 
 	@PostMapping("/register")
 	public AdminVO register(@RequestBody AdminVO admin) {
@@ -83,13 +58,6 @@ public class AdminContorller {
 			adminList = SERVICE.searchBySomething(searchType, search);
 		}
 
-//		if (adminList.size() == 0) {
-//			Core core = new Core();
-//			core.setMessage("查無資料");
-//			core.setSuccessful(false);
-//			return core;
-//		}
-
 		return adminList;
 
 	}
@@ -116,6 +84,23 @@ public class AdminContorller {
 			core.setMessage("刪除成功");
 			return core;
 		}
+		
+	}
+	
+	@PostMapping("/editAdmin")
+	public AdminVO editAdmin(@RequestBody AdminVO admin, HttpServletRequest req) {
+		
+		if (admin == null) {
+			admin = new AdminVO();
+			admin.setMessage("無會員資訊");
+			admin.setSuccessful(false);
+			return admin;
+		}
+
+		admin = SERVICE.editAdmin(admin);
+		
+		req.getSession().invalidate();
+		return admin;
 		
 	}
 }

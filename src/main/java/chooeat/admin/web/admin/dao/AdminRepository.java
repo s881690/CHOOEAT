@@ -6,4 +6,5 @@ import chooeat.admin.web.admin.pojo.AdminVO;
 
 public interface AdminRepository extends JpaRepository<AdminVO, Integer>{
 
+	AdminVO findByAdminId (Integer adminId); 
 }

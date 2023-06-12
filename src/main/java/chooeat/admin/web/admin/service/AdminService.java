@@ -8,6 +8,8 @@ public interface AdminService {
 	
 	AdminVO register(AdminVO adminVO);
 	
+	AdminVO editAdmin(AdminVO admin);
+	
 	AdminVO login(AdminVO adminvo);
 	
 	AdminVO edit(Integer adminId, Integer adminPermission);

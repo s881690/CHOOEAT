@@ -65,6 +65,46 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
+	public AdminVO editAdmin(AdminVO admin) {
+		
+		if (admin.getAdminName() == null) {
+			admin.setMessage("名稱未輸入");
+			admin.setSuccessful(false);
+			return admin;
+		}
+		
+		if (admin.getAdminPass() == null) {
+			admin.setMessage("密碼未輸入");
+			admin.setSuccessful(false);
+			return admin;
+		}
+		
+		if (dao.selectByAdminName(admin.getAdminName()) != null && dao.selectByAdminName(admin.getAdminName()).getAdminId() != admin.getAdminId()) {
+			admin.setMessage("此管理員名稱已被註冊，請更換管理員名稱");
+			admin.setSuccessful(false);
+			return admin;
+		}
+		
+		final int resultCount = dao.update(admin);
+		admin.setSuccessful(resultCount > 0);
+		admin.setMessage(resultCount > 0 ? "更新成功!" : "更新失敗");
+		
+		return admin;
+		
+//		AdminVO newAdmin = adminRepository.save(admin);
+//		
+//		if (newAdmin == null) {
+//			admin.setMessage("註冊錯誤，請聯絡管理員!");
+//			admin.setSuccessful(false);
+//			return admin;
+//		}
+//		
+//		newAdmin.setMessage("更新成功!");
+//		newAdmin.setSuccessful(true);
+//		return newAdmin;
+	}
+
+	@Override
 	public AdminVO login(AdminVO adminVO) {
 		final String acc = adminVO.getAdminAcc();
 		final String pwd = adminVO.getAdminPass();

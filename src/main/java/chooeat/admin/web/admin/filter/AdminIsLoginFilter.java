@@ -11,6 +11,9 @@ import javax.servlet.annotation.WebFilter;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import chooeat.admin.web.admin.pojo.AdminVO;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,24 +28,20 @@ public class AdminIsLoginFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
+        HttpSession session = req.getSession(false);
 
-		HttpSession session = req.getSession();
-		
-		String uri = new String(req.getRequestURI());
-		
-		if (uri.contains("/login")) {
-	        // 如果是 Login Controller，直接執行後續的過濾器或控制器
-	        chain.doFilter(request, response);
-	        return;
-	    }
-		
-		
-//		int adminId = (Integer)session.getAttribute("adminId");
-		
-//		System.out.println(adminId);
-		System.out.println("filter執行");
+        if (session != null) {            
+            AdminVO admin = (AdminVO) session.getAttribute("admin");
+//            System.out.println(admin.getAdminId());
+            
+            if(admin == null) {
+            	res.sendRedirect("/admin_login.html");
+            } else {
+            	chain.doFilter(request, response);
+            }
+        } 
 
-		
+        chain.doFilter(request, response);
 
 	}
 

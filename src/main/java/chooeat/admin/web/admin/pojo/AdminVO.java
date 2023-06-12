@@ -30,7 +30,7 @@ public class AdminVO extends Core{
 	@Column(name = "admin_pass")
     private String adminPass;
 	
-	@Column(name = "admin_timestamp")
+	@Column(name = "admin_timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp adminTimestamp;
 	
 	@Column(name = "admin_permission")

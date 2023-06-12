@@ -137,7 +137,7 @@
                                     <td>
                                         <button class="btn btn-outline-dark btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#editAdminArea${index + 1}">編輯</button>
                                         <button class="btn justify-content-center align-items-center">
-                                            <i class="fa-solid fa-ban deleteBtn" data-bs-toggle="modal" data-bs-target="#deleteAdminArea" style="color: #000000;"></i>
+                                            <i class="fa-solid fa-trash-can deleteBtn" data-bs-toggle="modal" data-bs-target="#deleteAdminArea" style="color: #000000;"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -197,6 +197,11 @@
         }
     };
 
+    $(document).ready(function(){
+        currentPage = 1;  // 重置當前頁碼為第一頁
+        fetchAndUpdateData();
+    });
+
     $("#submitSearch").on("click", () => {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
@@ -248,7 +253,7 @@
                     alert(message);
                     $("deleteResTypeArea").modal("hide");
                     location.reload();
-                } else if(succeddful === false){
+                } else if(successful === false){
                     alert(message);
                 }
             });
