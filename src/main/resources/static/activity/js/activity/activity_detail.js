@@ -56,6 +56,7 @@ function showDetail() {
       return res.json();
     })
     .then((result) => {
+      console.log(result.activityDate);
       let activityDate = result.activityDate.split(" ");
       // console.log(activityDate);
       let month = activityDate[0];
