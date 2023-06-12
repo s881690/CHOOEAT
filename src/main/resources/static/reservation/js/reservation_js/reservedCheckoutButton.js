@@ -39,7 +39,10 @@ button.addEventListener('click', function() {
   }
 
   // 發送請求給後端
-  fetch('/reservation')
+
+  const index = sessionStorage.getItem('index');
+
+  fetch('/reservation?index=' + index)
     .then(response => response.json())
     .then(data => {
       // 檢查回傳的物件中的status屬性
@@ -48,8 +51,8 @@ button.addEventListener('click', function() {
         // 跳轉至下一個頁面
         window.location.href = 'reservationSucess.html';
       } else {
-        alert("訂位失敗，請重新選擇");
-        window.location.href = "http://localhost:8080/reservation/reservation.html";
+        // 處理其他情況
+        // ...
       }
     })
     .catch(error => {
