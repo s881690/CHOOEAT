@@ -1,4 +1,7 @@
 let accId;
+var selectedProducts;
+var jsonselectedProducts;
+
 //===========
 let account = JSON.parse(sessionStorage.getItem("loginReq"));
 if (sessionStorage.getItem("loginReq") != null) {
@@ -92,10 +95,17 @@ function displayCart() {
 
 			checkboxes.forEach((checkbox, index) => {
 				checkbox.checked = true;
-				console.log(checkbox);
+			
 				if (index === checkboxes.length - 1) {
-					return; // 跳過第一個 checkbox
+					//					const prodElement = checkbox.closest('.prod');
+					//					console.log(prodElement);
+					//					const productId = prodElement.getAttribute('data-product-id');
+					//					console.log(productId);
+					//					selectedProducts.push(productId);
+//					console.log(checkbox);
+					return;
 				} else {
+					console.log(checkbox);
 					const qty = parseInt(countInputs[index].value);
 					const priceElement = priceElements[index];
 					const priceText = priceElement.textContent.trim();
@@ -442,8 +452,6 @@ function bindEventsToElements() {
 			selectAllCheckbox.checked = allChecked;
 		});
 	});
-	var selectedProducts;
-	var jsonselectedProducts;
 	const isDirectBuy = false;
 	function handleCheckboxChange(event) {
 		selectedProducts = [];
@@ -453,7 +461,7 @@ function bindEventsToElements() {
 				selectedProducts.push(productId);
 			}
 		});
-		//		console.log(selectedProducts);
+		console.log(selectedProducts);
 		jsonselectedProducts = JSON.stringify(selectedProducts);
 		//		console.log(jsonselectedProducts);
 	}
