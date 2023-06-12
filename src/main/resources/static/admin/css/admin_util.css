@@ -21,6 +21,15 @@ li a:hover{
     background-color: #ffdeb9;
     border-radius: 5px;
 }
+#adminPage{
+    padding: 5px 10px 0 10px;
+}
+
+#adminPage:hover{
+    background-color: #ffdeb9;
+    border-radius: 5px;
+}
+
 .navbar-nav li:hover > ul.dropdown-menu{
     display: block;
     border-radius: 5px;
@@ -87,7 +96,7 @@ div#listCount p {
 .stateBtn, .editBtn, .deleteBtn{
     background-color: white;
 }
-#registerBtn{
+#registerBtn, #confirmEditBtn{
     border: 1px solid white;
     background-color: orange;
 }
@@ -103,6 +112,15 @@ div#listCount p {
 }
 div#deleteMsg p {
     display: inline-block;
+}
+
+i.deleteBtn{
+    transition: transform 0.3s ease;
+    background-color: transparent;
+}
+i.deleteBtn:hover{
+    cursor: pointer;
+    transform: scale(1.5);
 }
 
 

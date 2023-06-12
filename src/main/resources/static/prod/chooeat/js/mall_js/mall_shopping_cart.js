@@ -1,4 +1,7 @@
 let accId;
+var selectedProducts;
+var jsonselectedProducts;
+
 //===========
 let account = JSON.parse(sessionStorage.getItem("loginReq"));
 if (sessionStorage.getItem("loginReq") != null) {
@@ -23,15 +26,15 @@ if (account != null) {
 function displayCart() {
 	var cartContainer = document.getElementById("cart_container");
 	cartContainer.innerHTML = "";
-	const url = "get-cart?accId=" + accId;
+	const operation = "mergeCart";
+	const url = "get-cart?accId=" + accId + "&operation=" + operation;
 	fetch(url)
 		.then(function(response) { return response.json(); })
 		.then(data => {
 			// console.log(data);
 			const productsMap = data;
 			if (Object.keys(productsMap).length === 0) {
-				// 資料為空，顯示提示訊息
-				cartContainer.innerHTML =`<a href="mall.html"><h2 style="margin-top:30px; text-align: center;">購物車尚未有任何商品，快前往選購吧！</h2></a>`;
+				cartContainer.innerHTML = `<a href="mall.html"><h2 style="margin-top:30px; text-align: center;">購物車尚未有任何商品，快前往選購吧！</h2></a>`;
 			} else {
 				for (let [productId, value] of Object.entries(productsMap)) {
 					const key = productId;
@@ -80,6 +83,43 @@ function displayCart() {
 
 				bindEventsToElements();
 			}
+			// Step 3: 勾選所有checkbox
+			const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			const totalQtyElement = document.querySelector(".qty_number");
+			const totalPriceElement = document.querySelector(".amount");
+			const countInputs = document.querySelectorAll(".qty");
+			const priceElements = document.querySelectorAll(".price");
+
+			let totalQty = 0;
+			let totalPrice = 0;
+
+			checkboxes.forEach((checkbox, index) => {
+				checkbox.checked = true;
+			
+				if (index === checkboxes.length - 1) {
+					//					const prodElement = checkbox.closest('.prod');
+					//					console.log(prodElement);
+					//					const productId = prodElement.getAttribute('data-product-id');
+					//					console.log(productId);
+					//					selectedProducts.push(productId);
+//					console.log(checkbox);
+					return;
+				} else {
+					console.log(checkbox);
+					const qty = parseInt(countInputs[index].value);
+					const priceElement = priceElements[index];
+					const priceText = priceElement.textContent.trim();
+					const priceMatch = priceText.match(/[\d,]+/);
+					const price = parseInt(priceMatch[0].replace(/,/g, ""));
+					totalQty += qty;
+					totalPrice += price * qty;
+				}
+			});
+			totalQtyElement.textContent = totalQty;
+			totalPriceElement.textContent = "NT $" + totalPrice.toLocaleString();
+
+
+
 		})
 		.catch(function(error) {
 			console.log(error);
@@ -106,7 +146,7 @@ function bindEventsToElements() {
 			const qty = parseInt(input.value);
 			if (qty < 1 || isNaN(qty)) {
 				input.value = "1";
-			} else if (qty > 100) {
+			} else if (qty > 10) {
 				alert("超過可購買上限");
 				input.value = "1";
 				return;
@@ -259,6 +299,7 @@ function bindEventsToElements() {
 		});
 	});
 	//=== 更新側邊攔 ===
+
 	function updateSidebar() {
 		let totalQty = 0;
 		let totalPrice = 0;
@@ -411,8 +452,6 @@ function bindEventsToElements() {
 			selectAllCheckbox.checked = allChecked;
 		});
 	});
-	var selectedProducts;
-	var jsonselectedProducts;
 	const isDirectBuy = false;
 	function handleCheckboxChange(event) {
 		selectedProducts = [];
@@ -422,7 +461,7 @@ function bindEventsToElements() {
 				selectedProducts.push(productId);
 			}
 		});
-		//		console.log(selectedProducts);
+		console.log(selectedProducts);
 		jsonselectedProducts = JSON.stringify(selectedProducts);
 		//		console.log(jsonselectedProducts);
 	}

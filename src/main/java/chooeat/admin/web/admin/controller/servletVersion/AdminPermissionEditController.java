@@ -1,4 +1,4 @@
-package chooeat.admin.web.admin.controller;
+package chooeat.admin.web.admin.controller.servletVersion;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import chooeat.admin.core.util.CommonUtil;
 import chooeat.admin.web.admin.service.AdminService;
 
-@WebServlet("/admin/adminPermissionEdit")
+//@WebServlet("/admin/adminPermissionEdit")
 public class AdminPermissionEditController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	

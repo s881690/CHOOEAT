@@ -1,4 +1,4 @@
-package chooeat.admin.web.admin.controller;
+package chooeat.admin.web.admin.controller.servletVersion;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/adminLogout")
+//@WebServlet("/admin/adminLogout")
 public class AdminLogoutController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	

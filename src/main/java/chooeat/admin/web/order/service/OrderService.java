@@ -16,5 +16,7 @@ public interface OrderService {
 	public List<AdminOrderVO> searchByAcc(Integer searchType, String search);
 	
 	public List<AdminOrderDetailVO> searchByOrderId(Integer id);
+	
+	public boolean deleteById(Integer id);
 
 }

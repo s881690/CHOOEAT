@@ -126,7 +126,7 @@
                         let html = `
                                 <tr>
                                     <th scope="row">${rowIndex}</th>
-                                    <td>${res.restaurantId}</td>
+                                    <td class="restaurantId">${res.restaurantId}</td>
                                     <td>${res.resName}</td>
                                     <td>${res.resType}</td>
                                     <td>${state}</td>
@@ -148,8 +148,19 @@
         }
     };
 
+    $(document).ready(function(){
+        currentPage = 1;  // 重置當前頁碼為第一頁
+        fetchAndUpdateData();
+    });
+
     $("#submitSearch").on("click", () => {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
+    });
+
+    $(document).on("click", ".editBtn", function(){
+        let restaurantId = $(this).closest("tr").find(".restaurantId").text();
+        sessionStorage.setItem("restaurantId", restaurantId);
+        location = "admin_resSearchResult.html";
     });
 })();

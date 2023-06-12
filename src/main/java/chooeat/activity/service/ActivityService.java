@@ -8,7 +8,8 @@ import chooeat.activity.vo.SavedActivityVO;
 
 
 public interface ActivityService {
-
+	
+	public List<ActivityVO> all();
 
 	public List<ActivityVO> sellectAll();
 

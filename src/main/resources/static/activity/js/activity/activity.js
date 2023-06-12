@@ -1,3 +1,4 @@
+// $("header.headerpage").load("../../header.html .navbar");
 // 日期格式化 YYYY-MM-DD
 function YYYYMMDD(dateTime) {
   let date = new Date(dateTime);
@@ -19,13 +20,13 @@ function fetch3ActivityList() {
   const card_list_3 = document.querySelector(".card_list_3");
   const card_list_collapse = document.querySelector(".card_list_collapse");
   // 因Java有將靜態檔案設定映射名稱與前綴字，因此不用加"activity/"
-  const url = "activityList";
+  const url = "activitys";
   fetch(url)
     .then((res) => {
       return res.json();
     })
     .then((resList) => {
-      // console.log(resList);
+      console.log(resList);
       let resList3 = resList.slice(0, 3);
       // console.log(resList3);
       let resListCollapse = resList.slice(3, 9);
@@ -49,43 +50,35 @@ function fetch3ActivityList() {
         card_list_3.innerHTML += `
         <div class="col-4 mt-5">
           <div class="card">
-            <img
-              src="${image.src}"
-              class="card-img-top"
-              alt="..."
-            />
+            <img src="${image.src}" class="card-img-top" alt="..." />
             <div class="card-body" data-activityid=${reser.activityId}>
               <h5 class="card-title">${reser.activityName}</h5>
               <p class="restaurant-name">地點：${
                 reser.activityrestaurantVO.resName
               }</p>
-            <p class="card-text address">地址：
-              ${reser.activityrestaurantVO.resAdd}
-            </p>
-            <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
-              reser.regesterationStartingTime
-            )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
+              <p class="card-text address">地址：
+                ${reser.activityrestaurantVO.resAdd}
+              </p>
+              <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
+                reser.regesterationStartingTime
+              )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
           reser.regesterationEndingTime
         )}</span> 23:59 止
-            </p>
-            <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+              </p>
+              <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
           reser.activityStartingTime.slice(9) +
           " " +
           reser.activityStartingTime.slice(0, 5)
         }</p>
-            <p class="card-text expected">
-            預計參加人數：${reser.minNumber}-${reser.maxNumber}人
-          </p>
+              <p class="card-text expected">預計參加人數：${reser.minNumber}-${
+          reser.maxNumber
+        }人</p>
               <p class="total">
               ${reser.activityNumber}人已報名參加
               </p>
               <div class="btns row align-items-center">
                 <div class="col-10">
-                  <a
-                    href="./activity_detail.html"
-                    class="btn btn-outline-warning signup"
-                    >立刻報名</a
-                  >
+                  <a href="./activity_detail.html" class="btn btn-outline-warning signup">立刻報名</a>
                 </div>
                 <div class="col-2">
                   <svg class="like" data-like="false" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none">
@@ -206,19 +199,13 @@ function like() {
   likebtn.click(function (e) {
     // 判斷會員登入
     if (sessionStorage.getItem("loginReq") == null) {
-      alert("請先登入!");
+      alert("請先登入");
       return;
     }
     // 解析會員資訊
     let account = JSON.parse(sessionStorage.getItem("loginReq"));
     let accId = account.acc_id;
     let activityId = $(e.target).closest(".card-body").attr("data-activityId");
-
-    // 判斷是否已登入
-    if (sessionStorage.getItem("loginReq") == null) {
-      alert("請先進行登入");
-      return;
-    }
 
     if ($(e.target).attr("data-like") == "false") {
       // 將收藏的資訊發送給後端
@@ -262,7 +249,7 @@ function like() {
 function getlikes() {
   // 判斷會員是否已登入
   if (sessionStorage.getItem("loginReq") == null) {
-    console.log("請先登入");
+    // console.log("請先登入");
     return;
   }
 
@@ -304,19 +291,24 @@ function getlikes() {
 
 // 點擊「立刻報名」按鈕
 function signup() {
-  //點擊報名按鈕，會將活動id存入session，然後傳給activity/detail畫面
   let signup_btn = $("a.signup");
+  //點擊報名按鈕，會將活動id存入session，然後傳給activity/detail畫面
   signup_btn.click((e) => {
     e.preventDefault();
-
-    // 判斷報名時間，如果大於今天就不給報名
-    let today = new Date();
-    console.log(today);
-    console.log($(this).closest("p"));
-    if (signup_btn.closest("span.regesteration_starting_time").val() > today) {
-      alert("報名時間還沒到喔!");
+    // 判斷是否登入，未登入就不給報名
+    if (sessionStorage.getItem("loginReq") == null) {
+      alert("請先登入");
       return;
     }
+
+    // 判斷報名時間，如果大於今天就不給報名
+    // let today = new Date();
+    // console.log(today);
+    // console.log($(this).closest("p.regesteration"));
+    // if (signup_btn.closest("span.regesteration_starting_time").val() > today) {
+    //   alert("報名時間還沒到喔!");
+    //   return;
+    // }
     // if(signup_btn.closest())
     let activityid = $(e.target)
       .closest("div.card-body")
@@ -325,7 +317,7 @@ function signup() {
     // 將值存在session中，傳給下個頁面
     sessionStorage.setItem("activityId", activityid);
     //進行重導向
-    // document.location.href = "activity_detail.html";
+    document.location.href = "activity_detail.html";
   });
 }
 
@@ -335,7 +327,7 @@ function establish() {
     e.preventDefault();
     // 判斷是否登入
     if (sessionStorage.getItem("loginReq") == null) {
-      alert("請先登入!");
+      alert("請先登入");
       return;
     }
 

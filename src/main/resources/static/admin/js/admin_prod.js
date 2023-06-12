@@ -129,7 +129,7 @@
                                     <th scope="row">${rowIndex}</th>
                                     <td class="prodId">${prod.prodId}</td>
                                     <td>${prod.prodName}</td>
-                                    <td>${prod.restaurantId}</td>
+                                    <td class="restaurantId">${prod.restaurantId}</td>
                                     <td>${prod.adminRestaurantVO.resName}</td>
                                     <td>${prodStateText}</td>
                                     <td>
@@ -150,8 +150,21 @@
         }
     };
 
+    $(document).ready(function(){
+        currentPage = 1;  // 重置當前頁碼為第一頁
+        fetchAndUpdateData();
+    });
+
     $("#submitSearch").on("click", () => {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
+    });
+
+    $(document).on("click", ".editBtn", function(){
+        let prodId = $(this).closest("tr").find(".prodId").text();
+        let restaurantId = $(this).closest("tr").find(".restaurantId").text();
+        sessionStorage.setItem("prodId", prodId);
+        sessionStorage.setItem("restaurantId", restaurantId);
+        location = "admin_prodSearchResult.html";
     });
 })();

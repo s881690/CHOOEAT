@@ -132,7 +132,7 @@
                                     <th scope="row">${rowIndex}</th>
                                     <td class="adId">${ad.adId}</td>
                                     <td>${ad.adApplyTimestamp}</td>
-                                    <td>${ad.restaurantId}</td>
+                                    <td class="restaurantId">${ad.restaurantId}</td>
                                     <td>${ad.adminRestaurantVO.resName}</td>
                                     <td>${adCheckText}</td>
                                     <td>${adState}</td>
@@ -155,8 +155,21 @@
         }
     };
 
+    $(document).ready(function(){
+        currentPage = 1;  // 重置當前頁碼為第一頁
+        fetchAndUpdateData();
+    });
+
     $("#submitSearch").on("click", () => {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
+    });
+
+    $(document).on("click", ".editBtn", function(){
+        let adId = $(this).closest("tr").find(".adId").text();
+        let restaurantId = $(this).closest("tr").find(".restaurantId").text();
+        sessionStorage.setItem("adId", adId);
+        sessionStorage.setItem("restaurantId", restaurantId);
+        location = "admin_adSearchResult.html";
     });
 })();

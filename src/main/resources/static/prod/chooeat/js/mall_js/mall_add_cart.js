@@ -37,7 +37,7 @@ window.addEventListener("load", function() {
 		let imageUrl = URL.createObjectURL(blob);
 
 		product_name_el.innerHTML = productName;
-		product_price_el.innerHTML = "總價：NT $" + price.toLocaleString();
+		product_price_el.innerHTML = "總價：NT $" + form_data.price;
 		product_qty_el.innerHTML = qty;
 		product_img_el.src = imageUrl;
 	};

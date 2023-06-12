@@ -144,6 +144,11 @@
         }
     };
 
+    $(document).ready(function(){
+        currentPage = 1;  // 重置當前頁碼為第一頁
+        fetchAndUpdateData();
+    });
+
     $("#submitSearch").on("click", () => {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();

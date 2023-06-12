@@ -37,6 +37,21 @@ public class ActivityServiceImpl implements ActivityService {
 		}
 		return list;
 	}
+	
+	
+	// 活動列表顯示(非流團 && 申請截止日期 < 今天)
+	public List<ActivityVO> all(){
+		List<ActivityVO> list = activityRepository.findActivitys();
+		for (int i = 0; i < list.size(); i++) {
+			// 若activityPhoto欄位不為空，才進來轉
+			if(list.get(i).getActivityPhoto() != null) {
+				// 將byte[]圖片轉為base64 String
+				String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
+				list.get(i).setActivityPhotoBase64(base64String);
+			}
+		}
+		return list;
+	}
 
 	
 	// 活動名稱查詢
@@ -67,7 +82,7 @@ public class ActivityServiceImpl implements ActivityService {
 	@Transactional
 	public Object establish(Map<String, String> map) {
 		ActivityVO activityVO = new ActivityVO();
-		if(!map.get("activityId").isEmpty()) {
+		if(map.get("activityId")!= null) {
 			activityVO.setActivityId(Integer.parseInt(map.get("activityId")));
 		}
 		activityVO.setActivityName(map.get("activityName"));
@@ -136,12 +151,14 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public Integer addActivityMember(Integer activityId) {
-		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
-		System.out.println(activityNumber);
-		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
-		activityVO.setActivityNumber(activityNumber); 
-		System.out.println(activityVO.getActivityNumber());
-		return activityVO.getActivityNumber();
+//		Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
+//		System.out.println(activityNumber);
+//		ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+//		activityVO.setActivityNumber(activityNumber); 
+//		System.out.println(activityVO.getActivityNumber());
+//		return activityVO.getActivityNumber();
+		return null;
+		
 	}
 
 

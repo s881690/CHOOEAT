@@ -35,5 +35,10 @@ public class AdminSearchReservation {
 			return Collections.emptyList();
 		}
 	}
+	
+	@GetMapping("/findReservation")
+	public AdminReservationVO findReservation(Integer reservationId) {
+		return SERVICE.findById(reservationId);
+	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import chooeat.admin.web.admin.dao.AdminDAO;
+import chooeat.admin.web.admin.dao.AdminRepository;
 import chooeat.admin.web.admin.pojo.AdminVO;
 import chooeat.admin.web.admin.service.AdminService;
 
@@ -14,6 +15,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminDAO dao;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@Override
 	public AdminVO register(AdminVO admin) {
@@ -60,6 +64,46 @@ public class AdminServiceImpl implements AdminService {
 		return admin;
 	}
 	
+	@Override
+	public AdminVO editAdmin(AdminVO admin) {
+		
+		if (admin.getAdminName() == null) {
+			admin.setMessage("名稱未輸入");
+			admin.setSuccessful(false);
+			return admin;
+		}
+		
+		if (admin.getAdminPass() == null) {
+			admin.setMessage("密碼未輸入");
+			admin.setSuccessful(false);
+			return admin;
+		}
+		
+		if (dao.selectByAdminName(admin.getAdminName()) != null && dao.selectByAdminName(admin.getAdminName()).getAdminId() != admin.getAdminId()) {
+			admin.setMessage("此管理員名稱已被註冊，請更換管理員名稱");
+			admin.setSuccessful(false);
+			return admin;
+		}
+		
+		final int resultCount = dao.update(admin);
+		admin.setSuccessful(resultCount > 0);
+		admin.setMessage(resultCount > 0 ? "更新成功!" : "更新失敗");
+		
+		return admin;
+		
+//		AdminVO newAdmin = adminRepository.save(admin);
+//		
+//		if (newAdmin == null) {
+//			admin.setMessage("註冊錯誤，請聯絡管理員!");
+//			admin.setSuccessful(false);
+//			return admin;
+//		}
+//		
+//		newAdmin.setMessage("更新成功!");
+//		newAdmin.setSuccessful(true);
+//		return newAdmin;
+	}
+
 	@Override
 	public AdminVO login(AdminVO adminVO) {
 		final String acc = adminVO.getAdminAcc();
@@ -123,15 +167,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public boolean remove(Integer adminId) {
-		// TODO Auto-generated method stub
-		return false;
+		adminRepository.deleteById(adminId);
+		return true;
 	}
-
-	@Override
-	public boolean save(AdminVO adminVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	
 }

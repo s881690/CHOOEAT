@@ -88,8 +88,8 @@ public class CheckoutController extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("application/json; charset=utf-8");
 		
-		String userId = "user1";
-		String cartKey = "cart:" + userId; // 先假設使用者ID為user1，實際要再多增加使用者這個參數
+		String accId = req.getParameter("accId");
+		String cartKey = "cart:user" + accId; 
 		HttpSession session = req.getSession();
 		String[] selectedProducts = (String[]) session.getAttribute("selectedProducts");
 		BufferedReader reader = req.getReader();
