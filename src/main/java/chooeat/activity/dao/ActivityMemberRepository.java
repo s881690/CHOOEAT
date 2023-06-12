@@ -10,6 +10,7 @@ import chooeat.activity.vo.ActivityMemberVO;
 
 
 
+
 public interface ActivityMemberRepository extends JpaRepository<ActivityMemberVO, Integer> {
 	List<ActivityMemberVO> findByActivityId(Integer activityId);
 	

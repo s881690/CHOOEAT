@@ -1,3 +1,4 @@
+// $("header.headerpage").load("../../header.html .navbar");
 // 日期格式化 YYYY-MM-DD
 function YYYYMMDD(dateTime) {
   let date = new Date(dateTime);
@@ -19,13 +20,13 @@ function fetch3ActivityList() {
   const card_list_3 = document.querySelector(".card_list_3");
   const card_list_collapse = document.querySelector(".card_list_collapse");
   // 因Java有將靜態檔案設定映射名稱與前綴字，因此不用加"activity/"
-  const url = "activityList";
+  const url = "activitys";
   fetch(url)
     .then((res) => {
       return res.json();
     })
     .then((resList) => {
-      // console.log(resList);
+      console.log(resList);
       let resList3 = resList.slice(0, 3);
       // console.log(resList3);
       let resListCollapse = resList.slice(3, 9);
@@ -49,43 +50,35 @@ function fetch3ActivityList() {
         card_list_3.innerHTML += `
         <div class="col-4 mt-5">
           <div class="card">
-            <img
-              src="${image.src}"
-              class="card-img-top"
-              alt="..."
-            />
+            <img src="${image.src}" class="card-img-top" alt="..." />
             <div class="card-body" data-activityid=${reser.activityId}>
               <h5 class="card-title">${reser.activityName}</h5>
               <p class="restaurant-name">地點：${
                 reser.activityrestaurantVO.resName
               }</p>
-            <p class="card-text address">地址：
-              ${reser.activityrestaurantVO.resAdd}
-            </p>
-            <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
-              reser.regesterationStartingTime
-            )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
+              <p class="card-text address">地址：
+                ${reser.activityrestaurantVO.resAdd}
+              </p>
+              <p class="card-text regesteration">報名時間：<span class="regesteration_starting_time">${YYYYMMDD(
+                reser.regesterationStartingTime
+              )} </span>00:00 ~ <span class="regesteration_ending_time">${YYYYMMDD(
           reser.regesterationEndingTime
         )}</span> 23:59 止
-            </p>
-            <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
+              </p>
+              <p class="card-text date_time">活動時間：${year}年${month}${date}日 ${
           reser.activityStartingTime.slice(9) +
           " " +
           reser.activityStartingTime.slice(0, 5)
         }</p>
-            <p class="card-text expected">
-            預計參加人數：${reser.minNumber}-${reser.maxNumber}人
-          </p>
+              <p class="card-text expected">預計參加人數：${reser.minNumber}-${
+          reser.maxNumber
+        }人</p>
               <p class="total">
               ${reser.activityNumber}人已報名參加
               </p>
               <div class="btns row align-items-center">
                 <div class="col-10">
-                  <a
-                    href="./activity_detail.html"
-                    class="btn btn-outline-warning signup"
-                    >立刻報名</a
-                  >
+                  <a href="./activity_detail.html" class="btn btn-outline-warning signup">立刻報名</a>
                 </div>
                 <div class="col-2">
                   <svg class="like" data-like="false" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none">

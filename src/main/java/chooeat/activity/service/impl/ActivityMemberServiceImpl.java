@@ -52,9 +52,15 @@ public class ActivityMemberServiceImpl implements ActivityMemberService{
 
 	@Transactional
 	@Override
-	public String deleteMember(Integer accId) {
+	public String deleteMember(Integer activityId, Integer accId) {
 		try {
+			// 刪除這筆activityMemberVO
 			activityMemberRepository.deleteByAccId(accId);
+			// 將新的總數存入activity表內
+			Integer activityNumber = activityMemberRepository.countByActivityId(activityId);
+			ActivityVO activityVO = activityRepository.findByActivityId(activityId);
+			activityVO.setActivityNumber(activityNumber);
+			activityRepository.save(activityVO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "false";

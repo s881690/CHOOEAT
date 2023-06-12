@@ -26,6 +26,12 @@ public class ActivityController {
 	public List<ActivityVO> activityList() {
 		return activityService.sellectAll();
 	}
+	
+	// activity.js
+	@GetMapping("/activitys")
+	public List<ActivityVO> activitys() {
+		return activityService.all();
+	}
 
 	@GetMapping("/search")
 	public List<ActivityVO> search(@RequestParam(value = "search_value", required = false) String value) {
