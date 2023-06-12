@@ -183,7 +183,11 @@ div.prod {
 	transform: translate(-50%);
 	overflow: hidden;
 }
-
+#alls {
+	margin-left: 10px;
+	margin-top: 5px;
+	align-items: center;
+}
 button.delete_selected_btn {
 	float: right;
 }
@@ -212,9 +216,7 @@ div.delete {
 	right: 0;
 }
 
-#alls {
-	margin-left: 10px;
-}
+
 
 img.prod_img {
 	width: 130px;
