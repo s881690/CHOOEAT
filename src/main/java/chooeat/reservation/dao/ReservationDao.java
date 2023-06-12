@@ -34,6 +34,4 @@ public interface ReservationDao {
 	List<String> getRestaurantNameByReservation(int reservationId);
 	
 
-	
-
 }

@@ -6,6 +6,19 @@
  const restaurantId = obj.restaurantId;
 
 
+// 圖片轉B64編碼字串
+function arrayBufferToBase64(buffer) {
+	var binary = '';
+	var bytes = new Uint8Array(buffer);
+	var len = bytes.byteLength;
+	for (var i = 0; i < len; i++) {
+	  binary += String.fromCharCode(bytes[i]);
+	}
+	return window.btoa(binary);
+}
+
+
+
  //餐廳首頁相關
  $(document).ready(function() {
   $.ajax({
@@ -16,12 +29,32 @@
    } ,
     success: function (response) {
 
-         
-      var resAcc =response.restauranthomepagemyselfList[0]["resAcc"]
+
+      var photoBase64m = arrayBufferToBase64(response.restauranthomepagemyselfList[0]["resPhoto"]);
+      var imageSrcm = `data:image/jpeg;base64,${photoBase64m}`;
+
+      var ddd = document.getElementById("vvv");        
+      var rrr = document.createElement("div");
+      rrr.classList.add("col-12");
+
+      if (photoBase64m) {
+        rrr.innerHTML = `
+          <img
+            src="${imageSrcm}"          
+            style="width: 100%; height: 200px ; margin-bottom: 10px;"
+          />
+        `;
+      } else {
+        rrr.innerHTML = `
+          <div style="text-align: center">這裡是圖片顯示頁面喔!!目前沒圖片喔!!</div>
+        `;
+      }
+      ddd.appendChild(rrr);
+
+
       
-    
-      var ccccc = document.createElement("div");
-   
+      var resAcc =response.restauranthomepagemyselfList[0]["resAcc"]             
+      var ccccc = document.createElement("div");   
    ccccc.innerHTML = ` 
    <div>
    <br>
@@ -249,6 +282,7 @@ $(document).ready(function() {
         success: function(response) {
           alert("你上傳了" + response + "張圖片");
           $(".uuu").attr("hidden", true);
+          window.location.replace(location.href)          
         },
         error: function(xhr, status, error) {
           
@@ -262,6 +296,17 @@ $(document).ready(function() {
   });
 });
 
+
+ //上傳時預覽餐卷圖片
+ function previewImagemyself(event) {
+  var reader = new FileReader();
+  reader.onload = function () {
+    var imagePreview = document.getElementById("image-preview");
+    imagePreview.src = reader.result;
+    imagePreview.style.display = "block";
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
 
 
 
@@ -614,12 +659,32 @@ $(document).ready(function () {
       { data: "restaurantCommentDatetime", title: "留言日期" },
       { data: "restaurantCommentText", title: "留言評論" },
       { data: "restaurantCommentScore", title: "星數評價" },
-      { data: "restaurantCommentReplyDatetime", title: "餐廳回復日期" },
-      { data: "restaurantCommentReplyText", title: "餐廳回復評論" },
+      { 
+        data: null,
+        title: "餐廳回復日期",
+        render: function(data, type, row) {
+          if (row.restaurantCommentReplyText) {
+            return row.restaurantCommentReplyDatetime;
+          } else {
+            return '';
+          }
+        }
+      },
+      { 
+        data: null,
+        title: "餐廳回復評論",
+        render: function(data, type, row) {
+          if (row.restaurantCommentReplyText) {
+            return row.restaurantCommentReplyText;
+          } else {
+            return '';
+          }
+        }
+      },
       {
         data: null,
-       title: "操作功能", 
-        render: function (data, type,row) {
+        title: "操作功能",
+        render: function (data, type, row) {
           if (row.restaurantCommentReplyText) {
             return '';
           } else {
@@ -628,6 +693,7 @@ $(document).ready(function () {
         },
       },
     ],
+    
     
   });
 
@@ -664,13 +730,14 @@ $(document).ready(function () {
  function previewImage(event) {
    var reader = new FileReader();
    reader.onload = function () {
-     var imagePreview = document.getElementById("image-preview");
+     var imagePreview = document.getElementById("image-previewprod");
      imagePreview.src = reader.result;
      imagePreview.style.display = "block";
    };
    reader.readAsDataURL(event.target.files[0]);
  }
 
+ 
  
  
 //上傳餐卷功能 

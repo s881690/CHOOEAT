@@ -6,6 +6,8 @@ import chooeat.admin.web.restaurant.pojo.AdminRestaurantPOJO;
 import chooeat.admin.web.restaurant.pojo.AdminRestaurantVO;
 
 public interface RestaurantDAO {
+	
+	AdminRestaurantVO findByResId(String resId);
 
 	int register(List<String> values);	
 

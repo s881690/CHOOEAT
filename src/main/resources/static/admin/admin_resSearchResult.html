@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <form class="row mb-4 justify-content-center" action="#">
+            <!-- <form class="row mb-4 justify-content-center" action="#">
                 <div class="col-12 col-md-2 ms-5">
                     <select class="form-select">
                         <option selected value="0">請選擇查詢方式</option>
@@ -58,14 +58,14 @@
                 <div class="col-3 col-md-2" style="margin-left: 20px;">
                     <button type="submit" class="btn btn-outline-dark searchBtn">送出查詢</button>
                 </div>
-            </form>
+            </form> -->
 
         </div>
 
         <div class="rounded shadow-sm plate">
             <div class="container">
-                <form action="#">
-                    <div class="row align-items-center justify-content-center">
+                <div>
+                    <!-- <div class="row align-items-center justify-content-center">
                         <div class="col-8 mt-2">
                             <div class="row align-items-center mb-3">
                                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -91,46 +91,46 @@
                                   </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-12 col-md-6 mt-3">
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳名稱</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="樂活蔬食餐廳">
+                                    <input type="text" readonly class="form-control-plaintext" id="resName">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳編號</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="00001">
+                                    <input type="text" readonly class="form-control-plaintext" id="restaurantId">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳帳號</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="p5DcV7Ku">
+                                    <input type="text" readonly class="form-control-plaintext" id="resAcc">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳類別</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="健康餐">
+                                    <input type="text" readonly class="form-control-plaintext" id="resType">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳類型</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="多人餐廳">
+                                    <input type="text" readonly class="form-control-plaintext" id="singleMeal">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">上架狀態</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="上架中">
+                                    <input type="text" readonly class="form-control-plaintext" id="resState">
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <!-- <div class="row mb-1">
                                 <label class="col-3 col-md-4 col-form-label">審核狀態</label>
                                 <div class="col-6 col-md-6">
                                     <select class="form-select">
@@ -143,67 +143,72 @@
                             <div class="row">
                                 <label class="col-3 col-md-4 col-form-label">審核人員</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="管理員一">
+                                    <input type="text" readonly class="form-control-plaintext">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-12 col-md-6 mt-3">
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳地址</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="台北市中山區民族東路一段22號">
+                                    <input type="text" readonly class="form-control-plaintext" id="resAdd">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳電話</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="02-1234-5678">
+                                    <input type="text" readonly class="form-control-plaintext" id="resTel">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳信箱</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="123456@gmail.com">
+                                    <input type="text" readonly class="form-control-plaintext" id="resEmail">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">開始營業時間</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="11:00">
+                                    <input type="text" readonly class="form-control-plaintext" id="resStartTime">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">結束營業時間</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="21:00">
+                                    <input type="text" readonly class="form-control-plaintext" id="resEndTime">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">統一編號</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="88888888">
+                                    <input type="text" readonly class="form-control-plaintext" id="resTexId">
                                 </div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <label class="col-3 col-md-4 col-form-label">餐廳負責人</label>
                                 <div class="col-9 col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext" placeholder="王大明">
+                                    <input type="text" readonly class="form-control-plaintext" id="resOwnerName">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-5 col-md-2 ms-3 mt-3">
-                            <button type="submit" class="btn btn-outline-secondary">編輯餐廳資訊</button>
+                            <button type="submit" class="btn btn-outline-secondary" id="editResInformation">編輯餐廳資訊</button>
+                        </div>
+                        <div class="col-5 col-md-2 ms-3 mt-3">
+                            <button type="submit" class="btn btn-outline-secondary" id="confirmEdit" hidden>確認送出</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
+    
+    <script type="text/javascript" src="js/admin_resSearchResult.js"></script>
 </body>
 
 </html>

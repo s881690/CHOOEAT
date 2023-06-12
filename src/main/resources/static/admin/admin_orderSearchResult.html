@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,9 +21,10 @@
     <link rel="shortcut icon" href="images/header/logo2.png">
 
 </head>
+
 <body>
     <script type="text/javascript" src="js/header.js"></script>
-    
+
     <div class="main_content">
         <div class="container">
             <div class="row">
@@ -39,7 +41,7 @@
 
         <div class="rounded shadow-sm plate">
             <div class="container">
-                <form action="#">
+                <div>
                     <div class="row">
                         <div class="col-12 mt-3">
                             <div class="row">
@@ -47,7 +49,7 @@
                                     <h4>訂單資訊</h4>
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-outline-danger" style="margin-left: 39px;">
+                                    <button class="btn btn-outline-danger" style="margin-left: 39px;" data-bs-toggle="modal" data-bs-target="#deleteOrderArea">
                                         <i class="fa-regular fa-circle-xmark"></i>
                                         取消訂單
                                     </button>
@@ -58,28 +60,28 @@
                                 <div class="col-6">
                                     <div class="row">
                                         <div class="col-3">
-                                            訂單編號： 
+                                            訂單編號：
                                         </div>
                                         <div class="col-9" id="orderId">
-                                            
+
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-3">
-                                            訂單狀態： 
+                                            訂單狀態：
                                         </div>
                                         <div class="col-9" id="orderState">
-                                
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="row">
                                         <div class="col-4">
-                                            訂單成立時間： 
+                                            訂單成立時間：
                                         </div>
                                         <div class="col-8" id="orderTimestamp">
-                   
+
                                         </div>
                                     </div>
                                     <div class="row mt-3" style="visibility: hidden;">
@@ -135,41 +137,41 @@
                                 <div class="col-6">
                                     <div class="row">
                                         <div class="col-3">
-                                            會員編號： 
+                                            會員編號：
                                         </div>
                                         <div class="col-9" id="accId">
-                               
+
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-3">
-                                            會員帳號： 
+                                            會員帳號：
                                         </div>
                                         <div class="col-9" id="accAcc">
-                          
+
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-3">
-                                            會員名稱： 
+                                            會員名稱：
                                         </div>
                                         <div class="col-9" id="accName">
-                       
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="row">
                                         <div class="col-3">
-                                            會員暱稱： 
+                                            會員暱稱：
                                         </div>
                                         <div class="col-9" id="accNickname">
-        
+
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-3">
-                                            會員電話： 
+                                            會員電話：
                                         </div>
                                         <div class="col-9" id="accPhone">
 
@@ -177,7 +179,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-3">
-                                            會員信箱： 
+                                            會員信箱：
                                         </div>
                                         <div class="col-9" id="accMail">
 
@@ -187,13 +189,37 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteOrderArea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">刪除訂單</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row align-items-center">
+                        <div class="col-12 d-flex justify-content-center" id="deleteMsg">
+                            <p>確定刪除此訂單？</p>
+                            <p id="deleteResTypeId" hidden></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-warning" id="confirmDelete">確定刪除</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="js/footer.js"></script>
-    
+
     <script type="text/javascript" src="js/admin_orderSearchResult.js"></script>
 </body>
+
 </html>
