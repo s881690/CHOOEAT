@@ -18,9 +18,16 @@ public class Result {
 	private String member;
 	private String restaurantName;
 	private Integer remainSeat;
+	private String index;
 	
 	
 	
+	public String getIndex() {
+		return index;
+	}
+	public void setIndex(String index) {
+		this.index = index;
+	}
 	public Integer getRemainSeat() {
 		return remainSeat;
 	}
