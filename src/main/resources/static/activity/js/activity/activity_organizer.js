@@ -72,8 +72,9 @@ function remove() {
   let check_btn = $("button.check");
   check_btn.click(function (e) {
     let accId = $(e.target).closest("tr").attr("data-accId");
+    let activityId = sessionStorage.getItem("activityId");
     //點擊「確認」將資料庫中的資料刪除
-    fetch(`deleteMember/${accId}`, {
+    fetch(`deleteMember/${accId}/${activityId}`, {
       method: "DELETE",
     })
       .then((res) => {

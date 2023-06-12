@@ -31,9 +31,9 @@ public class ActivityMemberController {
 		return activityMemberService.memberList(activityId);
 	}
 
-	@DeleteMapping("/deleteMember/{accId}")
-	public String deleteMember(@PathVariable Integer accId) {
-		return activityMemberService.deleteMember(accId);
+	@DeleteMapping("/deleteMember/{accId}/{activityId}")
+	public String deleteMember(@PathVariable Integer activitiId,@PathVariable Integer accId) {
+		return activityMemberService.deleteMember(activitiId, accId);
 	}
 	
 	@GetMapping("/findMember")
