@@ -37,6 +37,21 @@ public class ActivityServiceImpl implements ActivityService {
 		}
 		return list;
 	}
+	
+	
+	// 活動列表顯示(非流團 && 申請截止日期 < 今天)
+	public List<ActivityVO> all(){
+		List<ActivityVO> list = activityRepository.findActivitys();
+		for (int i = 0; i < list.size(); i++) {
+			// 若activityPhoto欄位不為空，才進來轉
+			if(list.get(i).getActivityPhoto() != null) {
+				// 將byte[]圖片轉為base64 String
+				String base64String = Base64.getEncoder().encodeToString(list.get(i).getActivityPhoto());
+				list.get(i).setActivityPhotoBase64(base64String);
+			}
+		}
+		return list;
+	}
 
 	
 	// 活動名稱查詢
