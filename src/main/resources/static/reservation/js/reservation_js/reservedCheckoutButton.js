@@ -38,16 +38,17 @@ button.addEventListener('click', function() {
     return;
   }
 
-  // 發送請求給後端
-
   const index = sessionStorage.getItem('index');
-
+  // 發送請求給後端
   fetch('/reservation?index=' + index)
     .then(response => response.json())
     .then(data => {
       // 檢查回傳的物件中的status屬性
       if (data.status === 'success') {
         sessionStorage.setItem('reservationId', data.reservationId);
+        // 删除名为 "index" 的项
+        sessionStorage.removeItem("index");
+
         // 跳轉至下一個頁面
         window.location.href = 'reservationSucess.html';
       } else {
