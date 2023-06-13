@@ -211,7 +211,7 @@
                 aria-controls="v-pills-prod-upload"
                 aria-selected="false"
               >
-                上傳餐卷
+                上傳餐券
               </button>
               <button
                 class="nav-link"
@@ -223,7 +223,7 @@
                 aria-controls="v-pills-prod-find"
                 aria-selected="false"
               >
-                查看餐卷
+                查看餐券
               </button>
 
               <button
@@ -248,7 +248,7 @@
                 aria-controls="v-pills-hyoga"
                 aria-selected="false"
               >
-                查看/回復餐廳評論
+                查看/回覆餐廳評論
               </button>
               <button
                 class="nav-link"
@@ -867,7 +867,7 @@
                 <div class="row">
                   <div class="col-2"></div>
                   <div class="col-8">
-                    <h1><i class="fas fa-upload"></i>上傳餐卷</h1>
+                    <h1><i class="fas fa-upload"></i>上傳餐券</h1>
 
                     <div>
                       <div>
@@ -876,7 +876,7 @@
                       <input
                         name="prodname"
                         class="form-control"
-                        placeholder="請輸入餐卷名稱"
+                        placeholder="請輸入餐券名稱"
                         type="text"
                       />
                     </div>
@@ -888,7 +888,7 @@
                       <input
                         name="prodprice"
                         class="form-control"
-                        placeholder="請輸入餐卷金額"
+                        placeholder="請輸入餐券金額"
                         type="number"
                       />
                     </div>
@@ -900,7 +900,7 @@
                       <input
                         name="prodnumber"
                         class="form-control"
-                        placeholder="請輸入餐卷數量"
+                        placeholder="請輸入餐券數量"
                         type="number"
                       />
                     </div>
@@ -912,7 +912,7 @@
                       <textarea
                         name="prodruler"
                         class="form-control"
-                        placeholder="請輸入餐卷使用規則"
+                        placeholder="請輸入餐券使用規則"
                         type="text"
                       ></textarea>
                     </div>
@@ -924,7 +924,7 @@
                       <textarea
                         name="proddiscribe"
                         class="form-control"
-                        placeholder="請輸入餐卷描述"
+                        placeholder="請輸入餐券描述"
                         type="text"
                       ></textarea>
                     </div>
@@ -981,13 +981,13 @@
                 <table id="myTable3" class="display" style="width: 100%">
                   <thead>
                     <tr>
-                      <th>餐卷ID</th>
-                      <th>餐卷名稱</th>
-                      <th>餐卷描述</th>
-                      <th>餐卷使用規則</th>
-                      <th>餐卷價錢</th>
-                      <th>餐卷數量</th>
-                      <th>餐卷狀態</th>
+                      <th>餐券ID</th>
+                      <th>餐券名稱</th>
+                      <th>餐券描述</th>
+                      <th>餐券使用規則</th>
+                      <th>餐券價錢</th>
+                      <th>餐券數量</th>
+                      <th>餐券狀態</th>
                       <th>操作功能</th>
                     </tr>
                   </thead>
@@ -998,10 +998,10 @@
                     <div class="col-2"></div>
                     <div class="col-8">
                       <h1 style="text-align: center">
-                        <i class="fas fa-upload"></i>編輯餐卷
+                        <i class="fas fa-upload"></i>編輯餐券
                       </h1>
                       <div style="margin-bottom: 5px" hidden>
-                        <div h>餐卷ID</div>
+                        <div h>餐券ID</div>
                         <input
                           name="updateprodid"
                           class="form-control"
@@ -1010,7 +1010,7 @@
                       </div>
 
                       <div style="margin-bottom: 5px">
-                        <div>餐卷名稱</div>
+                        <div>餐券名稱</div>
                         <input
                           name="updateprodname"
                           class="form-control"
@@ -1019,7 +1019,7 @@
                       </div>
 
                       <div style="margin-bottom: 5px">
-                        <div>餐卷價錢</div>
+                        <div>餐券價錢</div>
                         <input
                           name="updateprodprice"
                           class="form-control"
@@ -1028,7 +1028,7 @@
                       </div>
 
                       <div style="margin-bottom: 5px">
-                        <div>餐卷數量</div>
+                        <div>餐券數量</div>
                         <input
                           name="updateprodnumber"
                           class="form-control"
@@ -1037,7 +1037,7 @@
                       </div>
 
                       <div style="margin-bottom: 5px">
-                        <div>餐卷使用規則</div>
+                        <div>餐券使用規則</div>
                         <textarea
                           name="updateprodruler"
                           class="form-control"
@@ -1046,7 +1046,7 @@
                       </div>
 
                       <div style="margin-bottom: 5px">
-                        <div>餐卷描述</div>
+                        <div>餐券描述</div>
                         <textarea
                           name="updateproddiscribe"
                           class="form-control"
@@ -1110,8 +1110,8 @@
                       <th>留言日期</th>
                       <th>留言評論</th>
                       <th>星數評價</th>
-                      <th>餐廳回復日期</th>
-                      <th>餐廳回復評論</th>
+                      <th>餐廳回覆日期</th>
+                      <th>餐廳回覆評論</th>
                       <th>操作功能</th>
                     </tr>
                   </thead>
@@ -1135,8 +1135,8 @@
                       <select name="adplan" class="form-control">
                         <option value="" disabled selected>請選擇方案</option>
                         <option value="1">廣告餐廳</option>
-                        <option value="2">廣告餐卷</option>
-                        <option value="3">廣告餐廳+餐卷</option>
+                        <option value="2">廣告餐券</option>
+                        <option value="3">廣告餐廳+餐券</option>
                       </select>
                     </div>
                     <div>
