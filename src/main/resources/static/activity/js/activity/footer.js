@@ -18,7 +18,7 @@ footer.html(`
                 <a href="#" class="nav-link px-4 text-muted">商家申請</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link px-4 text-muted">關於我們</a>
+                <a href="../../../prod/aboutUs.html" class="nav-link px-4 text-muted">關於我們</a>
             </li>
         </ul>
         <p class="text-center text-muted mb-0 py-2 my-3">

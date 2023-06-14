@@ -8,7 +8,7 @@ header.html(`
                 這裡放的是chooeat文字logo
                         這裡的連結之後要改，跳轉到首頁
                     內包超連結，超連結裡面包圖片，讓使用者點圖片跳轉 -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="../restaurant/Homepage.html">
       <img src="./images/header/logo2.png" class="logo2" />
       <h4>C H O O E A T ！</h4>
     </a>
@@ -94,7 +94,7 @@ header.html(`
           <a href="../activity/activity.html" class="nav-link">揪團</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">關於我們</a>
+          <a href="../../../prod/aboutUs.html" class="nav-link">關於我們</a>
         </li>
       </ul>
     </div>

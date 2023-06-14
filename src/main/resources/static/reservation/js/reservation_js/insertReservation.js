@@ -111,9 +111,13 @@ btn.onclick = () => {
     .then((r) => r.json())
     .then((data) => {
       if (data.status === "success") {
+        sessionStorage.setItem("index", data.index);
         window.location.href = "reservationCheckout.html";
+ 
         console.log("success");
-      } else {
+      } else if(data.status === "wait") {
+        alert("該時段有人訂位中，請稍後！");
+      }else{
         alert("訂位失敗，請重新選擇");
       }
     });

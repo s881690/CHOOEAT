@@ -297,7 +297,7 @@ $(document).ready(function() {
 });
 
 
- //上傳時預覽餐卷圖片
+ //上傳時預覽餐券圖片
  function previewImagemyself(event) {
   var reader = new FileReader();
   reader.onload = function () {
@@ -391,7 +391,7 @@ $(document).ready(function() {
    });
  });
 
- //餐廳找餐卷功能
+ //餐廳找餐券功能
  $(document).ready(function () {
    const table3 = $("#myTable3").DataTable({
     "language": {
@@ -427,13 +427,13 @@ $(document).ready(function() {
        dataSrc: "",
      },
      columns: [
-       { data: "prodId", title: "餐卷ID" },
-       { data: "prodName", title: "餐卷名稱" },
-       { data: "prodText", title: "餐卷描述" },
-       { data: "prodUserGuide", title: "餐卷使用規則" },
-       { data: "prodPrice", title: "餐卷價錢" },
-       { data: "prodQty", title: "餐卷數量" },
-       { data: "prodState", title: "餐卷狀態" },
+       { data: "prodId", title: "餐券ID" },
+       { data: "prodName", title: "餐券名稱" },
+       { data: "prodText", title: "餐券描述" },
+       { data: "prodUserGuide", title: "餐券使用規則" },
+       { data: "prodPrice", title: "餐券價錢" },
+       { data: "prodQty", title: "餐券數量" },
+       { data: "prodState", title: "餐券狀態" },
        {
          data: null,
          title: "操作功能",
@@ -447,7 +447,7 @@ $(document).ready(function() {
      ],
    });
 
-   // 編輯餐卷
+   // 編輯餐券
    $("#myTable3").on("click", ".btn-warning", function () {
     $("#update").removeAttr("hidden");
        var data = table3.row($(this).closest("tr")).data();  
@@ -495,7 +495,7 @@ $(document).ready(function() {
   })
 
 
-   // 餐卷刪除按鈕點擊事件
+   // 餐券刪除按鈕點擊事件
    $("#myTable3").on("click", ".btn-danger", function () {
      var data = table3.row($(this).closest("tr")).data();
      var prodName = data.prodName;
@@ -606,7 +606,7 @@ $("#myTable2").on("click", ".btn-danger", function () {
    });
  });
 
-//餐廳找評論回復功能
+//餐廳找評論回覆功能
 $(document).ready(function () {  
   const table4 = $("#myTable4").DataTable({
     "language": {
@@ -661,7 +661,7 @@ $(document).ready(function () {
       { data: "restaurantCommentScore", title: "星數評價" },
       { 
         data: null,
-        title: "餐廳回復日期",
+        title: "餐廳回覆日期",
         render: function(data, type, row) {
           if (row.restaurantCommentReplyText) {
             return row.restaurantCommentReplyDatetime;
@@ -672,7 +672,7 @@ $(document).ready(function () {
       },
       { 
         data: null,
-        title: "餐廳回復評論",
+        title: "餐廳回覆評論",
         render: function(data, type, row) {
           if (row.restaurantCommentReplyText) {
             return row.restaurantCommentReplyText;
@@ -726,7 +726,7 @@ $(document).ready(function () {
   });
 });
 
- //上傳時預覽餐卷圖片
+ //上傳時預覽餐券圖片
  function previewImage(event) {
    var reader = new FileReader();
    reader.onload = function () {
@@ -740,7 +740,7 @@ $(document).ready(function () {
  
  
  
-//上傳餐卷功能 
+//上傳餐券功能 
 // $("#container").on("click", "#restaurantuploadprod", function () {
  $("#restaurantuploadprod").on("click", function () {
    var formData = new FormData();
@@ -766,7 +766,7 @@ $(document).ready(function () {
      data: formData,
      success: function (response) {
        if (response === 1) {
-         alert("上傳成功囉,請去查看餐卷");         
+         alert("上傳成功囉,請去查看餐券");         
         //  $('input[name="prodname"]').val("");
         //  $('input[name="prodprice"]').val("");
         //  $('input[name="prodnumber"]').val("");
@@ -823,7 +823,7 @@ $(document).ready(function () {
       data: ccc,
       success: function (response) {
         if (response === 1) {
-          alert("上傳成功囉,請去查看餐卷");         
+          alert("上傳成功囉,請去查看廣告");         
          
         } else if (response === 2) {        
           alert("上傳失敗,你在Hello麼");        
