@@ -136,7 +136,7 @@
                                     <td>${permission}</td>
                                     <td>
                                         <button class="btn btn-outline-dark btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#editAdminArea${index + 1}">編輯</button>
-                                        <button class="btn justify-content-center align-items-center">
+                                        <button class="btn justify-content-center align-items-center deleteAdminBtn">
                                             <i class="fa-solid fa-trash-can deleteBtn" data-bs-toggle="modal" data-bs-target="#deleteAdminArea" style="color: #000000;"></i>
                                         </button>
                                     </td>
@@ -193,11 +193,22 @@
                     // 更新資料總筆數
                     $("#listCountNumber").text(body.length);
 
+                    checkAdminPermission();
+
                 });
         }
     };
 
-    $(document).ready(function(){
+    function checkAdminPermission() {
+        const currentAdminPermission = parseInt(sessionStorage.getItem("adminPermission"));
+
+        if (currentAdminPermission === 10) {
+            $(".deleteAdminBtn").remove();
+            $(".editBtn").attr("disabled", true);
+        }
+    }
+
+    $(document).ready(function () {
         currentPage = 1;  // 重置當前頁碼為第一頁
         fetchAndUpdateData();
     });
@@ -253,7 +264,7 @@
                     alert(message);
                     $("deleteResTypeArea").modal("hide");
                     location.reload();
-                } else if(successful === false){
+                } else if (successful === false) {
                     alert(message);
                 }
             });

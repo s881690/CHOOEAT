@@ -110,6 +110,16 @@
                     //顯示新分頁資料
                     $.each(currentPageData, function(index, acc){
 
+                        let accStateString = "";
+
+                        if(acc.accState === 0){
+                            accStateString = "未驗證";
+                        } else if (acc.accState === 1){
+                            accStateString = "啟用";
+                        } else if (acc.accState === 2){
+                            accStateString = "停用";
+                        }
+
                         //列表編號
                         let rowIndex = (currentPage - 1) * itemsPerPage + index + 1;
 
@@ -120,7 +130,7 @@
                                     <td>${acc.accName}</td>
                                     <td>${acc.accAcc}</td>
                                     <td>${acc.accPhone}</td>
-                                    <td>${acc.accState}</td>
+                                    <td>${accStateString}</td>
                                     <td>
                                         <button class="btn btn-outline-dark btn-sm editBtn">編輯</button>
                                     </td>
