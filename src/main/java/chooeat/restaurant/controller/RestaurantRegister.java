@@ -53,7 +53,7 @@ public class RestaurantRegister extends HttpServlet {
         if (b==1) {        	
 		String to=request.getParameter("email");
         String subject="Chooeat註冊驗證信件";
-        String messageText = "請點擊以下連結進行登入: http://localhost:8080/restaurant/Restaurantlogin.html";
+        String messageText = "請點擊以下連結進行登入: http://35.194.170.154:8080/restaurant/Restaurantlogin.html";
         RestaurantService.sendMail(to, subject, messageText); 
 		}else {System.out.println("註冊失敗");}
                      
