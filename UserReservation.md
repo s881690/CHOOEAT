@@ -4,6 +4,17 @@ HOST: http://localhost:8080
 # Reservation
 The Restaurant Platform Reservation API is an interface designed for managing restaurant reservations. It provides a set of functionalities that allow users to conveniently book services at restaurants.
 
+## Reservation related information Query
+| URL | method | **Description** |
+| :--- | :--- | :--- |
+| /getBusinessDay | `GET` | retrieve business day information for a specific date and restaurant |
+| /restaurantName | `GET` | retrieve the name of a restaurant |
+| /restaurantAddress | `GET` | retrieve the address of a restaurant |
+| /getAllreservation | `GET` | retrieve all reservation records for a member |
+| /getReservationInfo | `GET` | retrieve the member name, reservation time, and number of people for a reservation based on the reservation ID |
+| /getRestaurantNameByReservation | `GET` | retrieve the name of the restaurant associated with a reservation |
+
+
 ### Get Business Day Information [GET] [/getBusinessDay]
 This API endpoint allows you to retrieve business day information for a specific date and restaurant. It provides details such as the restaurant's operating hours, remaining seat availability for each hour, and reservation status for each hour.
 
@@ -50,6 +61,41 @@ This API endpoint allows you to retrieve business day information for a specific
       * hourlySeatList: A list of objects representing the remaining seat availability for each hour. Each object contains the hour and remainSeat properties.
       * reservedList: A list of hours that are already reserved.
       * remainSeat: The total number of remaining seats available for the specified date and restaurant.
+
+### Get Restaurant Name [GET] [/restaurantName]
+This API endpoint is used to retrieve the name of a restaurant.
+* Request Parameters
+  * restaurantId (string, query, required): The ID of the restaurant.
+* Response 200 (text/plain)
+The response body contains the name of the restaurant.
+
+### Get Restaurant Address [GET] [/restaurantAddress]
+This API endpoint is used to retrieve the address of a restaurant.
+* Request Parameters
+  * restaurantId (string, query, required): The ID of the restaurant.
+* Response 200 (text/plain)
+The response body contains the address of the restaurant.
+
+### Get All Reservations [GET] [/getAllreservation]
+This API endpoint is used to retrieve all reservation records for a member.
+* Request Parameters
+  * accId (integer, query, required): The ID of the member.
+* Response 200 (application/json)
+The response body contains a list of reservation records.
+
+### Get Reservation Information [GET] [/getReservationInfo]
+This API endpoint is used to retrieve the member name, reservation time, and number of people for a reservation based on the reservation ID.
+* Request Parameters
+  * reservationId (string, query, required): The ID of the reservation.
+* Response 200 (application/json)
+The response body contains the reservation information.
+
+### GGet Restaurant Name by Reservation [GET] [/getRestaurantNameByReservation]
+This API endpoint is used to retrieve the name of the restaurant associated with a reservation.
+* Request Parameters
+  * reservationId (string, query, required): The ID of the reservation.
+* Response 200 (text/plain)
+The response body contains the name of the restaurant.
 
 
 ## Reservation Management
