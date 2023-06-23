@@ -4,7 +4,7 @@ HOST: http://localhost:8080
 # Reservation
 The Restaurant Platform Reservation API is an interface designed for managing restaurant reservations. It provides a set of functionalities that allow users to conveniently book services at restaurants.
 
-## Get Business Day Information [GET] [/getBusinessDay]
+### Get Business Day Information [GET] [/getBusinessDay]
 This API endpoint allows you to retrieve business day information for a specific date and restaurant. It provides details such as the restaurant's operating hours, remaining seat availability for each hour, and reservation status for each hour.
 
 * Request (application/json)
@@ -61,7 +61,7 @@ This API endpoint allows you to retrieve business day information for a specific
 
 
 
-## Reservation Redis [POST] [/reservationRedis]
+### Reservation Redis [POST] [/reservationRedis]
 This API endpoint is used to input a successful reservation into Redis and proceed to the checkout page.
 
 * Request (application/json)
@@ -92,7 +92,7 @@ This API endpoint is used to input a successful reservation into Redis and proce
       * status: The status of the reservation (success or failure).
       * index: The key used to store the reservation in Redis.
        
-## Reserve [GET] [/reservation]
+### Reserve [GET] [/reservation]
 This API endpoint is used to confirm the checkout and make a reservation. If successful, the data is first inserted into the database, and then the corresponding data in Redis is deleted.
 * Request (application/json)
   * Parameter：
@@ -107,7 +107,7 @@ This API endpoint is used to confirm the checkout and make a reservation. If suc
       * status: The status of the reservation (success or empty if unsuccessful). * ppl (string): The number of people for the reservation.
       * reservationId: The ID of the reservation in the database (if successful). * acc_id (integer): The ID of the account or member making the reservation.
      
-## Update Reservation [PUT] [/reservationUpdate]
+### Update Reservation [PUT] [/reservationUpdate]
 This API endpoint is used to modify reservation details.
 
 * Request (application/json)
